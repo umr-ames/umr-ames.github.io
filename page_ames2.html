@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UMR-AMES - Analyse et Modélisation pour l’Environnement et la Santé</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #25A9E0;
+      --blue-dark: #004AAD;
+      --green-dark: #008E45;
+      --green-light: #9DC93D;
+      --white: #FFFFFF;
+      --gray-bg: #F4F4F4;
+      --max-width: 1100px;
+      --padding-sec: 60px 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background-color: var(--gray-bg); color: #333; line-height: 1.6; }
+    .hero { background: linear-gradient(135deg, var(--blue) 0%, var(--green-light) 100%); color: var(--white); text-align: center; padding: 80px 20px; }
+    .hero .main-logo { height: 120px; margin-bottom: 20px; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; color: var(--blue-dark); margin-bottom: 10px; }
+    .hero p { font-size: 1.1rem; }
+    nav { background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: var(--max-width); margin: auto; display: flex; justify-content: center; padding: 15px; }
+    nav a { color: var(--blue-dark); margin: 0 20px; text-decoration: none; font-weight: 600; font-family: 'Montserrat', sans-serif; transition: color 0.3s; cursor: pointer; }
+    nav a.active, nav a:hover { color: var(--green-dark); }
+    section { display: none; background: var(--white); margin: 40px auto; padding: var(--padding-sec); max-width: var(--max-width); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    section.active { display: block; }
+    section h2 { color: var(--green-dark); margin-bottom: 20px; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    table th, table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    table th { background: var(--blue); color: var(--white); }
+    .filter-input { margin-bottom: 15px; }
+    .filter-input input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    .partner-logos { background: #e8f5e9; padding: 40px 20px; }
+    .partner-logos .logos-container { max-width: var(--max-width); margin: auto; display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; }
+    .partner-logos img { height: 60px; object-fit: contain; filter: grayscale(20%); transition: filter 0.3s; }
+    .partner-logos img:hover { filter: none; }
+    footer { text-align: center; padding: 20px; background: var(--blue-dark); color: var(--white); font-size: 0.9rem; }
+    @media (max-width: 768px) { .hero h1 { font-size: 2rem; } nav a { margin: 0 10px; font-size: 0.9rem; } }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <img src="logo/AMES.png" alt="Logo UMR-AMES" class="main-logo">
+    <h1>UMR-AMES</h1>
+    <p>Unité Mixte de Recherche - Analyse et Modélisation pour l’Environnement et la Santé</p>
+  </section>
+
+  <nav>
+    <div class="nav-container">
+      <a data-target="presentation" class="active">Présentation</a>
+      <a data-target="membres">Membres</a>
+      <a data-target="equipes">Équipes</a>
+      <a data-target="projets">Projets</a>
+      <a data-target="publications">Publications</a>
+      <a data-target="contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="presentation" class="active">
+    <h2>Description générale</h2>
+    <p>L’UMR AMES réunit des chercheurs et enseignants-chercheurs issus de l’Université de Nouakchott, de l’ENSG, de l’IMROP, de l’ONISPA et du PNBA, conformément au décret n° 001045 encadrant les unités mixtes de recherche.</p>
+    <h3>Mission</h3>
+    <p>Concevoir et appliquer des méthodes mathématiques, statistiques et d’intelligence artificielle pour modéliser les défis environnementaux et sanitaires de la Mauritanie.</p>
+    <h3>Objectifs</h3>
+    <ul>
+      <li>Renforcer la compréhension des processus liés à l’environnement et à la gestion des ressources naturelles</li>
+      <li>Appuyer la prise de décision sur des enjeux critiques de santé publique et d’épidémiologie</li>
+      <li>Fournir des outils prédictifs et décisionnels adaptés aux contextes locaux</li>
+    </ul>
+    <h3>Effectif</h3>
+    <p>L’unité rassemble 33 chercheurs (mathématiciens, statisticiens, biologistes, géomaticiens et écologues), dont 15 membres permanents et 18 membres associés.</p>
+  </section>
+
+  <section id="membres">
+    <h2>Membres permanents</h2>
+    <div class="filter-input">
+      <input type="text" id="memberFilter" placeholder="Rechercher un membre...">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th><th>Établissement</th><th>Grade</th><th>Spécialité</th><th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Marbe Begnoug</td><td>IUP</td><td>MC</td><td>Maths Appliquées</td><td>benioug@gmail.com</td></tr>
+        <!-- autres membres -->
+      </tbody>
+    </table>
+  </section>
+
+  <section id="equipes">
+    <h2>Équipes</h2>
+    <!-- contenu équipes inchangé -->
+  </section>
+
+  <section id="projets">
+    <h2>Projets</h2>
+    <ul>
+      <li>Modélisation du transport de polluants dans les nappes phréatiques</li>
+      <li>Surveillance des zones côtières du PNBA</li>
+    </ul>
+  </section>
+
+  <section id="publications">
+    <h2>Publications</h2>
+    <ul>
+      <li><em>Interaction between biofilm growth and NAPL remediation: A pore-scale study</em>. M. Benioug, F. Golfier, P. Fisher, C. Oltean, M. A. Buès, X. Yang. <strong>Advances in Water Resources</strong>, 2019, 125:82–97.</li>
+      <li><em>An immersed boundary-lattice Boltzmann model for biofilm growth in porous media</em>. M. Benioug, F. Golfier, M. A. Buès, C. Oltean, T. Bahar, J. Cuny. <strong>Advances in Water Resources</strong>, 2017, 107:65–82.</li>
+      <li><em>An upscaled model for bio-enhanced NAPL Dissolution in porous media</em>. T. Bahar, F. Golfier, C. Oltean, M. Benioug. <strong>Transport in Porous Media</strong>, 2016, 113:653–693.</li>
+      <li><em>Modélisation numérique de la croissance microbienne en milieu poreux</em>. M. Benioug. Paris, Éditions Universitaires Européennes, 9 février 2016. ISBN 978-3841776594.</li>
+      <li><em>Two Models of Nosocomial Infection, Comparative Study</em>. E. Moulay Ely & K. Niri. <strong>Acta Biotheorica</strong>, 2018, 154:252–257.</li>
+      <li><em>Generalized linear model with functional predictors and their derivatives</em>. A. Ahmedou, J.-M. Marion, B. Pumobe. <strong>Journal of Multivariate Analysis</strong>, Vol 146, April 2016, pp 313–324.</li>
+      <li><em>Cooperative system analysis of the Ebola virus epidemic model</em>. E. Moulay Ely & K. Niri. <strong>Infectious Disease Modelling</strong>, 2018, pp 117–121.</li>
+      <li><em>Design and Study of Planar Antennas for Ultra-Wide Band Applications</em>. A. Mohameden, M. M. Haiballa, S. M. Mahmoud, S. Badra, Y. Beddiaf, A. D. Memoune, D. Memou, Y. Dialoo. <strong>Mathematical Modelling of Engineering Problems</strong>, Vol 7, June 2020, pp 237–241.</li>
+      <li><em>Text Line Segmentation and Binarization of Handwritten Historical Documents Using the Fast and Adaptive Bidimensional Empirical Mode Decomposition</em>. M. H. Mohamed Dyla, F. Morain-Nicolier. <strong>Optik</strong>, Elsevier, 2019. DOI: 10.1016/j.ijleo.2019.04.128.</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email : contact@ames-univ-nkc.mr</p>
+    <p>Adresse : Université de Nouakchott, Département de Mathématiques Appliquées</p>
+  </section>
+
+  <section class="partner-logos">
+    <h2>Partenaires</h2>
+    <div class="logos-container">
+      <img src="logo/un.jpg" alt="Université de Nouakchott">
+      <img src="logo/onispa.jpg" alt="ONISPA">
+      <img src="logo/pnba.png" alt="PNBA">
+      <img src="logo/imrop.jpg" alt="IMROP">
+      <img src="logo/ens.jpg" alt="ENS">
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 UMR-AMES | Tous droits réservés</p>
+  </footer>
+
+  <script>
+    // Navigation onglets
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelectorAll('section[id]').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(link.getAttribute('data-target')).classList.add('active');
+      });
+    });
+    // Filtre dynamique pour membres
+    document.getElementById('memberFilter').addEventListener('input', function() {
+      const filter = this.value.toLowerCase();
+      document.querySelectorAll('#membres tbody tr').forEach(row => {
+        const name = row.cells[0].textContent.toLowerCase();
+        row.style.display = name.includes(filter) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
