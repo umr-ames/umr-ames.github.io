@@ -48,9 +48,7 @@
       align-items: center;
       padding: 15px;
     }
-    .nav-item {
-      position: relative;
-    }
+    .nav-item { position: relative; }
     .nav-container a {
       color: var(--ames-dark-green);
       text-decoration: none;
@@ -98,10 +96,7 @@
       text-align: center;
       padding: 40px 20px;
     }
-    .main-logo {
-      width: 80px;
-      margin-bottom: 20px;
-    }
+    .main-logo { width: 80px; margin-bottom: 20px; }
 
     /* SECTIONS */
     section {
@@ -122,11 +117,6 @@
     section.content-section h3 {
       color: var(--blue-primary);
       margin-bottom: 10px;
-    }
-
-    /* INSTANCE content */
-    #instances #instance-content {
-      margin-top: 10px;
     }
 
     /* MEMBER TABLES */
@@ -155,7 +145,6 @@
     /* PARTENAIRES */
     .partner-logos {
       text-align: center;
-      /* Appliqué le même dégradé que header/footer */
       background: linear-gradient(135deg, var(--ames-light-blue), var(--ames-dark-green));
       color: var(--white);
       padding: 30px 20px;
@@ -191,6 +180,7 @@
   </style>
 </head>
 <body>
+
   <section class="hero">
     <img src="logo/ames.png" alt="Logo UMR-AMES" class="main-logo">
     <h1>UMR-AMES</h1>
@@ -200,6 +190,7 @@
   <nav>
     <div class="nav-container">
       <a href="#" data-target="presentation" class="active">Présentation</a>
+      <a href="#" data-target="actualites">Actualités</a>
       <div class="nav-item">
         <a href="#" data-target="instances">Instances</a>
         <ul class="dropdown-menu">
@@ -208,7 +199,13 @@
           <li data-instance="directeur">Directeur</li>
         </ul>
       </div>
-      <a href="#" data-target="membres">Membres</a>
+      <div class="nav-item">
+        <a href="#" data-target="membres">Membres</a>
+        <ul class="dropdown-menu">
+          <li data-sub="permanents">Membres permanents</li>
+          <li data-sub="associes">Membres associés</li>
+        </ul>
+      </div>
       <a href="#" data-target="equipes">Équipes</a>
       <a href="#" data-target="projets">Projets</a>
       <a href="#" data-target="publications">Publications</a>
@@ -233,7 +230,20 @@
     <p>L’unité rassemble 33 chercheurs (15 permanents, 18 associés).</p>
   </section>
 
-  <!-- Instance -->
+  <!-- Actualités -->
+  <section id="actualites" class="content-section">
+    <h2>Actualités</h2>
+    <ul>
+      <li><strong>15 mai 2025</strong> : Atelier sur la modélisation des écoulements polluants</li>
+      <li><strong>26 janvier – 6 février 2026</strong> :
+        <a href="https://cimpa.univ-nkc.mr/" target="_blank" rel="noopener">
+          École de recherche CIMPA sur la modélisation mathématique des écoulements et du transport de polluants dans les sols et les nappes souterraines
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Instances -->
   <section id="instances" class="content-section">
     <div id="instance-content"></div>
   </section>
@@ -242,7 +252,7 @@
   <section id="membres" class="content-section">
     <h2>Membres</h2>
 
-    <div class="member-table-wrapper">
+    <div id="wrapper-permanents" class="member-table-wrapper">
       <h3>Membres permanents</h3>
       <div class="table-actions">
         <input id="permanent-search-name" type="text" placeholder="Rechercher par nom">
@@ -279,7 +289,7 @@
       </table>
     </div>
 
-    <div class="member-table-wrapper">
+    <div id="wrapper-associes" class="member-table-wrapper" style="display:none;">
       <h3>Membres associés</h3>
       <div class="table-actions">
         <input id="assoc-search-name" type="text" placeholder="Rechercher par nom">
@@ -300,7 +310,7 @@
           <tr><td>Enne Benhmeida</td><td>ISGI</td><td>MA</td><td>Maths appliquées</td><td>enne_sidaty@yahoo.fr</td></tr>
           <tr><td>Moustapha Saleck</td><td>ISGI</td><td>MA</td><td>Informatique-IA</td><td>–</td></tr>
           <tr><td>Mohamed Ahmed Sidi Cheikh</td><td>CDD</td><td>Exp</td><td>Géomatique</td><td>ouldsidicheikh@gmail.com</td></tr>
-          <tr><td>Khadijetou El Heda</td><td>FSJE, UN</td><td>MA</td><td>Statistiques</td><td>khatouahmed@yahoo.fr</td></tr>
+          <tr><td>Khadijetou El Heda</td><td>FSJE, UN</td><td>MA</td><td>Statistiques</td><td>khatouahmed@yahoo.com</td></tr>
           <tr><td>Hasna Hmoyed</td><td>FSJE, UN</td><td>MA</td><td>Statistiques</td><td>hasnaahmedou@yahoo.fr</td></tr>
           <tr><td>Ahmed Mohameden</td><td>FST, UN</td><td>MA</td><td>Informatique</td><td>amed.mohameden@gmail.com</td></tr>
           <tr><td>Abdoul Samba Ndongo</td><td>ISCAE</td><td>MA</td><td>Maths appliquées</td><td>abdoul_ndongo@hotmail.com</td></tr>
@@ -314,17 +324,15 @@
           <tr><td>Lalla Boulahe Chadade</td><td>FST, UN</td><td>DCR</td><td>Maths appliquées</td><td>lalaboulahe@gmail.com</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <h3>Abréviations :</h3>
-    <ul>
-      <li><strong>MC</strong> : Maître des conférences / Maîtresse des conférences</li>
-      <li><strong>MA</strong> : Maître-assistant / Maîtresse-assistante</li>
-      <li><strong>Cher</strong> : Chercheur / Chercheuse</li>
-      <li><strong>DCR</strong> : Doctorant / Doctorante</li>
-      <li><strong>EM</strong> : Étudiant de Master / Étudiante de Master</li>
-    </ul>
-  </section>
+      <h3>Abréviations :</h3>
+      <ul>
+        <li><strong>MC</strong> : Maître des conférences / Maîtresse des conférences</li>
+        <li><strong>MA</strong> : Maître-assistant / Maîtresse-assistante</li>
+        <li><strong>Cher</strong> : Chercheur / Chercheuse</li>
+        <li><strong>DCR</strong> : Doctorant / Doctorante</li>
+        <li><strong>EM</strong> : Étudiant de Master / Étudiante de Master</li>
+      </ul>
+    </section>
 
   <!-- Équipes -->
   <section id="equipes" class="content-section">
@@ -379,60 +387,42 @@
   <!-- Publications -->
   <section id="publications" class="content-section">
     <h2>Publications</h2>
-<ol>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359-369, 2025.</li>
-      <li>A. Choumad Fall, M.H. Mohamed Dyla, M. Mohamed Saleck, N. Taleb, T. Gadi, and M. Farouk Nanne, Digitalization and Classification of Scanned ECG Using Convolutional Neural Network, Journal of Theoretical and Applied Information Technology, vol. 102 (1), 287-296, 2024.</li>
+    <ol>
+      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359–369, 2025.</li>
+      <li>A. Choumad Fall, M.H. Mohamed Dyla, M. Mohamed Saleck, N. Taleb, T. Gadi, and M. Farouk Nanne, Digitalization and Classification of Scanned ECG Using Convolutional Neural Network, Journal of Theoretical and Applied Information Technology, vol. 102 (1), 287–296, 2024.</li>
       <li>F. Habott, A. Ahmedou, Y. Mohamed, and M.A. Sambe, Analysis of COVID-19’s dynamic behavior using a modified SIR model characterized by a nonlinear function, Symmetry, vol. 16 (1448), 2024.</li>
-      <li>Y. Mohamed, A. Ahmedou, and M.S.B. Elemine Vall, Global analysis for a modified SEIR model with general non-linear incidence function, Nonlinear Dynamics, 112 (13), 11661-11678, 2024.</li>
-      <li>Adji Pratomo, Muhammad O. Jatmika, Bedine Kerim, Rahmat Budiarto, Transfer Learning Implementation on Bi-LSTM with Optimizer to Improve Non-Ferrous Metal Prices Prediction, Collabits Journal, vol. 1 (1), 40-49, 2024.</li>
-      <li>S.A. Maouloud, M.H. Mohamed Dyla, and C. Ba, Transformer-based Model for handwritten recognition Arabic words Al-Soudani Maghrebi script, Journal of Theoretical and Applied Information Technology, vol. 101 (24), 8093-8103, 2024.</li>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity of weak solutions for a (p(x), q(x))-Kirchhoff equation with Neumann boundary conditions, Journal of Applied Analysis and Computation, 14 (4), 2441-2465, 2024.</li>
-      <li>Lemrabott, Sidi Yahya et al., The chronology of overfishing in a remote West-African coastal ecosystem, Ecology and Society, Resilience Alliance, Inc., vol.29 (1), 1708-3087, 2024.</li>
+      <li>Y. Mohamed, A. Ahmedou, and M.S.B. Elemine Vall, Global analysis for a modified SEIR model with general non-linear incidence function, Nonlinear Dynamics, 112 (13), 11661–11678, 2024.</li>
+      <li>Adji Pratomo, Muhammad O. Jatmika, Bedine Kerim, Rahmat Budiarto, Transfer Learning Implementation on Bi-LSTM with Optimizer to Improve Non-Ferrous Metal Prices Prediction, Collabits Journal, vol. 1 (1), 40–49, 2024.</li>
+      <li>S.A. Maouloud, M.H. Mohamed Dyla, and C. Ba, Transformer-based Model for handwritten recognition Arabic words Al-Soudani Maghrebi script, Journal of Theoretical and Applied Information Technology, vol. 101 (24), 8093–8103, 2024.</li>
+      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity of weak solutions for a (p(x), q(x))-Kirchhoff equation with Neumann boundary conditions, Journal of Applied Analysis and Computation, 14 (4), 2441–2465, 2024.</li>
+      <li>Lemrabott, Sidi Yahya et al., The chronology of overfishing in a remote West-African coastal ecosystem, Ecology and Society, Resilience Alliance, Inc., vol. 29 (1), 1708–3087, 2024.</li>
       <li>Naim Khandakar, Delip K. Das, El-Hacen M. El-Hacen, Md. Shoeb Ali, and Theunis Piersma, Prey availability and diet composition of wintering Black-tailed Godwits in Nijhum Dweep, Bangladesh, Conference: International Wader Study Group Annual Conference 2023, Sylt, Germany, 2023.</li>
       <li>Theunis Piersma and El-Hacen M. El-Hacen, To See, Hear and Speak: How Counts of Birds in Individual Trees Help Address the Environmental Causes of the Sahel, Ardea, vol. 111 (1), Netherlands Ornithologists’ Union, 2023.</li>
       <li>Lemrabott, Sidi Yahya Cheikhna et al., Twenty years of monitoring reveal overfishing of bony fish stocks in the coastal national park Banc d’Arguin, Mauritania, Senior journal, vol. 33 (8), 833–844, 2023.</li>
-      <li>El-Hacen M. El-Hacen et al., Growth and population structure of bloody cockles Senilia senilis at Banc d’Arguin and Bijagós with different environmental conditions and harvesting regimes, Marine Ecology Progress Series, vol. 710, 71–83, 2023.</li>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Minimization of elliptic non-local functionals involving p→(·)-Laplacian, J. Elliptic Parabol. Equ., vol. 9(1), 331-354, 2023.</li>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Existence of three weak solutions for an anisotropic quasilinear elliptic problem, IJNAA, vol. 14(10), 85-93, 2023.</li>
-      <li>M. Mohamed Abdelahi, M.A. Sambe, and E. Moulay Ely, Existence results for some generalized Sigmoid Beverton-Holt models in time scales, Nonautonomous Dynamical Systems, vol. 10 (1), 2023.</li>
-      <li>A. Tajmouati, Y. Zahouan and M.B. Mohamed Ahmed, Spectral inclusions between C0-quasi-semigroups and its generators, Boletim da Sociedade Paranaense de Matemática, vol. 40, 1–7, 2022.</li>
-      <li>A. Tajmouati, Y. Zahouan and M.B. Mohamed Ahmed, Semi-Fredholm and semi-Browder spectra for C0-quasi-semigroups, Boletim da Sociedade Paranaense de Matemática, vol. 22 (2), 1-13, 2022.</li>
+      <li>El-Hacen M. El-Hacen et al., Growth and population structure of bloody cockles Senilia senilis at Banc d’Arguin et Bijagós with different environmental conditions and harvesting regimes, Marine Ecology Progress Series, vol. 710, 71–83, 2023.</li>
+      <li>A. Ahmed and M.S.B. Elemine Vall, Minimization of elliptic non-local functionals involving p→(·)-Laplacian, J. Elliptic Parabol. Equ., vol. 9 (1), 331–354, 2023.</li>
+      <li>A. Ahmed and M.S.B. Elemine Vall, Existence of three weak solutions for an anisotropic quasilinear elliptic problem, IJNAA, vol. 14 (10), 85–93, 2023.</li>
+      <li>M. Mohamed Abdelahi, M.A. Sambe, and E. Moulay Ely, Existence results for some generalized Sigmoid Beverton–Holt models in time scales, Nonautonomous Dynamical Systems, vol. 10 (1), 2023.</li>
+      <li>A. Tajmouati, Y. Zahouan and M.B. Mohamed Ahmed, Spectral inclusions between C0-quasi-semigroups and their generators, Boletim da Sociedade Paranaense de Matemática, vol. 40, 1–7, 2022.</li>
+      <li>A. Tajmouati, Y. Zahouan and M.B. Mohamed Ahmed, Semi-Fredholm and semi-Browder spectra for C0-quasi-semigroups, Boletim da Sociedade Paranaense de Matemática, vol. 22 (2), 1–13, 2022.</li>
       <li>A. Tajmouati, F. Barki and M.B. Mohamed Ahmed, Local spectral theory for α-times integrated semigroups, Rendiconti del Circolo Matematico di Palermo Ser. 2, vol. 71, 21–37, 2022.</li>
       <li>El-Hacen M. El-Hacen et al., Fossilized diatoms as indirect indicators of the origin of carbon stored in intertidal flats, Frontiers in Marine Science, vol. 9, 2022.</li>
-      <li>Zauner, Sarah et al., Microbial communities in developmental stages of lucinid bivalves, Journal ISME Communications, vol. 2 (1), 2022.</li>
-      <li>Moustapha Mohamed Saleck et al., Otsu’s Thresholding for Semi-Automatic Segmentation of Breast Lesions in Digital Mammograms, IJACSA, vol. 13 (10), 368-375, 2022.</li>
-      <li>Hassine Ali Abeidi et al., A Study for Remote Monitoring of Water Points in Mauritania Based on IoT (LoRa) Technology, IJEEI, vol. 10 (2), 398-409, 2022.</li>
-      <li>M.S.B. Elemine Vall and A. Ahmed, Perturbed nonlinear elliptic Neumann problems in anisotropic Sobolev spaces with variable exponents, Le Matematiche, vol. 77 (2), 465-486, 2022.</li>
+      <li>Zauner, Sarah et al., Microbial communities in developmental stages of lucinid bivalves, ISME Communications, vol. 2 (1), 2022.</li>
+      <li>Moustapha Mohamed Saleck et al., Otsu’s Thresholding for Semi-Automatic Segmentation of Breast Lesions in Digital Mammograms, IJACSA, vol. 13 (10), 368–375, 2022.</li>
+      <li>Hassine Ali Abeidi et al., A Study for Remote Monitoring of Water Points in Mauritania Based on IoT (LoRa) Technology, IJEEI, vol. 10 (2), 398–409, 2022.</li>
+      <li>M.S.B. Elemine Vall and A. Ahmed, Perturbed nonlinear elliptic Neumann problems in anisotropic Sobolev spaces with variable exponents, Le Matematiche, vol. 77 (2), 465–486, 2022.</li>
       <li>Kasper J. Meijer et al., Mangrove-mudflat connectivity shapes benthic communities in a tropical intertidal system, Ecological Indicators, vol. 130, 108030, 2021.</li>
       <li>Ewan Trégarot et al., Coastal protection assessment: a tradeoff between ecological, social, and economic issues, Ecosphere, vol. 12 (2), 2021.</li>
-      <li>Kurniabudi Kurniabudi et al., Important Features of CICIDS-2017 Dataset For Anomaly Detection in High Dimension and Imbalanced Class Dataset, IJEEI, vol. 9 (2), 498-511, 2021.</li>
+      <li>Kurniabudi Kurniabudi et al., Important Features of CICIDS-2017 Dataset For Anomaly Detection in High Dimension and Imbalanced Class Dataset, IJEEI, vol. 9 (2), 498–511, 2021.</li>
       <li>Bedine Kerim, Securing IoT Network against DDoS Attacks using Mult-Agent IDS, Journal of Physics: Conf. Ser., ICCAI 2020, 2021.</li>
-      <li>Nikhat Akhtar et al., A Comprehensive Overview of Privacy and Data Security for Cloud, IJSRSET, vol. 8 (5), 113-152, 2021.</li>
-      <li>A. Talha and M.S.B. Elemine Vall, Strongly nonlinear elliptic unilateral problems without sign condition and with free obstacle in Musielak-Orlicz spaces, Revista Colombiana de Matemáticas, vol. 55, 43-70, 2021.</li>
-      <li>A.C.M. N’Diaye et al., Apply sentiment analysis technology in social Media as a tool to enhance the effectiveness of eGovernment: Application on Arabic and Mauritanian dialect ‘HASSANIYA’, ICDS 2021, 1-5, 2021.</li>
-      <li>A. Tajmouati et al., On the uniform ergodic for α-times integrated semigroups, Boletim da Sociedade Paranaense de Matemática, vol. 39 (4), 9-20, 2021.</li>
-      <li>M.S.B. Elemine Vall et al., Entropy solutions for parabolic equations in Musielak framework without sign condition and with measure data, Archivum Mathematicum, vol. 56 (2), 65-106, 2020.</li>
-      <li>M.S.B. Elemine Vall et al., Infinitely many weak solutions for perturbed nonlinear elliptic Neumann problem in Musielak-Orlicz-Sobolev framework, Acta Sci. Math, vol. 86 (3-4), 601-616, 2020.</li>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Three weak solutions for a Neumann elliptic equation involving the p(x)-Laplacian operator, Nonautonomous Dynamical Systems, 7 (1), 224-236, 2020.</li>
-      <li>Bedine Kerim, Improving the Accuracy of Under-Fog Driving Assistance System, Journal of Signal and Information Processing, vol. 11, 23-33, 2020.</li>
-      <li>El-Hacen M. El-Hacen et al., Long-term changes in seagrass and benthos at Banc d’Arguin, Global Ecology and Conservation, vol. 24, e01364, 2020.</li>
-      <li>Oudman, Thomas et al., Changes in the waterbird community of the Parc National du Banc d’Arguin, Conservation International, vol. 30 (4), 618-633, 2020.</li>
-      <li>A. Tajmouati et al., The distance from the holomorphically decomposable Fredholm spectrum, Boletim da Sociedade Paranaense de Matemática, vol. 38 (4), 137–144, 2020.</li>
-      <li>A. Tajmouati et al., Spectral inclusions between α-times integrated semigroups and their generators, Boletim da Sociedade Paranaense de Matemática, vol. 38 (5), 115–130, 2020.</li>
-      <li>El-Hacen M. El-Hacen et al., Seagrass Sensitivity to Collapse Along a Hydrodynamic Gradient: Evidence from a Pristine Subtropical Intertidal Ecosystem, Ecosystems, vol. 22 (5), 1007–1023, 2019.</li>
-      <li>M.H. Mohamed Dyla and F. Morain-Nicolier, Text Line Segmentation and binarization of Handwritten Historical Documents using bidimensional empirical mode decomposition, Optik, vol. 188, 52-63, 2019.</li>
-      <li>Sharipuddin Sharipuddin et al., Enhanced Deep Learning Intrusion Detection in IoT Heterogeneous Network with Feature Extraction, IJEEI, vol. 9 (3), 747-755, 2019.</li>
-      <li>M.M. El Benany et al., Big Data Interoperability for eGovernance, Journal of Computer Science, vol. 15 (10), 1430-1438, 2019.</li>
-      <li>O. Barakat et al., Toward A Business Intelligence Model for challenges of interoperability in eGov system: Transparency, Scalability and Genericity, WITS2019, 1-6, 2019.</li>
-      <li>O. Barakat et al., Cloud Based Architecture for Interoperability of Data E-Government Services, ICDS2019, 1-6, 2019.</li>
-      <li>O. Barakat et al., Business Intelligence and EDA Based Architecture for Interoperability of E-Government Data Services, ISC2, 1-6, 2019.</li>
-      <li>A. Talha et al., Semi-Fredholm and semi-Browder spectrums for α-times integrated semigroups, Boletín de la Sociedad Matemática Mexicana, vol. 26 (2), 673–685, 2019.</li>
-      <li>A. Talha et al., New extensions of Cline's formula for the generalized Drazin-Riesz inverses, Revista de la Unión Matemática Argentina, vol. 60 (2), 567–572, 2019.</li>
+      <li>Nikhat Akhtar et al., A Comprehensive Overview of Privacy and Data Security for Cloud, IJSRSET, vol. 8 (5), 113–152, 2021.</li>
+      <li>A. Talha et al., Strongly nonlinear elliptic unilateral problems without sign condition and with free obstacle in Musielak–Orlicz spaces, Revista Colombiana de Matemáticas, vol. 55, 43–70, 2021.</li>
+      <li>A. Talha et al., New extensions of Cline’s formula for the generalized Drazin–Riesz inverses, Revista de la Unión Matemática Argentina, vol. 60 (2), 567–572, 2021.</li>
       <li>A. Talha et al., Some new properties on λ-commuting operators, Italian Journal of Pure and Applied Mathematics, vol. 41, 149–157, 2019.</li>
-      <li>A. Talha, A. Benkirane and M.S.B. Elemine Vall, Existence of Renormalized Solutions for Some Strongly Parabolic Problems in Musielak-Orlicz-Sobolev Spaces, Nonlinear Dynamics and Systems Theory, 19 (1), 97-110, 2019.</li>
-      <li>A. Talha and M.S.B. Elemine Vall, Entropy solutions for strongly nonlinear parabolic problems with lower order terms in Musielak-Orlicz spaces, Acta Math. Univ. Comenianae, vol. 2, 201–228, 2019.</li>
-      <li>M.S.B. Elemine Vall and A. Ahmed, Multiplicity of solutions for a class of Neumann elliptic systems in anisotropic Sobolev spaces with variable exponent, Adv. Oper. Theory, vol. 4 (2), 497-513, 2019.</li>
-      <li>M.Benioug et al., Interaction between biofilm growth and NAPL remediation: A pore-scale study, Advances in Water Resources, vol. 125, 82-97, 2019.</li>
+      <li>A. Talha, A. Benkirane and M.S.B. Mohamed Ahmed, Existence of Renormalized Solutions for Some Strongly Parabolic Problems in Musielak–Orlicz–Sobolev Spaces, Nonlinear Dynamics and Systems Theory, 19 (1), 97–110, 2019.</li>
+      <li>A. Talha and M.S.B. Mohamed Ahmed, Entropy solutions for strongly nonlinear parabolic problems with lower order terms in Musielak–Orlicz spaces, Acta Math. Univ. Comenianae, vol. 2, 201–228, 2019.</li>
+      <li>M.S.B. Mohamed Ahmed and A. Ahmed, Multiplicity of solutions for a class of Neumann elliptic systems in anisotropic Sobolev spaces with variable exponent, Adv. Oper. Theory, vol. 4 (2), 497–513, 2019.</li>
+      <li>M. Benioug et al., Interaction between biofilm growth and NAPL remediation: A pore-scale study, Advances in Water Resources, vol. 125, 82–97, 2019.</li>
     </ol>
   </section>
 
@@ -482,59 +472,84 @@
           </ul>`,
         directeur: `
           <h3>Directeur</h3>
-          <p>Dr Marbe Begnoug</p>`  
+          <p>Dr Marbe Begnoug</p>`
       };
 
-      document.querySelectorAll('.dropdown-menu li').forEach(item => {
-        item.addEventListener('click', function(){
+      // Instances dropdown
+      document.querySelectorAll('.dropdown-menu li[data-instance]').forEach(item => {
+        item.addEventListener('click', function(e){
+          e.preventDefault();
           const key = this.getAttribute('data-instance');
-          document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
-          document.getElementById('instances').style.display = 'block';
-          document.getElementById('instance-content').innerHTML = instanceData[key];
+          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
+          document.getElementById('instances').style.display='block';
+          document.getElementById('instance-content').innerHTML=instanceData[key];
+          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
+          document.querySelector('a[data-target="instances"]').classList.add('active');
         });
       });
 
-      function sortTable(id) {
-        const tbody = document.getElementById(id).querySelector('tbody');
-        Array.from(tbody.rows)
-          .sort((a,b)=> a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim(),'fr'))
-          .forEach(r=> tbody.appendChild(r));
-      }
-      sortTable('permanent-table');
-      sortTable('assoc-table');
-
-      const links = document.querySelectorAll('.nav-container a');
-      const sections = document.querySelectorAll('.content-section');
-      links.forEach(link => {
+      // Navigation links
+      document.querySelectorAll('.nav-container a[data-target]').forEach(link => {
         link.addEventListener('click', function(e){
           e.preventDefault();
           const tgt = this.getAttribute('data-target');
-          sections.forEach(s => s.style.display = 'none');
-          links.forEach(l => l.classList.remove('active'));
-          document.getElementById(tgt).style.display = 'block';
+          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
+          if(tgt==='membres'){
+            document.getElementById('membres').style.display='block';
+            document.getElementById('wrapper-permanents').style.display='block';
+            document.getElementById('wrapper-associes').style.display='block';
+          } else {
+            document.getElementById(tgt).style.display='block';
+          }
+          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
           this.classList.add('active');
         });
       });
 
-      function setupFilter(nId, iId, tId){
-        const ni = document.getElementById(nId);
-        const ii = document.getElementById(iId);
-        const tb = document.getElementById(tId).querySelector('tbody');
-        function f(){
-          const nv = ni.value.toLowerCase();
-          const iv = ii.value.toLowerCase();
+      // Membres submenu
+      document.querySelectorAll('.dropdown-menu li[data-sub]').forEach(item => {
+        item.addEventListener('click', function(e){
+          e.preventDefault();
+          const sub = this.getAttribute('data-sub');
+          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
+          document.getElementById('membres').style.display='block';
+          document.getElementById('wrapper-permanents').style.display = sub==='permanents' ? 'block':'none';
+          document.getElementById('wrapper-associes').style.display   = sub==='associes'   ? 'block':'none';
+          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
+          document.querySelector('a[data-target="membres"]').classList.add('active');
+        });
+      });
+
+      // Sort tables
+      function sortTable(id){
+        const tbody = document.getElementById(id).querySelector('tbody');
+        Array.from(tbody.rows)
+          .sort((a,b)=>a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim(),'fr'))
+          .forEach(r=>tbody.appendChild(r));
+      }
+      sortTable('permanent-table');
+      sortTable('assoc-table');
+
+      // Filters
+      function setupFilter(nameId, instId, tableId){
+        const nameInput = document.getElementById(nameId),
+              instInput = document.getElementById(instId),
+              tb = document.getElementById(tableId).querySelector('tbody');
+        function filter(){
+          const nv = nameInput.value.toLowerCase(), iv = instInput.value.toLowerCase();
           Array.from(tb.rows).forEach(r=>{
-            const nm = r.cells[0].textContent.toLowerCase();
-            const inst = r.cells[1].textContent.toLowerCase();
-            r.style.display = (nm.includes(nv) && inst.includes(iv)) ? '' : 'none';
+            const nm = r.cells[0].textContent.toLowerCase(),
+                  ins= r.cells[1].textContent.toLowerCase();
+            r.style.display = (nm.includes(nv)&&ins.includes(iv))?'':'none';
           });
         }
-        ni.addEventListener('input', f);
-        ii.addEventListener('input', f);
+        nameInput.addEventListener('input', filter);
+        instInput.addEventListener('input', filter);
       }
       setupFilter('permanent-search-name','permanent-search-institution','permanent-table');
       setupFilter('assoc-search-name','assoc-search-institution','assoc-table');
     });
   </script>
+
 </body>
 </html>
