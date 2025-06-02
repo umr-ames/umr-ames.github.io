@@ -110,14 +110,8 @@
     }
     .content-section { display: none; }
     #presentation.content-section { display: block; }
-    section.content-section h2 {
-      color: var(--green-primary);
-      margin-bottom: 15px;
-    }
-    section.content-section h3 {
-      color: var(--blue-primary);
-      margin-bottom: 10px;
-    }
+    section.content-section h2 { color: var(--green-primary); margin-bottom: 15px; }
+    section.content-section h3 { color: var(--blue-primary); margin-bottom: 10px; }
 
     /* MEMBER TABLES */
     .member-table-wrapper { margin-top: 20px; }
@@ -159,10 +153,7 @@
       gap: 20px;
       margin-top: 20px;
     }
-    .logos-container img {
-      height: 60px;
-      filter: none;
-    }
+    .logos-container img { height: 60px; filter: none; }
 
     /* FOOTER */
     footer {
@@ -191,6 +182,7 @@
     <div class="nav-container">
       <a href="#" data-target="presentation" class="active">Présentation</a>
       <a href="#" data-target="actualites">Actualités</a>
+
       <div class="nav-item">
         <a href="#" data-target="instances">Instances</a>
         <ul class="dropdown-menu">
@@ -199,6 +191,7 @@
           <li data-instance="directeur">Direction</li>
         </ul>
       </div>
+
       <div class="nav-item">
         <a href="#" data-target="membres">Membres</a>
         <ul class="dropdown-menu">
@@ -206,7 +199,17 @@
           <li data-sub="associes">Membres associés</li>
         </ul>
       </div>
-      <a href="#" data-target="equipes">Équipes</a>
+
+      <div class="nav-item">
+        <a href="#" data-target="equipes">Équipes</a>
+        <ul class="dropdown-menu">
+          <li data-team="mod_env">Modélisation Mathématique de l’Environnement</li>
+          <li data-team="geom_ia">Géomatique et IA appliquées à l’Environnement</li>
+          <li data-team="mod_epi">Modélisation Épidémiologique</li>
+          <li data-team="epi_spatial">Épidémiologie Spatiale et Science des Données</li>
+        </ul>
+      </div>
+
       <a href="#" data-target="projets">Projets</a>
       <a href="#" data-target="publications">Publications</a>
       <a href="#" data-target="contact">Contact</a>
@@ -236,9 +239,7 @@
     <ul>
       <li><strong>15 mai 2025</strong> : Atelier sur la modélisation des écoulements polluants</li>
       <li><strong>26 janvier – 6 février 2026</strong> :
-        <a href="https://cimpa.univ-nkc.mr/" target="_blank" rel="noopener">
-          École de recherche CIMPA</a> sur la modélisation mathématique des écoulements et du transport de polluants dans les sols et les nappes souterraines
-        
+        <a href="https://cimpa.univ-nkc.mr/" target="_blank" rel="noopener">École de recherche CIMPA</a> sur la modélisation mathématique des écoulements et du transport de polluants dans les sols et les nappes souterraines
       </li>
     </ul>
   </section>
@@ -319,7 +320,6 @@
           <tr><td>Ahmed Jidou Mohamed Lemine El Bechir</td><td>FST, UN</td><td>EM</td><td>Maths appliquées</td><td>ajidou35@gmail.com</td></tr>
           <tr><td>Abdallahi Ahmedou Mohamed Lemine</td><td>FST, UN</td><td>EM</td><td>Maths appliquées</td><td>daddahabdallahi@gmail.com</td></tr>
           <tr><td>Mohamed Lemine Mohamed</td><td>FST, UN</td><td>EM</td><td>Maths appliquées</td><td>medlemineb6@gmail.com</td></tr>
-          <tr><td>Ahmed Begnoug</td><td>FST, UN</td><td>EM</td><td>Maths appliquées</td><td>–</td></tr>
           <tr><td>Zeineb Mohamed Mahmoud</td><td>FST, UN</td><td>DCR</td><td>Informatique</td><td>zeynebouelmehdi@gmail.com</td></tr>
           <tr><td>Lalla Boulahe Chadade</td><td>FST, UN</td><td>DCR</td><td>Maths appliquées</td><td>lalaboulahe@gmail.com</td></tr>
         </tbody>
@@ -336,43 +336,10 @@
 
   <!-- Équipes -->
   <section id="equipes" class="content-section">
-    <h2>Équipes</h2>
-    <h3>Équipe 1 : Modélisation Environnementale & Hydrodynamique (MEH)</h3>
-    <p><strong>Responsable :</strong> Dr Mohamed Ahmed Sambe</p>
-    <ul>
-      <li>Mathématiciens appliqués (EDP, dynamiques fluides)</li>
-      <li>Hydrologues (écoulements souterrains, modélisation côtière)</li>
-    </ul>
-    <p><strong>Missions :</strong></p>
-    <ul>
-      <li>Transport des polluants : modélisation réactive en milieux poreux et systèmes côtiers</li>
-      <li>Prévision hydrologique : inondations, recharge des nappes, impact climatique</li>
-      <li>Validation terrain : collaboration avec écologues pour ajuster paramètres modèles</li>
-      <li>Études de scénarios : simulation d’événements extrêmes et évaluation des mesures de gestion</li>
-    </ul>
-    <h3>Équipe 2 : Santé Publique & Épidémiologie Environnementale (SPEE)</h3>
-    <p><strong>Responsable :</strong> Dr Jyda Moustapha</p>
-    <ul>
-      <li>Médecins (infectiologues, maladies chroniques)</li>
-      <li>Épidémiologistes (risques, dynamiques d’épidémies)</li>
-      <li>Santé publique (programmes d’intervention, politiques de santé)</li>
-    </ul>
-    <p><strong>Missions :</strong></p>
-    <ul>
-      <li>Diagnostic sanitaire et modélisation épidémiologique</li>
-      <li>Recommandations et stratégies de prévention</li>
-    </ul>
-    <h3>Équipe 3 : Informatique & Intelligence Artificielle (IIA)</h3>
-    <p><strong>Responsable :</strong> Dr Bedin Mohamed Lemine Kerim</p>
-    <ul>
-      <li>Ingénieurs logiciels (Big Data, capteurs)</li>
-      <li>Chercheurs IA/ML (détection d’anomalies, deep learning)</li>
-    </ul>
-    <p><strong>Missions :</strong></p>
-    <ul>
-      <li>Surveillance temps réel et alertes</li>
-      <li>Tableaux de bord décisionnels</li>
-    </ul>
+    <div id="wrapper-equipes-summary">
+      <p>L’unité de recherche AMES est organisée en quatre équipes complémentaires, adaptées aux enjeux scientifiques et géographiques de la Mauritanie. Deux équipes sont dédiées à l’Environnement, regroupant des chercheurs en mathématiques, modélisation numérique, informatique, IA et SIG pour étudier les défis environnementaux du pays (sécheresse, érosion, pollution, etc.). Deux équipes sont axées sur la Santé, combinant des compétences en modélisation épidémiologique, statistiques, IA et SIG pour étudier les maladies transmissibles et non transmissibles d’importance nationale.</p>
+    </div>
+    <div id="team-content" style="display:none;"></div>
   </section>
 
   <!-- Projets -->
@@ -388,7 +355,7 @@
   <section id="publications" class="content-section">
     <h2>Publications</h2>
     <ol>
-      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359–369, 2025.</li>
+            <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359–369, 2025.</li>
       <li>A. Choumad Fall, M.H. Mohamed Dyla, M. Mohamed Saleck, N. Taleb, T. Gadi, and M. Farouk Nanne, Digitalization and Classification of Scanned ECG Using Convolutional Neural Network, Journal of Theoretical and Applied Information Technology, vol. 102 (1), 287–296, 2024.</li>
       <li>F. Habott, A. Ahmedou, Y. Mohamed, and M.A. Sambe, Analysis of COVID-19’s dynamic behavior using a modified SIR model characterized by a nonlinear function, Symmetry, vol. 16 (1448), 2024.</li>
       <li>Y. Mohamed, A. Ahmedou, and M.S.B. Elemine Vall, Global analysis for a modified SEIR model with general non-linear incidence function, Nonlinear Dynamics, 112 (13), 11661–11678, 2024.</li>
@@ -452,29 +419,279 @@
   <script>
     document.addEventListener('DOMContentLoaded', function(){
       const instanceData = {
-        copil: `
-          <h3>Comité de pilotage (CoPil)</h3>
-          <ul>
-            <li>Dr Ahmed, ISGI</li>
-            <li>Dr Mahoumiud, UN</li>
-            <li>Dr Ismail, IMROP</li>
-            <li>Dr Ali, ONISPA</li>
-            <li>Dr Bob, ENS</li>
-          </ul>`,
-        conseil: `
-          <h3>Conseil scientifique</h3>
-          <ul>
-            <li>Dr Ahmed, ISGI</li>
-            <li>Dr Mahoumiud, UN</li>
-            <li>Dr Ismail, IMROP</li>
-            <li>Dr Ali, ONISPA</li>
-            <li>Dr Bob, ENS</li>
-          </ul>`,
-        directeur: `
-          <h3>Directeur</h3>
-          <p>Dr Marbe Begnoug</p>
+        copil: `<h3>Comité de pilotage (CoPil)</h3>
+               <ul>
+                 <li>Dr Ahmed, ISGI</li>
+                 <li>Dr Mahoumiud, UN</li>
+                 <li>Dr Ismail, IMROP</li>
+                 <li>Dr Ali, ONISPA</li>
+                 <li>Dr Bob, ENS</li>
+               </ul>`,
+        conseil: `<h3>Conseil scientifique</h3>
+                  <ul>
+                    <li>Dr. Marbe Begnoug, ISGI</li>
+                    <li>Dr. Mohamed Saad Bouh Elemine Vall, ISGI</li>
+                    <li>Dr. Zeinebou Zoubeir, ISGI</li>
+                    <li>Dr. Mohamed Yahya Jiddou, FSJE, UN</li>
+                    <li>Dr. Jyda Moustapha, FSJE, UN</li>
+                  </ul>`,
+        directeur: 
+        `<h3>Directeur</h3>
+          <p>Dr. Marbe Begnoug</p>
           <h3>Directeur Adjoint</h3>
-          <p>Dr Mohamed Ahmed Sambe</p>`
+          <p>Dr. Mohamed Ahmed Sambe</p>`
+      };
+      const teamData = {
+        mod_env: `<h3>Équipe Modélisation Mathématique de l’Environnement</h3>
+        <p><strong>Responsable :</strong> Dr. Mohamed Saad Bouh Elemine Vall</p>
+        <p><strong>Responsable Adjoint :</strong> Dr. Dia Mamadou </p>
+        <p>
+          Cette équipe réunit des mathématiciens, numériciens et experts en environnement et écologie afin de modéliser les phénomènes environnementaux en Mauritanie. 
+          Elle s’intéresse aux problèmes tels que la contamination des sols et des eaux, la prolifération d’algues nuisibles, l’érosion côtière, 
+          la sécheresse, les mouvements de dunes de sable et l’humidité des sols. La Mauritanie fait face à un régime pluviométrique fluctuant 
+          et déficitaire, entraînant une sécheresse chronique, la désertification et une érosion éolienne/hydrique accrues sur les trois quarts 
+          du territoire. La perte du couvert végétal engendre notamment des mouvements de dunes de sable dans les zones sahéliennes et sahariennes. 
+          Parallèlement, les zones côtières subissent l’érosion du littoral sous l’effet de la hausse du niveau marin et des tempêtes, tandis que 
+          le réchauffement de l’océan modifie les écosystèmes marins et peut favoriser des proliférations d’algues toxiques. Les activités humaines 
+          (ex. exploration pétrolière) posent également des risques de pollution des eaux et des sols par des déversements de contaminants. 
+          L’équipe développe des modèles mathématiques et statistiques pour comprendre, simuler et prédire ces dynamiques environnementales, 
+          afin d’aider à la gestion durable des ressources naturelles et à la prévention des catastrophes écologiques.
+          </p>
+
+        
+                <h4>Compétences cœur :</h4>
+        <ul>
+          <li>Doctorant·es ou chercheur·es en mathématiques appliquées (PDE, EDO, modélisation de phénomènes physiques)</li>
+          <li>Expert·es en méthodes numériques (différences finies, éléments finis, volumes finis, LBM)</li>
+        </ul>
+
+        <h4>Thèmes prioritaires :</h4>
+        <ol style="margin: 0 0 15px 0; padding: 0 0 0 20px;">
+          <li>
+            <strong>Contamination sols &amp; eaux</strong>
+            <ul>
+              <li>Modélisation (équations aux dérivées partielles) du transport de polluants dans le fleuve Sénégal (eaux de surface et souterraines).</li>
+              <li>Calibration des modèles sur données in situ (concentrations en métaux lourds, pesticides).</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Impacts écologiques côtiers</strong>
+            <ul>
+              <li>Couplage hydrodynamique–écologie pour prévoir la prolifération d’algues nuisibles (HAB).</li>
+              <li>Simulation numérique de l’érosion côtière à Nouakchott &amp; Nouadhibou (houle, marées, sédimentation).</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Sécheresse &amp; humidité du sol</strong>
+            <ul>
+              <li>Modélisation de l’infiltration, de l’évapotranspiration et du bilan hydrique du sol dans un contexte sahélien.</li>
+              <li>Étude de la dynamique spatio-temporelle de l’humidité à l’aide de PDE et tests de stabilité numérique.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Mouvements de dunes de sable</strong>
+            <ul>
+              <li>Formulation mathématique du transport éolien de sédiments et morphodynamique des dunes.</li>
+              <li>Validation des modèles sur cas terrain (Mauritanie) : corréler intensité du vent et évolution des dunes.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h4>Terrains & jeux de données :</h4>
+        <ul>
+          <li>
+            <strong>Fleuve Sénégal (rive droite) :</strong> relevés historiques de qualité de l’eau (ANAM, hydrologues locaux), données piézométriques.
+          </li>
+          <li>
+            <strong>Côtes atlantiques (Nouakchott & Nouadhibou) :</strong> profils bathymétriques, relevés in situ (salinité, turbidité), relevés de houle et de niveau marin.
+          </li>
+          <li>
+            <strong>Région Banc d’Arguin & Cap Blanc :</strong> inventaires de la végétation côtière, campagnes de mesure météo (ANAM).
+          </li>
+          <li>
+            <strong>Séries climatiques :</strong> pluviométrie journalière (ANAM), produits SMOS/SMAP pour humidité du sol, indices SPI/SPEI.
+          </li>
+        </ul>
+      `,
+
+        geom_ia: `<h3>Équipe Géomatique et IA appliquées à l’Environnement</h3>
+                <p><strong>Responsable :</strong> Dr. Zeinebou Zoubeir </p>
+        <p><strong>Responsable Adjoint :</strong> Dr. El Hacen Mohamed El Hacen </p>
+                  <p>
+                    Cette équipe regroupe des informaticiens, spécialistes en intelligence artificielle et en SIG, pour l’étude et la surveillance des écosystèmes mauritaniens. Elle aborde les mêmes thématiques environnementales (pollution des sols/eaux, algues nuisibles, érosion côtière, sécheresse, mobilité des dunes, humidité des sols), en mettant l’accent sur la cartographie, l’analyse de données spatiales et les outils numériques intelligents. Dans un pays aux vastes étendues peu peuplées, les technologies SIG et l’imagerie satellite permettent de suivre l’état de l’environnement sur le terrain (qualité des eaux, déplacement des dunes, zones de sécheresse, etc.), tandis que l’IA aide à détecter des schémas complexes (par ex. prédire les zones à risque de prolifération d’algues ou d’érosion accélérée). L’approche géomatique est cruciale pour gérer les ressources naturelles et anticiper les crises environnementales dans des régions parfois isolées du territoire mauritanien.
+                    </p>
+
+
+                    
+                <h4>Compétences cœur :</h4>
+        <ul>
+          <li>Informaticien·nes, doctorant·es ou chercheur·es en  en apprentissage automatique (machine learning, deep learning)</li>
+          <li>Expert·es SIG (PostGIS, QGIS/ArcGIS, analyses spatiales avancées)</li>
+          <li>Statisticiens / biostatisticien·nes (analyse multivariée, modèles probabilistes, inférence bayésienne)</li>
+        </ul>
+
+        <h4>Thèmes prioritaires :</h4>
+        <ol style="margin: 0 0 15px 0; padding: 0 0 0 20px;">
+          <li>
+            <strong>Télédétection  &amp; détection HAB</strong>
+            <ul>
+              <li>Développement de modèles supervisés / non supervisés (CNN, Random Forest, SVM) pour détecter la prolifération d’algues à partir d’images Sentinel-2, Landsat, etc..</li>
+              <li>Validation statistique (ROC, courbe PR, validation croisée) pour quantifier la fiabilité des détections..</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Suivi de l’érosion côtière &amp; dunes </strong>
+            <ul>
+              <li>Traitement multi-temporel d’images SAR et optiques (Sentinel-1/2) pour estimer la recule du trait de côte via segmentation (Canny, Watershed) et classification supervisée.</li>
+              <li>Modèles statistiques spatiaux (krigeage, régression géographiquement pondérée) pour corréler vitesse du vent / hauteur de houle avec érosion.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Cartographie sécheresse &amp; humidité du sol</strong>
+            <ul>
+              <li>Assemblage de couches satellitaires (SMOS/SMAP, indices NDVI/NDSI) et données in situ (pluies, station météo).</li>
+              <li>Construction de cartes dynamiques dans un SIG (GeoServer + Leaflet ou QGIS Server) pour visualiser en temps réel la progression de la sécheresse.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Base de données géoréférencées &amp automatisation</strong>
+            <ul>
+              <li>Conception et maintenance d’un entrepôt PostgreSQL + PostGIS regroupant toutes les couches raster/vectorielles (satellite, in situ).</li>
+              <li>Pipelines Python automatisés (GDAL, rasterio, scikit-learn, statsmodels) pour ingérer, nettoyer, prétraiter et mettre à jour quotidiennement.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h4>Terrains & jeux de données :</h4>
+        <ul>
+          <li>
+            <strong>Imagerie satellite :</strong> Sentinel-1/2/3, Landsat 8/9, SMOS/SMAP.
+          </li>
+          <li>
+            <strong>Données in situ :</strong> stations hydrologiques fleuve Sénégal, capteurs météo ANAM.
+          </li>
+          <li>
+            <strong>Cartes topographiques & MNT (Modèle Numérique de Terrain) :</strong>  BD ORTHO Mauritanie, MNT SRTM pour analyses spatiales.
+          </li>
+          <li>
+            <strong>Séries climatiques :</strong> pluviométrie journalière (ANAM), produits SMOS/SMAP pour humidité du sol, indices SPI/SPEI.
+          </li>
+        </ul>
+      `,
+
+
+
+        mod_epi: `<h3>Équipe Modélisation Épidémiologique</h3>
+                        <p><strong>Responsable :</strong> Dr. Mohamed Yahya Jiddou </p>
+        <p><strong>Responsable Adjointe :</strong> Dr. Aziza Ahmedou </p>
+                  <p>
+                    Cette équipe, composée de mathématiciens et de modélisateurs, est dédiée à la modélisation épidémiologique des maladies en Mauritanie. Elle élabore des modèles mathématiques pour comprendre la dynamique des maladies transmissibles (infectieuses) et non transmissibles (chroniques) d’intérêt national. En Mauritanie, les maladies infectieuses demeurent la principale cause de mortalité et de morbidité. On y rencontre fréquemment des infections respiratoires aiguës, le paludisme et les maladies diarrhéiques, ainsi que des endémies/épidémies comme la tuberculose et le VIH/SIDA. Parallèlement, les maladies non transmissibles – notamment les affections cardiovasculaires, les pneumopathies chroniques, le diabète et les cancers – sont en forte progression et constituent un fardeau de plus en plus lourd pour la santé publique. Face à ce double défi sanitaire, l’équipe conçoit des modèles mathématiques pour simuler la propagation des maladies infectieuses (par ex. modèles de transmission du paludisme, de la tuberculose ou de la COVID-19) et pour analyser l’évolution des maladies chroniques (par ex. modèles prédictifs du diabète ou des maladies cardiovasculaires dans la population). Ces modèles aident à anticiper les tendances épidémiologiques, à évaluer l’impact des interventions (vaccination, campagnes de prévention) et à orienter les décideurs vers des stratégies efficaces de contrôle des maladies.
+                  </p>
+
+                        
+                <h4>Compétences cœur :</h4>
+        <ul>
+          <li>Chercheur·es en mathématiques appliquées (modèles compartimentaux, réseaux complexes)</li>
+          <li>Expert·es en méthodes numériques pour EDO/EDP (simulateurs stochastiques, résolution numérique)</li>
+        </ul>
+
+        <h4>Thèmes prioritaires :</h4>
+        <ol style="margin: 0 0 15px 0; padding: 0 0 0 20px;">
+          <li>
+            <strong>Modélisation maladies transmissibles (zoonoses)</strong>
+            <ul>
+              <li>Équations SIR/SEIR adaptées aux vecteurs (paludisme, leishmaniose) avec couplage climatique.</li>
+              <li>Simulation stochastique (méthode Monte Carlo) de la propagation spatiale via réseaux de mobilité (flux inter-wilayas).</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Étude des maladies non transmissibles (MNT) </strong>
+            <ul>
+              <li>Modèles épidémiologiques pour la prévalence du diabète, hypertension, maladies cardiovasculaires en population urbaine/rurale.</li>
+              <li>Résolution numérique d’EDO couplées pour suivre la dynamique des facteurs de risque (obésité, alimentation).</li>
+            </ul>
+          </li>
+          <li>
+        </ol>
+
+        <h4>Terrains & jeux de données :</h4>
+        <ul>
+          <li>
+            <strong>Données officielles santé :</strong> bases de cas (Direction Nationale de la Santé, hôpitaux de Nouakchott, centres de santé régionaux) .
+          </li>
+          <li>
+            <strong>Enquêtes démographiques & santé  :</strong>  indicateurs de mortalité, prévalence maladies, données socio-démographiques.
+          </li>
+        </ul>
+      `,
+                  
+
+
+        epi_spatial: `<h3>Équipe Épidémiologie Spatiale et Science des Données</h3>
+                                <p><strong>Responsable :</strong> Dr. Jyda Moustapha </p>
+        <p><strong>Responsable Adjointe :</strong> Dr. Marième Denna </p>
+                  <p>
+                    Cette équipe est un groupe de recherche pluridisciplinaire réunissant des statisticiens, data scientists, experts en intelligence artificielle et épidémiologistes. Ensemble, ils s’attaquent aux grands défis sanitaires de la Mauritanie en combinant la rigueur des modèles statistiques à la puissance des algorithmes d’IA pour comprendre, anticiper et freiner la propagation des maladies.
+                  </p>
+
+                          <h4>Compétences cœur :</h4>
+        <ul>
+    <li><strong>Modélisation statistique</strong> : maîtrise des modèles de régression (linéaire, logistique, Cox), des modèles de séries temporelles (ARIMA, modèles à effets mixtes) et des techniques bayésiennes pour estimer prévalence, incidence et facteurs de risque.</li>
+    <li><strong>Statistiques spatiales et géostatistiques</strong> : utilisation d’outils de cartographie des risques (krigeage, interpolation spatiale, analyse de clusters) pour identifier les zones à forte prévalence.</li>
+    <li><strong>Analyse de survie</strong> : modélisation du temps jusqu’à l’apparition d’un événement (décès, complication) et comparaison des sous-populations (traitements, régions).</li>
+    <li><strong>Techniques d’échantillonnage et enquêtes de terrain</strong> : conception d’enquêtes par grappes, estimation des tailles d’échantillon, pondération pour enquêtes démographiques et de santé (EDSM).</li>
+    <li><strong>Gestion et nettoyage de données</strong> : traitement des bases médicales brutes (dossiers hospitaliers, registres), imputation des valeurs manquantes, détection et correction des valeurs aberrantes.</li>
+    <li><strong>Programmation et outils informatiques</strong> : maîtrise de <em>R</em> et <em>Python</em> (pandas, scikit-learn), ainsi que de logiciels statistiques (STATA, SAS) et de <em>QGIS</em> pour la cartographie spatiale.</li>
+    <li><strong>Intelligence artificielle appliquée :</strong> :  développement de modèles d’apprentissage supervisé (régression, arbres de décision, forêts aléatoires) et non supervisé (clustering, réduction de dimension) pour l’identification de profils à risque et la détection d’anomalies.</li>
+  </ul>
+
+
+          <h4>Thèmes prioritaires :</h4>
+        <ol style="margin: 0 0 15px 0; padding: 0 0 0 20px;">
+          <li>
+            <strong> Surveillance et évaluation du paludisme</strong>
+        <ul>
+    <li>Cartographie de la transmission saisonnière selon les régions sahéliennes et sahariennes.</li>
+    <li>Identification des facteurs environnementaux (pluviométrie, humidité des sols, mouvements de dunes) corrélés aux pics épidémiques.</li>
+    <li>Évaluation de l’impact des campagnes de distribution de moustiquaires imprégnées et des stratégies de pulvérisation intradomiciliaire.</li>
+  </ul>
+          </li>
+          <li>
+            <strong>Infections respiratoires aiguës (IRA) </strong>
+  <ul>
+    <li>Analyse des données de notification des cas de tuberculose selon provinces et groupes d’âge.</li>
+    <li>Étude des déterminants socio-économiques et spatiaux des IRA (pollution atmosphérique, conditions d’habitat).</li>
+    <li>Utiliser l’IA pour classer les images radiographiques de poumon et déceler précocement des signes de tuberculose.</li>
+  </ul>
+          </li>
+          <li>
+
+              <strong>Maladies non transmissibles (MNT) – diabète et hypertension </strong>
+  <ul>
+    <li>Estimation de la prévalence du diabète de type 2 et de l’hypertension artérielle en zones urbaines (Nouakchott, Nouadhibou) versus zones rurales (zones sahéliennes).</li>
+    <li>Identifier et modéliser les facteurs de risque modifiables (alimentation, sédentarité, tabagisme, obésité) à l’aide de régressions multivariées et de modèles de machine learning (régression logistique, forêts aléatoires).</li>
+    <li>Modélisation de la charge économique de ces MNT pour le système de santé mauritanien.</li>
+  </ul>
+          </li>
+          <li>
+
+
+              <strong>Maladies infectieuses émergentes et zoonoses </strong>
+  <ul>
+    <li>Surveiller les fièvres hémorragiques virales potentielles (fièvre de la vallée du Rift, fièvre de Lassa) dans une approche « One Health » (intégrant santé humaine, animale et environnementale)..</li>
+  </ul>        
+        </ol>
+       <h4>Terrains & jeux de données :</h4>
+        <ul>
+          <li>
+            <strong>Données officielles santé :</strong> bases de cas (Direction Nationale de la Santé, hôpitaux de Nouakchott, centres de santé régionaux) .
+          </li>
+          <li>
+            <strong>Enquêtes démographiques & santé  :</strong>  indicateurs de mortalité, prévalence maladies, données socio-démographiques.
+          </li>
+        </ul>
+      `,
+
       };
 
       // Instances dropdown
@@ -482,29 +699,11 @@
         item.addEventListener('click', function(e){
           e.preventDefault();
           const key = this.getAttribute('data-instance');
-          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
+          document.querySelectorAll('.content-section').forEach(sec => sec.style.display='none');
           document.getElementById('instances').style.display='block';
-          document.getElementById('instance-content').innerHTML=instanceData[key];
-          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
+          document.getElementById('instance-content').innerHTML = instanceData[key];
+          document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
           document.querySelector('a[data-target="instances"]').classList.add('active');
-        });
-      });
-
-      // Navigation links
-      document.querySelectorAll('.nav-container a[data-target]').forEach(link => {
-        link.addEventListener('click', function(e){
-          e.preventDefault();
-          const tgt = this.getAttribute('data-target');
-          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
-          if(tgt==='membres'){
-            document.getElementById('membres').style.display='block';
-            document.getElementById('wrapper-permanents').style.display='block';
-            document.getElementById('wrapper-associes').style.display='block';
-          } else {
-            document.getElementById(tgt).style.display='block';
-          }
-          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
-          this.classList.add('active');
         });
       });
 
@@ -513,12 +712,49 @@
         item.addEventListener('click', function(e){
           e.preventDefault();
           const sub = this.getAttribute('data-sub');
-          document.querySelectorAll('.content-section').forEach(sec=>sec.style.display='none');
+          document.querySelectorAll('.content-section').forEach(sec => sec.style.display='none');
           document.getElementById('membres').style.display='block';
-          document.getElementById('wrapper-permanents').style.display = sub==='permanents' ? 'block':'none';
-          document.getElementById('wrapper-associes').style.display   = sub==='associes'   ? 'block':'none';
-          document.querySelectorAll('.nav-container a').forEach(a=>a.classList.remove('active'));
+          document.getElementById('wrapper-permanents').style.display = sub==='permanents' ? 'block' : 'none';
+          document.getElementById('wrapper-associes').style.display   = sub==='associes'   ? 'block' : 'none';
+          document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
           document.querySelector('a[data-target="membres"]').classList.add('active');
+        });
+      });
+
+      // Équipes dropdown
+      document.querySelectorAll('.dropdown-menu li[data-team]').forEach(item => {
+        item.addEventListener('click', function(e){
+          e.preventDefault();
+          const key = this.getAttribute('data-team');
+          document.querySelectorAll('.content-section').forEach(sec => sec.style.display='none');
+          document.getElementById('equipes').style.display = 'block';
+          document.getElementById('wrapper-equipes-summary').style.display = 'none';
+          document.getElementById('team-content').style.display = 'block';
+          document.getElementById('team-content').innerHTML = teamData[key];
+          document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+          document.querySelector('a[data-target="equipes"]').classList.add('active');
+        });
+      });
+
+      // Navigation links
+      document.querySelectorAll('.nav-container a[data-target]').forEach(link => {
+        link.addEventListener('click', function(e){
+          e.preventDefault();
+          const tgt = this.getAttribute('data-target');
+          document.querySelectorAll('.content-section').forEach(sec => sec.style.display='none');
+          if (tgt === 'membres') {
+            document.getElementById('membres').style.display = 'block';
+            document.getElementById('wrapper-permanents').style.display = 'block';
+            document.getElementById('wrapper-associes').style.display   = 'block';
+          } else if (tgt === 'equipes') {
+            document.getElementById('equipes').style.display = 'block';
+            document.getElementById('wrapper-equipes-summary').style.display = 'block';
+            document.getElementById('team-content').style.display = 'none';
+          } else {
+            document.getElementById(tgt).style.display = 'block';
+          }
+          document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+          this.classList.add('active');
         });
       });
 
@@ -526,8 +762,8 @@
       function sortTable(id){
         const tbody = document.getElementById(id).querySelector('tbody');
         Array.from(tbody.rows)
-          .sort((a,b)=>a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim(),'fr'))
-          .forEach(r=>tbody.appendChild(r));
+          .sort((a,b) => a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim(),'fr'))
+          .forEach(r => tbody.appendChild(r));
       }
       sortTable('permanent-table');
       sortTable('assoc-table');
@@ -538,11 +774,12 @@
               instInput = document.getElementById(instId),
               tb = document.getElementById(tableId).querySelector('tbody');
         function filter(){
-          const nv = nameInput.value.toLowerCase(), iv = instInput.value.toLowerCase();
-          Array.from(tb.rows).forEach(r=>{
+          const nv = nameInput.value.toLowerCase(),
+                iv = instInput.value.toLowerCase();
+          Array.from(tb.rows).forEach(r => {
             const nm = r.cells[0].textContent.toLowerCase(),
-                  ins= r.cells[1].textContent.toLowerCase();
-            r.style.display = (nm.includes(nv)&&ins.includes(iv))?'':'none';
+                  ins = r.cells[1].textContent.toLowerCase();
+            r.style.display = (nm.includes(nv) && ins.includes(iv)) ? '' : 'none';
           });
         }
         nameInput.addEventListener('input', filter);
@@ -552,6 +789,5 @@
       setupFilter('assoc-search-name','assoc-search-institution','assoc-table');
     });
   </script>
-
 </body>
 </html>
