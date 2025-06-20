@@ -89,14 +89,46 @@
       background: var(--ames-light-blue);
     }
 
-    /* HERO */
-    .hero {
-      background: linear-gradient(135deg, var(--ames-light-blue), var(--ames-dark-green));
-      color: var(--white);
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .main-logo { width: 80px; margin-bottom: 20px; }
+
+.hero {
+  max-width: 1000px;    /* largeur maximale souhaitée */
+  margin: 0 auto;   /* 40px d’espace en haut/bas, centré horizontalement */
+  padding: 0px 0px;  /* votre padding existant */
+  background: #fff;    /* ou votre dégradé/blanc */
+  border-radius: 8px;  /* coins arrondis, optionnel */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* on supprime la marge native des titres et paragraphes */
+.hero h1,
+.hero p {
+  margin: 0px 0;           /* ou même 0 si tu veux aller au plus serré */
+}
+
+
+.logo-box {
+  /* tu peux réduire la taille si 240px c’est trop grand */
+  padding: 0px;
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo-box img {
+  /* c’est cette ligne qui fait que les pixels transparents 
+     du PNG vont afficher le blanc et non le dégradé de .hero */
+  background-color: #fff;
+  display: block;        /* élimine l’espacement inline par défaut */
+  max-width: 400px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+}
+
+
 
     /* SECTIONS */
     section {
@@ -172,11 +204,14 @@
 </head>
 <body>
 
-  <section class="hero">
-    <img src="logo/logo_unite.png" alt="Logo UMR-AMES" class="main-logo">
-    <h1>UMR-AMES</h1>
-    <p>Unité Mixte de Recherche Analyse et Modélisation pour l’Environnement et la Santé</p>
-  </section>
+<section class="hero">
+<div class="logo-box">
+<img src="logo/logo_ames.png" alt="Logo UMR-AMES">
+
+
+</div>
+
+</section> 
 
   <nav>
     <div class="nav-container">
