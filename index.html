@@ -250,12 +250,13 @@
   <a href="#" data-target="publications">Publications</a>
   <ul class="dropdown-menu">
     <li data-pub="2025">Publications 2025</li>
-    <li data-pub="avant2024">Publications antérieures</li>
+    <li data-pub="avant2025">Publications antérieures</li>
   </ul>
 </div>
       <a href="#" data-target="contact">Contact</a>
     </div>
   </nav>
+
 
   <!-- Présentation -->
   <section id="presentation" class="content-section">
@@ -408,34 +409,6 @@ L’unité regroupe des chercheurs et enseignants-chercheurs issus de ces cinq i
   </section>
 
 
-  // Publications dropdown (rendre les items cliquables)
-document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
-  item.addEventListener('click', function (e) {
-    e.preventDefault();
-    const key = this.getAttribute('data-pub');
-
-    // afficher la section Publications
-    document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
-    const pubSec = document.getElementById('publications');
-    pubSec.style.display = 'block';
-
-    // fermer tous les menus ouverts (utile mobile/hover)
-    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-
-    // activer l’onglet "Publications"
-    document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
-    const pubTab = document.querySelector('a[data-target="publications"]');
-    if (pubTab) pubTab.classList.add('active');
-
-    // scroller vers l’ancre correspondante
-    const map = { '2025': 'pub2025', 'avant2024': 'pubAvant2024' };
-    const target = document.getElementById(map[key]);
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
-
-
   <section id="publications" class="content-section">
   <h2>Publications</h2>
 
@@ -444,7 +417,7 @@ document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
     <li>…</li>
   </ol>
 
-  <h3 id="pubAvant2024">Publications antérieures</h3>
+  <h3 id="pubAvant2025">Publications antérieures</h3>
     <ol>
       <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359–369, 2025.</li>
       <li>A. Choumad Fall, M.H. Mohamed Dyla, M. Mohamed Saleck, N. Taleb, T. Gadi, and M. Farouk Nanne, Digitalization and Classification of Scanned ECG Using Convolutional Neural Network, Journal of Theoretical and Applied Information Technology, vol. 102 (1), 287–296, 2024.</li>
@@ -834,6 +807,34 @@ document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
           document.querySelector('a[data-target="equipes"]').classList.add('active');
         });
       });
+
+
+      // Publications dropdown (rendre les items cliquables)
+document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
+  item.addEventListener('click', function (e) {
+    e.preventDefault();
+    const key = this.getAttribute('data-pub');
+
+    // afficher la section Publications
+    document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
+    const pubSec = document.getElementById('publications');
+    pubSec.style.display = 'block';
+
+    // fermer tous les menus ouverts (utile mobile/hover)
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+
+    // activer l’onglet "Publications"
+    document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+    const pubTab = document.querySelector('a[data-target="publications"]');
+    if (pubTab) pubTab.classList.add('active');
+
+    // scroller vers l’ancre correspondante
+    const map = { '2025': 'pub2025', 'avant2024': 'pubAvant2024' };
+    const target = document.getElementById(map[key]);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
 
       // Navigation links
       document.querySelectorAll('.nav-container a[data-target]').forEach(link => {
