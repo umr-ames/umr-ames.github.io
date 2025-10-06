@@ -408,6 +408,27 @@ L’unité regroupe des chercheurs et enseignants-chercheurs issus de ces cinq i
   </section>
 
 
+  // Publications dropdown
+document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
+  item.addEventListener('click', function(e){
+    e.preventDefault();
+    const key = this.getAttribute('data-pub');
+    document.querySelectorAll('.content-section').forEach(sec => sec.style.display='none');
+    document.getElementById('publications').style.display='block';
+
+    // Option : filtrer ou scroller vers une partie selon l’année choisie
+    if (key === '2025') {
+      window.location.hash = '#pub2025';
+    }  else if (key === 'avant2025') {
+      window.location.hash = '#pubAvant2024';
+    }
+
+    document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+    document.querySelector('a[data-target="publications"]').classList.add('active');
+  });
+});
+
+
   <section id="publications" class="content-section">
   <h2>Publications</h2>
 
