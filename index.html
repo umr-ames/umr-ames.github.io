@@ -25,6 +25,7 @@
       margin: 0;
       padding: 0;
     }
+    .pub-sub { display: none; }
     body {
       font-family: 'Roboto', sans-serif;
       background-color: var(--gray-bg);
@@ -409,16 +410,20 @@ L’unité regroupe des chercheurs et enseignants-chercheurs issus de ces cinq i
     </ul>
   </section>
 
-
   <section id="publications" class="content-section">
   <h2>Publications</h2>
 
-  <h3 id="pub2025">Publications 2025</h3>
-  <ol>
+  <!-- Sous-section 2025 (cachée par défaut) -->
+  <div class="pub-sub" id="pub-2025">
+    <h3>Publications 2025</h3>
+ <ol>
      <li>A. Ahmed and M.S.B. Elemine Vall, Multiplicity analysis of positive weak solutions in a quasi-linear Dirichlet problem inspired by Kirchhoff-type phenomena, The International Journal of Nonlinear Analysis and Applications (IJNAA), 16 (1), 359–369, 2025.</li>
   </ol>
+  </div>
 
-  <h3 id="pubAnterieures">Publications antérieures</h3>
+ <!-- Sous-section antérieures (cachée par défaut) -->
+  <div class="pub-sub" id="pub-anterieures">
+    <h3>Publications antérieures</h3>
     <ol>
       <li>A. Choumad Fall, M.H. Mohamed Dyla, M. Mohamed Saleck, N. Taleb, T. Gadi, and M. Farouk Nanne, Digitalization and Classification of Scanned ECG Using Convolutional Neural Network, Journal of Theoretical and Applied Information Technology, vol. 102 (1), 287–296, 2024.</li>
       <li>F. Habott, A. Ahmedou, Y. Mohamed, and M.A. Sambe, Analysis of COVID-19’s dynamic behavior using a modified SIR model characterized by a nonlinear function, Symmetry, vol. 16 (1448), 2024.</li>
@@ -455,7 +460,8 @@ L’unité regroupe des chercheurs et enseignants-chercheurs issus de ces cinq i
       <li>M.S.B. Mohamed Ahmed and A. Ahmed, Multiplicity of solutions for a class of Neumann elliptic systems in anisotropic Sobolev spaces with variable exponent, Adv. Oper. Theory, vol. 4 (2), 497–513, 2019.</li>
       <li>M. Benioug et al., Interaction between biofilm growth and NAPL remediation: A pore-scale study, Advances in Water Resources, vol. 125, 82–97, 2019.</li>
     </ol>
-  </section>
+    </div>
+</section>
 
   <!-- Contact -->
   <section id="contact" class="content-section">
@@ -809,35 +815,28 @@ L’unité regroupe des chercheurs et enseignants-chercheurs issus de ces cinq i
       });
 
 
-// Publications dropdown (rendre les items cliquables)
+// Publications dropdown (afficher uniquement la sous-section choisie)
 document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
   item.addEventListener('click', function (e) {
     e.preventDefault();
+    const key = this.getAttribute('data-pub'); // "2025" | "anterieures"
+    const map = { '2025': 'pub-2025', 'anterieures': 'pub-anterieures' };
 
-    // quelle entrée ?
-    const key = this.getAttribute('data-pub');
-
-    // afficher la section Publications
+    // afficher la page Publications
     document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
-    const pubSec = document.getElementById('publications');
-    pubSec.style.display = 'block';
+    document.getElementById('publications').style.display = 'block';
 
-    // fermer les menus
+    // n’afficher QUE la sous-section demandée
+    showPubSub(map[key]);
+
+    // fermer les menus et activer l’onglet
     document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-
-    // activer l’onglet "Publications"
     document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
     const pubTab = document.querySelector('a[data-target="publications"]');
     if (pubTab) pubTab.classList.add('active');
-
-    // correspondances clé → ancre
-    const map = { '2025': 'pub2025', 'anterieures': 'pubAnterieures' };
-
-    // scroll
-    const target = document.getElementById(map[key]);
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
 
 
 
@@ -855,7 +854,10 @@ document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
             document.getElementById('equipes').style.display = 'block';
             document.getElementById('wrapper-equipes-summary').style.display = 'block';
             document.getElementById('team-content').style.display = 'none';
-          } else {
+          } else if (tgt === 'publications') {
+      document.getElementById('publications').style.display = 'block';
+      showPubSub('pub-2025'); // sous-section par défaut quand on clique "Publications"
+    } else {
             document.getElementById(tgt).style.display = 'block';
           }
           document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
@@ -892,7 +894,15 @@ document.querySelectorAll('.dropdown-menu li[data-pub]').forEach(item => {
       }
       setupFilter('permanent-search-name','permanent-search-institution','permanent-table');
       setupFilter('assoc-search-name','assoc-search-institution','assoc-table');
+      // --- utilitaire: afficher une sous-section Publications et masquer les autres
+function showPubSub(id) {
+  document.querySelectorAll('#publications .pub-sub').forEach(sec => sec.style.display = 'none');
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'block';
+}
+
     });
+    
   </script>
 </body>
 </html>
