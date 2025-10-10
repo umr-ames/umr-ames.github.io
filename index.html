@@ -152,7 +152,7 @@
       position: relative;
     }
     .content-section { display: none; }
-    #presentation.content-section { display: block; }
+  /*  #presentation.content-section { display: block; }*/
     section.content-section h2 { color: var(--green-primary); margin-bottom: 15px; }
     section.content-section h3 { color: var(--blue-primary); margin-bottom: 10px; }
 
@@ -962,6 +962,16 @@ function showPubSub(id) {
   const el = document.getElementById(id);
   if (el) el.style.display = 'block';
 }
+   // --- Accueil par défaut : Publications 2025
+document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
+document.getElementById('publications').style.display = 'block';
+showPubSub('pub-2025'); // n’affiche que la sous-section 2025
+
+// activer l’onglet "Publications" dans la nav
+document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+const pubTab = document.querySelector('a[data-target="publications"]');
+if (pubTab) pubTab.classList.add('active');
+   
 
     });
     
