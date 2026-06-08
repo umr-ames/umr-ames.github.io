@@ -395,6 +395,31 @@ button { cursor: pointer; border: none; background: none;
   font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 50px;
 }
 
+/* Bannière lauréat projets */
+.projet-award-banner {
+  background: linear-gradient(135deg, #7b5800, #c49a00);
+  color: var(--white); padding: 14px 24px; border-radius: var(--radius);
+  font-size: 0.9rem; text-align: center; margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 16px rgba(196,154,0,0.3);
+}
+.projet-award-banner i { font-size: 1.2rem; flex-shrink: 0; }
+
+/* Équipe projet */
+.projet-team { margin: 16px 0; display: flex; flex-direction: column; gap: 10px; }
+.projet-team-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--bg); border-radius: 8px; padding: 10px 12px;
+}
+.projet-team-item > i { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+.projet-team-item > div { display: flex; flex-direction: column; gap: 2px; }
+.projet-team-role { font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+.projet-team-name { font-size: 0.85rem; font-weight: 600; color: var(--primary); line-height: 1.5; }
+
+/* Actualité mise en avant */
+.actu-card-highlight { border: 2px solid #c49a00; }
+.actu-header-gold { background: linear-gradient(135deg, #7b5800, #c49a00) !important; }
+
 /* =====================================================
    PUBLICATIONS
    ===================================================== */
