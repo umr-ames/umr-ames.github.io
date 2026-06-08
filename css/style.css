@@ -164,6 +164,29 @@ button { cursor: pointer; border: none; background: none;
 
 .hero-content { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
 
+/* Logos hero (ISGI tutelle + AMES) */
+.hero-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; margin-bottom: 28px;
+}
+.hero-logo-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.hero-logo-item img {
+  height: 64px; width: auto; max-width: 120px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.92);
+  border-radius: 10px; padding: 6px 10px;
+}
+.hero-logo-item span {
+  font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,0.75);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.hero-logo-sep {
+  width: 1px; height: 56px;
+  background: rgba(255,255,255,0.3);
+}
+
 .hero-badge {
   display: inline-block;
   background: rgba(255,255,255,0.12);
@@ -217,6 +240,28 @@ button { cursor: pointer; border: none; background: none;
   text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px;
 }
 .info-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* Partenaire tutelle mis en valeur */
+.partenaire-tutelle {
+  border: 2px solid var(--accent) !important;
+  position: relative;
+}
+.tutelle-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--white);
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 3px 12px; border-radius: 50px;
+  white-space: nowrap;
+}
+
+/* Info card tutelle */
+.info-card-tutelle { border: 2px solid var(--accent) !important; }
+.info-card-logo {
+  height: 48px; width: auto; max-width: 110px;
+  object-fit: contain; margin-bottom: 10px;
+  border-radius: 6px; padding: 4px;
+  background: var(--bg-alt);
+}
 
 /* =====================================================
    INSTANCES
