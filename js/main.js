@@ -69,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (filter === 'all') {
           card.style.display = '';
         } else {
-          card.style.display = card.dataset.axis === filter ? '' : 'none';
+          const axes = (card.dataset.axis || '').split(' ');
+          card.style.display = axes.indexOf(filter) !== -1 ? '' : 'none';
         }
       });
     });
