@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260617">
+  <link rel="stylesheet" href="../css/style.css?v=20260618">
 </head>
 <body>
 
@@ -38,17 +38,30 @@
         <span>UMR-AMES</span>
       </a>
       <ul class="nav-menu" id="navMenu" role="menubar">
-        <li role="none"><a href="#accueil"      role="menuitem">Home</a></li>
-        <li role="none"><a href="#presentation" role="menuitem">About</a></li>
-        <li role="none"><a href="#instances"    role="menuitem">Governance</a></li>
-        <li role="none"><a href="#axes"         role="menuitem">Research</a></li>
-        <li role="none"><a href="#equipes"      role="menuitem">Teams</a></li>
-        <li role="none"><a href="#membres"      role="menuitem">Members</a></li>
-        <li role="none"><a href="#projets"      role="menuitem">Projects</a></li>
-        <li role="none"><a href="#publications" role="menuitem">Publications</a></li>
-        <li role="none"><a href="#actualites"   role="menuitem">News</a></li>
-        <li role="none"><a href="#partenaires"  role="menuitem">Partners</a></li>
-        <li role="none"><a href="#contact"      role="menuitem">Contact</a></li>
+        <li role="none"><a href="#accueil" role="menuitem">Home</a></li>
+
+        <li role="none" class="has-dropdown">
+          <button class="dropdown-toggle" aria-expanded="false">The Unit <i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none"><a href="#presentation" role="menuitem">About</a></li>
+            <li role="none"><a href="#instances"    role="menuitem">Governance</a></li>
+            <li role="none"><a href="#membres"      role="menuitem">Members</a></li>
+            <li role="none"><a href="#partenaires"  role="menuitem">Partners</a></li>
+          </ul>
+        </li>
+
+        <li role="none" class="has-dropdown">
+          <button class="dropdown-toggle" aria-expanded="false">Research <i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none"><a href="#axes"         role="menuitem">Research axes</a></li>
+            <li role="none"><a href="#equipes"      role="menuitem">Teams</a></li>
+            <li role="none"><a href="#projets"      role="menuitem">Projects</a></li>
+            <li role="none"><a href="#publications" role="menuitem">Publications</a></li>
+          </ul>
+        </li>
+
+        <li role="none"><a href="#actualites" role="menuitem">News</a></li>
+        <li role="none"><a href="#contact"    role="menuitem">Contact</a></li>
       </ul>
       <div class="lang-switcher" aria-label="Language selection">
         <a href="../" lang="fr">FR</a>
@@ -106,6 +119,37 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- FEATURED NEWS — photo slideshow -->
+<section class="news-band" aria-label="News in pictures" id="news-band">
+  <div class="news-slides" id="newsSlides">
+    <a class="news-slide is-active" href="#actualites" style="background-image:url('../images/anrsi/anrsi-1.jpg')">
+      <div class="news-slide-inner">
+        <span class="news-tag"><i class="fas fa-trophy" aria-hidden="true"></i> Highlight</span>
+        <h3>UMR-AMES wins 2 national research grants (ANRSI)</h3>
+      </div>
+    </a>
+    <a class="news-slide" href="#actualites" style="background-image:url('../images/cimpa/cimpa-01.jpg')">
+      <div class="news-slide-inner">
+        <span class="news-tag"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Event</span>
+        <h3>CIMPA Research School — Mathematical Modelling</h3>
+      </div>
+    </a>
+    <a class="news-slide" href="#actualites" style="background-image:url('../images/cimpa/cimpa-06.jpg')">
+      <div class="news-slide-inner">
+        <span class="news-tag"><i class="fas fa-users" aria-hidden="true"></i> Unit life</span>
+        <h3>Researchers and PhD students gathered for the CIMPA school</h3>
+      </div>
+    </a>
+    <a class="news-slide" href="#actualites" style="background-image:url('../images/anrsi/anrsi-2.jpg')">
+      <div class="news-slide-inner">
+        <span class="news-tag"><i class="fas fa-award" aria-hidden="true"></i> Distinction</span>
+        <h3>ANRSI 2025 award ceremony</h3>
+      </div>
+    </a>
+  </div>
+  <div class="news-dots" id="newsDots" aria-hidden="true"></div>
 </section>
 
 <!-- ABOUT -->
@@ -693,6 +737,6 @@
   <div class="lightbox-counter"></div>
 </div>
 
-<script src="../js/main.js?v=20260617"></script>
+<script src="../js/main.js?v=20260618"></script>
 </body>
 </html>
