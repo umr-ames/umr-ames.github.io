@@ -151,4 +151,59 @@ document.addEventListener('DOMContentLoaded', function () {
   const heroStats = document.querySelector('.hero-stats');
   if (heroStats) countersObserver.observe(heroStats);
 
+  /* ---- Lightbox galeries ---- */
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const lbImg     = lightbox.querySelector('.lightbox-img');
+    const lbCounter = lightbox.querySelector('.lightbox-counter');
+    const btnClose  = lightbox.querySelector('.lightbox-close');
+    const btnPrev   = lightbox.querySelector('.lightbox-prev');
+    const btnNext   = lightbox.querySelector('.lightbox-next');
+
+    let currentSet = [];
+    let currentIdx = 0;
+
+    function show(idx) {
+      currentIdx = (idx + currentSet.length) % currentSet.length;
+      const img = currentSet[currentIdx];
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || '';
+      lbCounter.textContent = (currentIdx + 1) + ' / ' + currentSet.length;
+      const multiple = currentSet.length > 1;
+      btnPrev.style.display = multiple ? '' : 'none';
+      btnNext.style.display = multiple ? '' : 'none';
+    }
+    function open(set, idx) {
+      currentSet = set;
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      show(idx);
+    }
+    function close() {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    document.querySelectorAll('.actu-gallery').forEach(function (gallery) {
+      const imgs = Array.prototype.slice.call(gallery.querySelectorAll('.actu-gallery-img'));
+      imgs.forEach(function (img, i) {
+        img.addEventListener('click', function () { open(imgs, i); });
+      });
+    });
+
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', function () { show(currentIdx - 1); });
+    btnNext.addEventListener('click', function () { show(currentIdx + 1); });
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape')     close();
+      if (e.key === 'ArrowLeft')  show(currentIdx - 1);
+      if (e.key === 'ArrowRight') show(currentIdx + 1);
+    });
+  }
+
 });

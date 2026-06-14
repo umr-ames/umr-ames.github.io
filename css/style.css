@@ -515,6 +515,57 @@ button { cursor: pointer; border: none; background: none;
   box-shadow: var(--shadow-sm);
 }
 
+/* ---- Galerie d'actualités ---- */
+.actu-gallery {
+  display: grid; gap: 8px; margin-top: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.actu-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+.actu-gallery-img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: 8px; cursor: pointer;
+  box-shadow: var(--shadow-sm); transition: var(--transition);
+}
+.actu-gallery-img:hover { transform: scale(1.04); box-shadow: var(--shadow); }
+
+/* ---- Lightbox ---- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-img {
+  max-width: 90vw; max-height: 86vh;
+  border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  user-select: none;
+}
+.lightbox-close, .lightbox-prev, .lightbox-next {
+  position: absolute; color: #fff; background: rgba(255,255,255,0.12);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s ease; line-height: 1;
+}
+.lightbox-close {
+  top: 20px; right: 24px; width: 46px; height: 46px; font-size: 1.8rem;
+}
+.lightbox-prev, .lightbox-next {
+  top: 50%; transform: translateY(-50%); width: 52px; height: 52px; font-size: 1.5rem;
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+  background: var(--accent);
+}
+.lightbox-counter {
+  position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+  color: #fff; font-size: 0.9rem; font-weight: 600;
+  background: rgba(0,0,0,0.45); padding: 5px 14px; border-radius: 50px;
+}
+@media (max-width: 600px) {
+  .lightbox-prev, .lightbox-next { width: 42px; height: 42px; font-size: 1.2rem; }
+  .lightbox-close { width: 40px; height: 40px; font-size: 1.5rem; top: 14px; right: 14px; }
+}
+
 /* =====================================================
    PARTENAIRES
    ===================================================== */

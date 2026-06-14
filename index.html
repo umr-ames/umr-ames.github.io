@@ -1237,7 +1237,10 @@
             Scientifique et de l'Innovation</strong>. Une reconnaissance nationale de l'excellence
             scientifique de l'unité.
           </p>
-          <img src="images/anrsi.jpg" alt="Financements ANRSI obtenus par l'UMR-AMES" class="actu-img" loading="lazy" onerror="this.style.display='none'">
+          <div class="actu-gallery" aria-label="Photos des prix ANRSI">
+            <img class="actu-gallery-img" src="images/anrsi/anrsi-1.jpg" alt="Prix ANRSI 2025 — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/anrsi/anrsi-2.jpg" alt="Cérémonie de remise des prix ANRSI" loading="lazy">
+          </div>
         </div>
       </article>
 
@@ -1259,7 +1262,19 @@
             L'UMR-AMES accueille une école de recherche CIMPA dédiée à la modélisation mathématique
             appliquée à l'environnement et à la santé, avec des experts internationaux.
           </p>
-          <img src="images/cimpa.jpg" alt="École de recherche CIMPA" class="actu-img" loading="lazy" onerror="this.style.display='none'">
+          <div class="actu-gallery actu-gallery-grid" aria-label="Photos de l'école de recherche CIMPA">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-01.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-02.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-03.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-04.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-05.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-06.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-07.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-08.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-09.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-10.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+            <img class="actu-gallery-img" src="images/cimpa/cimpa-11.jpg" alt="École CIMPA — UMR-AMES" loading="lazy">
+          </div>
         </div>
       </article>
 
@@ -1514,6 +1529,15 @@
 <button id="backToTop" aria-label="Retour en haut de la page">
   <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
+
+<!-- Visionneuse d'images (lightbox) -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'images" hidden>
+  <button class="lightbox-close" aria-label="Fermer">&times;</button>
+  <button class="lightbox-prev" aria-label="Image précédente">&#10094;</button>
+  <img class="lightbox-img" src="" alt="">
+  <button class="lightbox-next" aria-label="Image suivante">&#10095;</button>
+  <div class="lightbox-counter"></div>
+</div>
 
 <!-- JavaScript -->
 <script src="js/main.js"></script>
