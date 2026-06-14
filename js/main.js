@@ -96,7 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         });
       },
-      { threshold: 0.12 }
+      /* threshold 0 + marge basse : se déclenche dès que l'élément effleure
+         l'écran, même s'il est plus haut que la fenêtre (ex : longue liste de publications) */
+      { threshold: 0, rootMargin: '0px 0px -10% 0px' }
     );
     document.querySelectorAll('.fade-up').forEach(function (el) { observer.observe(el); });
   } else {
