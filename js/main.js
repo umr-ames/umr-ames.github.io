@@ -218,6 +218,52 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
+  /* ---- Publications dynamiques (chercheurs) ---- */
+  (function () {
+    const list = document.querySelector('.publications-list');
+    if (!list) return;
+    const axisLabels = { env: 'Environnement', sante: 'Santé & Épidémiologie', math: 'Modélisation Mathématique', ia: 'Statistiques & IA' };
+
+    fetch('/api/publications.php', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.ok || !data.publications || !data.publications.length) return;
+        const frag = document.createDocumentFragment();
+        data.publications.forEach(function (p) {
+          const card = document.createElement('article');
+          card.className = 'pub-card';
+          if (p.axis) card.dataset.axis = p.axis;
+
+          const meta = document.createElement('div');
+          meta.className = 'pub-meta';
+          if (p.year) { const y = document.createElement('span'); y.className = 'pub-year'; y.textContent = p.year; meta.appendChild(y); }
+          if (p.axis && axisLabels[p.axis]) { const a = document.createElement('span'); a.className = 'pub-axis'; a.textContent = axisLabels[p.axis]; meta.appendChild(a); }
+          card.appendChild(meta);
+
+          const title = document.createElement('div');
+          title.className = 'pub-title';
+          if (p.url) { const link = document.createElement('a'); link.href = p.url; link.target = '_blank'; link.rel = 'noopener'; link.textContent = p.title; title.appendChild(link); }
+          else { title.textContent = p.title; }
+          card.appendChild(title);
+
+          const authors = document.createElement('div');
+          authors.className = 'pub-authors';
+          if (p.authors) { authors.appendChild(document.createTextNode(p.authors + ' — ')); }
+          const who = document.createElement('a');
+          who.href = '/chercheur.php?slug=' + encodeURIComponent(p.slug);
+          who.className = 'pub-researcher-link';
+          who.textContent = p.researcher;
+          authors.appendChild(who);
+          card.appendChild(authors);
+
+          if (p.journal) { const j = document.createElement('div'); j.className = 'pub-journal'; j.textContent = p.journal; card.appendChild(j); }
+          frag.appendChild(card);
+        });
+        list.insertBefore(frag, list.firstChild);
+      })
+      .catch(function () { /* hors-ligne ou site statique : on garde la liste statique */ });
+  })();
+
   /* ---- Lightbox galeries ---- */
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {

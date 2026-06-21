@@ -1,0 +1,10 @@
+# Secrets — ne jamais versionner
+espace/config.php
+
+# Photos uploadées par les chercheurs (stockées sur le serveur)
+uploads/chercheurs/*
+!uploads/chercheurs/.gitkeep
+
+# Divers
+.DS_Store
+Thumbs.db
