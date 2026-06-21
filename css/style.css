@@ -208,6 +208,22 @@ h1, h2, h3, h4,
 .lang-switcher a:hover, .lang-switcher a.active { color: var(--accent); }
 .lang-switcher span { opacity: 0.4; }
 
+/* ---- Bouton Espace chercheur (navbar) ---- */
+.nav-login {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-size: 0.82rem; font-weight: 600; white-space: nowrap;
+  padding: 8px 16px; border-radius: 50px;
+  color: var(--white); border: 1px solid rgba(255,255,255,0.45);
+  transition: var(--transition);
+}
+.nav-login i { font-size: 0.82rem; }
+.nav-login:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.8); transform: translateY(-1px); }
+#header.scrolled .nav-login {
+  color: var(--white); background: var(--accent);
+  border-color: var(--accent); box-shadow: 0 3px 10px rgba(21,160,143,0.28);
+}
+#header.scrolled .nav-login:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
 .nav-toggle {
   display: none; flex-direction: column; justify-content: center;
   gap: 5px; padding: 8px; margin-left: auto;
@@ -887,8 +903,13 @@ footer::before {
   .section-header { margin-bottom: 38px; }
 
   /* Nav mobile */
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; margin-left: 8px; }
   .lang-switcher { display: none; }
+
+  /* Bouton espace chercheur : icône seule, collé à droite */
+  .nav-login { margin-left: auto; padding: 8px 12px; }
+  .nav-login span { display: none; }
+  #header.scrolled .nav-login { background: var(--accent); color: #fff; }
   .nav-menu {
     position: fixed; top: 74px; left: 0; right: 0; bottom: 0;
     background: var(--white); flex-direction: column; align-items: flex-start;
