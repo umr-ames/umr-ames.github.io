@@ -65,7 +65,15 @@ if ($r) {
         <h1 class="profile-name"><?= e($r['full_name']) ?></h1>
         <?php if ($r['title']): ?><p class="profile-title"><?= e($r['title']) ?></p><?php endif; ?>
         <?php if ($r['affiliation']): ?><p class="profile-affil"><i class="fas fa-building-columns"></i> <?= e($r['affiliation']) ?></p><?php endif; ?>
-        <?php if ($r['axis']): ?><span class="profile-axis"><?= e(axis_label($r['axis'])) ?></span><?php endif; ?>
+        <?php
+          $axesList = !empty($r['research_axes']) ? (json_decode($r['research_axes'], true) ?: []) : [];
+          if (!$axesList && !empty($r['axis'])) $axesList = [axis_label($r['axis'])];
+        ?>
+        <?php if ($axesList): ?>
+          <div class="profile-axes">
+            <?php foreach ($axesList as $ax): ?><span class="profile-axis"><?= e($ax) ?></span><?php endforeach; ?>
+          </div>
+        <?php endif; ?>
 
         <div class="profile-links">
           <?php if ($r['public_email']): ?><a href="mailto:<?= e($r['public_email']) ?>" title="E-mail"><i class="fas fa-envelope"></i></a><?php endif; ?>

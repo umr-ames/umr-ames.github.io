@@ -10,11 +10,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* ---- Enregistrer le profil ---- */
     if ($action === 'save_profile') {
+        // Axes de recherche : axes de l'unité (cases) + axes libres (texte)
+        $selectedUnit = (array)($_POST['axes'] ?? []);
+        $axesLabels = [];
+        $primaryAxis = null;
+        foreach ($selectedUnit as $k) {
+            if (array_key_exists($k, axes())) {
+                $axesLabels[] = axes()[$k];
+                if ($primaryAxis === null) $primaryAxis = $k;
+            }
+        }
+        foreach (explode(',', (string)($_POST['axes_custom'] ?? '')) as $c) {
+            $c = trim($c);
+            if ($c !== '') $axesLabels[] = mb_substr($c, 0, 80);
+        }
+        $axesLabels = array_values(array_unique($axesLabels));
+        $researchAxes = $axesLabels ? json_encode($axesLabels, JSON_UNESCAPED_UNICODE) : null;
+
         $fields = [
             'title'            => trim($_POST['title'] ?? ''),
             'affiliation'      => trim($_POST['affiliation'] ?? ''),
             'discipline'       => trim($_POST['discipline'] ?? ''),
-            'axis'             => (array_key_exists($_POST['axis'] ?? '', axes()) ? $_POST['axis'] : null),
+            'axis'             => $primaryAxis,
+            'research_axes'    => $researchAxes,
             'bio'              => trim($_POST['bio'] ?? ''),
             'phone'            => trim($_POST['phone'] ?? ''),
             'public_email'     => trim($_POST['public_email'] ?? ''),
@@ -57,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $sql = 'UPDATE profiles SET title=?, affiliation=?, discipline=?, axis=?, bio=?, phone=?, public_email=?, orcid=?, researchgate_url=?, scholar_url=?, linkedin_url=?, website_url=?' . $photoSql . ' WHERE researcher_id=?';
+        $sql = 'UPDATE profiles SET title=?, affiliation=?, discipline=?, axis=?, research_axes=?, bio=?, phone=?, public_email=?, orcid=?, researchgate_url=?, scholar_url=?, linkedin_url=?, website_url=?' . $photoSql . ' WHERE researcher_id=?';
         $vals = array_merge(array_values($fields), $photoVal, [$me['id']]);
         $pdo->prepare($sql)->execute($vals);
         flash(t('ok_profile'), 'success');
@@ -141,16 +159,25 @@ require __DIR__ . '/header.php';
         <div class="form-group"><label><?= t('grade') ?></label><input type="text" name="title" value="<?= e($p['title']??'') ?>" placeholder="Professeur, Maître de conférences, Doctorant…"></div>
         <div class="form-group"><label><?= t('affiliation') ?></label><input type="text" name="affiliation" value="<?= e($p['affiliation']??'') ?>" placeholder="ISGI, Université de Nouakchott…"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label><?= t('discipline') ?></label><input type="text" name="discipline" value="<?= e($p['discipline']??'') ?>"></div>
-        <div class="form-group"><label><?= t('axis') ?></label>
-          <select name="axis">
-            <option value="">—</option>
-            <?php foreach (axes() as $k=>$lbl): ?>
-              <option value="<?= e($k) ?>" <?= (($p['axis']??'')===$k?'selected':'') ?>><?= e($lbl) ?></option>
-            <?php endforeach; ?>
-          </select>
+      <div class="form-group"><label><?= t('discipline') ?></label><input type="text" name="discipline" value="<?= e($p['discipline']??'') ?>"></div>
+
+      <?php
+        $currentAxes = !empty($p['research_axes']) ? (json_decode($p['research_axes'], true) ?: []) : [];
+        if (!$currentAxes && !empty($p['axis'])) $currentAxes = [axis_label($p['axis'])];
+        $unitLabels = array_values(axes());
+        $customAxes = array_values(array_diff($currentAxes, $unitLabels));
+      ?>
+      <div class="form-group">
+        <label><?= t('axes_unit') ?></label>
+        <div class="axes-checks">
+          <?php foreach (axes() as $k=>$lbl): ?>
+            <label class="axis-check"><input type="checkbox" name="axes[]" value="<?= e($k) ?>" <?= in_array($lbl,$currentAxes,true)?'checked':'' ?>> <?= e($lbl) ?></label>
+          <?php endforeach; ?>
         </div>
+      </div>
+      <div class="form-group">
+        <label><?= t('axes_other') ?></label>
+        <input type="text" name="axes_custom" value="<?= e(implode(', ', $customAxes)) ?>" placeholder="<?= e(t('axes_other_ph')) ?>">
       </div>
       <div class="form-group"><label><?= t('bio') ?></label><textarea name="bio" rows="5"><?= e($p['bio']??'') ?></textarea></div>
 

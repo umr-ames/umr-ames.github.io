@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   title            VARCHAR(120) DEFAULT NULL,   -- grade : Professeur, Maître de conf., Doctorant…
   affiliation      VARCHAR(160) DEFAULT NULL,   -- ISGI, Université de Nouakchott…
   discipline       VARCHAR(160) DEFAULT NULL,
-  axis             VARCHAR(60)  DEFAULT NULL,    -- env | sante | math | ia
+  axis             VARCHAR(60)  DEFAULT NULL,    -- axe principal : env | sante | math | ia
+  research_axes    TEXT,                          -- liste JSON des axes (unité + libres)
   bio              TEXT,
   phone            VARCHAR(60)  DEFAULT NULL,
   public_email     VARCHAR(190) DEFAULT NULL,
