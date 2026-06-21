@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Redirect: umr-ames.github.io -> umr-ames.mr (official domain) -->
+  <script>
+    (function () {
+      if (location.hostname === 'umr-ames.github.io') {
+        location.replace('https://umr-ames.mr' + location.pathname + location.search + location.hash);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="UMR-AMES — Mixed Research Unit in Analysis and Modelling for Environment and Health. 33 researchers, 4 interdisciplinary axes, Nouakchott, Mauritania.">
   <meta name="keywords" content="UMR-AMES, research, mathematics, environment, health, Mauritania, ISGI, modelling, epidemiology, AI">
