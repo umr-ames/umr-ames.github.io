@@ -14,16 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pass2     = (string)($_POST['password2'] ?? '');
     $old = ['full_name' => $full_name, 'email' => $email];
 
-    if (mb_strlen($full_name) < 3)          $errors[] = "Indiquez votre nom complet.";
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Adresse e-mail invalide.";
-    if (strlen($pass) < 8)                  $errors[] = "Le mot de passe doit faire au moins 8 caractères.";
-    if ($pass !== $pass2)                   $errors[] = "Les deux mots de passe ne correspondent pas.";
+    if (mb_strlen($full_name) < 3)          $errors[] = t('err_name');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = t('err_email');
+    else {
+        // Réservé au domaine institutionnel @umr-ames.mr (l'admin est l'exception)
+        $cfg = config();
+        $isAdminEmail = (strcasecmp($email, $cfg['admin_email']) === 0);
+        $domainOk = (bool)preg_match('/@umr-ames\.mr$/i', $email);
+        if (!$domainOk && !$isAdminEmail) {
+            $errors[] = t('err_domain');
+        }
+    }
+    if (strlen($pass) < 8)                  $errors[] = t('err_pass8');
+    if ($pass !== $pass2)                   $errors[] = t('err_pass_match');
 
     if (!$errors) {
         $st = db()->prepare('SELECT 1 FROM researchers WHERE email = ?');
         $st->execute([$email]);
         if ($st->fetch()) {
-            $errors[] = "Un compte existe déjà avec cette adresse.";
+            $errors[] = t('err_exists');
         }
     }
 
@@ -46,45 +55,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['uid'] = $id;
 
         if ($status === 'pending') {
-            flash("Compte créé ! Il doit être validé par l'administration avant d'apparaître publiquement. Vous pouvez déjà compléter votre profil.", 'success');
+            flash(t('ok_pending'), 'success');
         } else {
-            flash("Compte administrateur créé et activé.", 'success');
+            flash(t('ok_admin'), 'success');
         }
         header('Location: tableau-de-bord.php'); exit;
     }
 }
 
-$page_title = 'Créer un compte';
+$page_title = t('reg_title');
 require __DIR__ . '/header.php';
 ?>
 <div class="auth-card">
-  <h1 class="portal-h1">Créer un compte chercheur</h1>
-  <p class="portal-sub">Réservé aux membres de l'UMR-AMES. Votre compte sera validé par l'administration.</p>
+  <h1 class="portal-h1"><?= t('reg_title') ?></h1>
+  <p class="portal-sub"><?= t('reg_sub') ?></p>
 
   <?php foreach ($errors as $err): ?><div class="flash flash-error"><?= e($err) ?></div><?php endforeach; ?>
 
   <form method="post" class="portal-form" autocomplete="off">
     <?= csrf_field() ?>
     <div class="form-group">
-      <label>Nom complet</label>
+      <label><?= t('full_name') ?></label>
       <input type="text" name="full_name" value="<?= e($old['full_name']) ?>" required>
     </div>
     <div class="form-group">
-      <label>Adresse e-mail</label>
+      <label><?= t('email') ?></label>
       <input type="email" name="email" value="<?= e($old['email']) ?>" required>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label>Mot de passe (8+ caractères)</label>
+        <label><?= t('password8') ?></label>
         <input type="password" name="password" required>
       </div>
       <div class="form-group">
-        <label>Confirmer le mot de passe</label>
+        <label><?= t('password_confirm') ?></label>
         <input type="password" name="password2" required>
       </div>
     </div>
-    <button class="btn btn-primary" type="submit"><i class="fas fa-user-plus"></i> Créer mon compte</button>
+    <button class="btn btn-primary" type="submit"><i class="fas fa-user-plus"></i> <?= t('reg_btn') ?></button>
   </form>
-  <p class="portal-alt">Déjà inscrit ? <a href="connexion.php">Se connecter</a></p>
+  <p class="portal-alt"><?= t('already') ?> <a href="<?= e(lang_url('connexion.php')) ?>"><?= t('login_btn') ?></a></p>
 </div>
 <?php require __DIR__ . '/footer.php'; ?>

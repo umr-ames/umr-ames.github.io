@@ -38,14 +38,14 @@ function orcid_http_get(string $url): ?string {
  */
 function orcid_import(int $researcher_id, string $orcid): array {
     $id = orcid_normalize($orcid);
-    if (!$id) return [0, 0, "Identifiant ORCID invalide (format attendu : 0000-0000-0000-0000)."];
+    if (!$id) return [0, 0, 'orcid_invalid'];
 
     $json = orcid_http_get("https://pub.orcid.org/v3.0/$id/works");
-    if ($json === null) return [0, 0, "Impossible de contacter ORCID. Réessayez plus tard."];
+    if ($json === null) return [0, 0, 'orcid_unreachable'];
 
     $data = json_decode($json, true);
     if (!isset($data['group']) || !is_array($data['group'])) {
-        return [0, 0, "Aucune publication trouvée pour cet ORCID."];
+        return [0, 0, 'orcid_none'];
     }
 
     $pdo = db();

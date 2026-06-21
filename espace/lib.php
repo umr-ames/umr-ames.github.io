@@ -2,6 +2,7 @@
 /* Bibliothèque commune : session, CSRF, auth, helpers */
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/i18n.php';
 
 function boot_session(): void {
     if (session_status() === PHP_SESSION_NONE) {

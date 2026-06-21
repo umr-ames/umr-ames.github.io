@@ -15,6 +15,10 @@
 .portal-nav a:hover { color: var(--accent-dark); background: rgba(21,160,143,0.08); }
 .portal-nav .portal-logout { color: #b3261e; }
 .portal-nav .portal-back { color: var(--text-light); }
+.portal-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: var(--text-light); }
+.portal-lang a { padding: 2px 4px; color: var(--text-secondary); }
+.portal-lang a.active { color: var(--accent-dark); }
+.portal-lang span { opacity: 0.4; }
 
 .portal-main { flex: 1; padding: 40px 0 64px; }
 .portal-footer { background: var(--ink); color: rgba(255,255,255,0.65); padding: 22px 0; text-align: center; font-size: 0.85rem; }

@@ -28,7 +28,7 @@ if ($r) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $r ? e($r['full_name']) : 'Chercheur introuvable' ?> · UMR-AMES</title>
+  <title><?= $r ? e($r['full_name']) : t('not_found') ?> · UMR-AMES</title>
   <link rel="icon" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,20 +41,20 @@ if ($r) {
 <header class="portal-header">
   <div class="container portal-header-inner">
     <a href="/" class="portal-brand"><img src="/logo/logo_unite.png" alt="UMR-AMES"> <span>UMR-AMES</span></a>
-    <nav class="portal-nav"><a href="/#membres" class="portal-back"><i class="fas fa-arrow-left"></i> Membres</a></nav>
+    <nav class="portal-nav"><a href="/#membres" class="portal-back"><i class="fas fa-arrow-left"></i> <?= t('back_members') ?></a></nav>
   </div>
 </header>
 <main class="portal-main">
   <div class="container">
   <?php if (!$r): ?>
     <div class="profile-404">
-      <h1 class="portal-h1">Chercheur introuvable</h1>
-      <p>Cette page n'existe pas ou n'est pas encore publiée.</p>
-      <a href="/#membres" class="btn btn-primary">Voir les membres</a>
+      <h1 class="portal-h1"><?= t('not_found') ?></h1>
+      <p><?= t('not_found_txt') ?></p>
+      <a href="/#membres" class="btn btn-primary"><?= t('see_members') ?></a>
     </div>
   <?php else: ?>
     <?php if ($r['status'] !== 'approved'): ?>
-      <div class="flash flash-info">Aperçu privé — ce profil n'est pas encore validé publiquement.</div>
+      <div class="flash flash-info"><?= t('private_preview') ?></div>
     <?php endif; ?>
 
     <article class="profile">
@@ -81,15 +81,15 @@ if ($r) {
       <div class="profile-body">
         <?php if ($r['bio']): ?>
           <section class="profile-section">
-            <h2 class="portal-h2">Biographie</h2>
+            <h2 class="portal-h2"><?= t('bio') ?></h2>
             <p class="profile-bio"><?= nl2br(e($r['bio'])) ?></p>
           </section>
         <?php endif; ?>
 
         <section class="profile-section">
-          <h2 class="portal-h2">Publications <span class="count">(<?= count($pubs) ?>)</span></h2>
+          <h2 class="portal-h2"><?= t('publications') ?> <span class="count">(<?= count($pubs) ?>)</span></h2>
           <?php if (!$pubs): ?>
-            <p class="muted">Aucune publication renseignée.</p>
+            <p class="muted"><?= t('no_pubs_public') ?></p>
           <?php else: ?>
             <ol class="profile-pubs">
               <?php foreach ($pubs as $pub): ?>

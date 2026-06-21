@@ -2,7 +2,7 @@
 </main>
 <footer class="portal-footer">
   <div class="container">
-    <p>© <?= date('Y') ?> UMR-AMES — Espace chercheur · <a href="/">Retour au site</a></p>
+    <p>© <?= date('Y') ?> <?= t('footer_line') ?> · <a href="/"><?= t('back_home') ?></a></p>
   </div>
 </footer>
 </body>
