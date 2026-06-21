@@ -10,6 +10,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* ---- Enregistrer le profil ---- */
     if ($action === 'save_profile') {
+        // Nom : prénom + nom -> full_name + slug
+        $first = trim($_POST['first_name'] ?? '');
+        $last  = trim($_POST['last_name'] ?? '');
+        $fullName = trim($first . ' ' . $last);
+        if ($fullName !== '' && $fullName !== $me['full_name']) {
+            $newSlug = unique_slug($fullName, (int)$me['id']);
+            try {
+                $pdo->prepare('UPDATE researchers SET first_name=?, last_name=?, full_name=?, slug=? WHERE id=?')
+                    ->execute([$first ?: null, $last ?: null, $fullName, $newSlug, $me['id']]);
+                $me['full_name'] = $fullName; $me['slug'] = $newSlug;
+            } catch (PDOException $ex) {
+                // colonnes first_name/last_name absentes : repli sur full_name + slug
+                $pdo->prepare('UPDATE researchers SET full_name=?, slug=? WHERE id=?')
+                    ->execute([$fullName, $newSlug, $me['id']]);
+                $me['full_name'] = $fullName; $me['slug'] = $newSlug;
+            }
+        } elseif ($first !== '' || $last !== '') {
+            try {
+                $pdo->prepare('UPDATE researchers SET first_name=?, last_name=? WHERE id=?')
+                    ->execute([$first ?: null, $last ?: null, $me['id']]);
+            } catch (PDOException $ex) { /* colonnes absentes : ignorer */ }
+        }
+
         // Axes de recherche : axes de l'unité (cases) + axes libres (texte)
         $selectedUnit = (array)($_POST['axes'] ?? []);
         $axesLabels = [];
@@ -133,6 +156,15 @@ $st = $pdo->prepare('SELECT * FROM publications WHERE researcher_id=? ORDER BY y
 $cfg = config();
 $photoUrl = !empty($p['photo']) ? $cfg['uploads_url'].'/'.$p['photo'] : null;
 
+// Prénom / Nom (repli : découpe de full_name si colonnes absentes/vides)
+$firstName = $me['first_name'] ?? '';
+$lastName  = $me['last_name'] ?? '';
+if ($firstName === '' && $lastName === '') {
+    $parts = preg_split('/\s+/', trim($me['full_name']), 2);
+    $firstName = $parts[0] ?? '';
+    $lastName  = $parts[1] ?? '';
+}
+
 $page_title = t('dashboard');
 require __DIR__ . '/header.php';
 ?>
@@ -157,6 +189,11 @@ require __DIR__ . '/header.php';
           <label><?= t('photo_label') ?></label>
           <input type="file" name="photo" accept="image/jpeg,image/png,image/webp">
         </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group"><label><?= t('first_name') ?></label><input type="text" name="first_name" value="<?= e($firstName) ?>" required></div>
+        <div class="form-group"><label><?= t('last_name') ?></label><input type="text" name="last_name" value="<?= e($lastName) ?>" required></div>
       </div>
 
       <div class="form-row">

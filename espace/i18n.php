@@ -57,6 +57,7 @@ function i18n_strings(): array {
         // Dashboard
         'hello' => 'Bonjour', 'pending_notice' => "Votre compte est <strong>en attente de validation</strong> par l'administration. Votre page ne sera publique qu'après approbation.",
         'my_profile' => 'Mon profil', 'photo_label' => 'Photo de profil (JPG/PNG/WebP, 4 Mo max)',
+        'first_name' => 'Prénom', 'last_name' => 'Nom',
         'grade' => 'Grade / Statut', 'affiliation' => 'Affiliation', 'discipline' => 'Discipline',
         'axis' => 'Axe de recherche', 'bio' => 'Biographie', 'public_email' => 'E-mail public', 'phone' => 'Téléphone',
         'axes_unit' => 'Axes de recherche de l\'unité', 'axes_other' => 'Autres axes de recherche',
@@ -111,6 +112,7 @@ function i18n_strings(): array {
         'ok_admin' => 'Administrator account created and activated.',
         'hello' => 'Hello', 'pending_notice' => 'Your account is <strong>pending approval</strong> by the administration. Your page will be public only after approval.',
         'my_profile' => 'My profile', 'photo_label' => 'Profile photo (JPG/PNG/WebP, 4 MB max)',
+        'first_name' => 'First name', 'last_name' => 'Last name',
         'grade' => 'Position / Status', 'affiliation' => 'Affiliation', 'discipline' => 'Discipline',
         'axis' => 'Research axis', 'bio' => 'Biography', 'public_email' => 'Public email', 'phone' => 'Phone',
         'axes_unit' => 'Unit research axes', 'axes_other' => 'Other research axes',

@@ -78,12 +78,17 @@ function make_slug(string $text): string {
     $text = trim($text, '-');
     return $text ?: 'chercheur';
 }
-function unique_slug(string $base): string {
+function unique_slug(string $base, ?int $exceptId = null): string {
     $slug = make_slug($base);
     $try = $slug; $i = 2;
     while (true) {
-        $st = db()->prepare('SELECT 1 FROM researchers WHERE slug = ?');
-        $st->execute([$try]);
+        if ($exceptId !== null) {
+            $st = db()->prepare('SELECT 1 FROM researchers WHERE slug = ? AND id <> ?');
+            $st->execute([$try, $exceptId]);
+        } else {
+            $st = db()->prepare('SELECT 1 FROM researchers WHERE slug = ?');
+            $st->execute([$try]);
+        }
         if (!$st->fetch()) return $try;
         $try = $slug . '-' . $i; $i++;
     }

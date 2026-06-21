@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS researchers (
   email          VARCHAR(190) NOT NULL UNIQUE,
   password_hash  VARCHAR(255) NOT NULL,
   full_name      VARCHAR(150) NOT NULL,
+  first_name     VARCHAR(80)  DEFAULT NULL,
+  last_name      VARCHAR(80)  DEFAULT NULL,
   slug           VARCHAR(170) NOT NULL UNIQUE,
   role           ENUM('researcher','admin') NOT NULL DEFAULT 'researcher',
   status         ENUM('pending','approved','suspended') NOT NULL DEFAULT 'pending',
