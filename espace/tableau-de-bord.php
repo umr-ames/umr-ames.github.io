@@ -77,8 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sql = 'UPDATE profiles SET title=?, affiliation=?, discipline=?, axis=?, research_axes=?, bio=?, phone=?, public_email=?, orcid=?, researchgate_url=?, scholar_url=?, linkedin_url=?, website_url=?' . $photoSql . ' WHERE researcher_id=?';
         $vals = array_merge(array_values($fields), $photoVal, [$me['id']]);
-        $pdo->prepare($sql)->execute($vals);
-        flash(t('ok_profile'), 'success');
+        try {
+            $pdo->prepare($sql)->execute($vals);
+            flash(t('ok_profile'), 'success');
+        } catch (PDOException $ex) {
+            flash(t('err_db_migration'), 'error');
+        }
         header('Location: tableau-de-bord.php'); exit;
     }
 
