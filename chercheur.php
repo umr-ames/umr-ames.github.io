@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/espace/lib.php';
+require_once __DIR__ . '/espace/metrics.php';
 $cfg = config();
 $pdo = db();
 
@@ -17,6 +18,17 @@ if (!$canView) {
 }
 
 if ($r) {
+    // Actualisation automatique des indicateurs (OpenAlex) si périmés et ORCID renseigné
+    if (!empty($r['orcid']) && empty($r['metrics_manual']) && metrics_are_stale($r['metrics_updated_at'] ?? null)) {
+        try {
+            if (refresh_metrics_for($pdo, (int)$r['id'], $r['orcid'], false)) {
+                $mq = $pdo->prepare('SELECT citations, h_index, i10_index, metrics_updated_at FROM profiles WHERE researcher_id=?');
+                $mq->execute([$r['id']]);
+                if ($mm = $mq->fetch()) $r = array_merge($r, $mm);
+            }
+        } catch (Throwable $e) { /* réseau / colonnes : on ignore */ }
+    }
+
     $st = $pdo->prepare('SELECT * FROM publications WHERE researcher_id=? ORDER BY year DESC, id DESC');
     $st->execute([$r['id']]);
     $pubs = $st->fetchAll();
@@ -34,8 +46,8 @@ if ($r) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20260625">
-  <link rel="stylesheet" href="/css/portal.css?v=20260625">
+  <link rel="stylesheet" href="/css/style.css?v=20260626">
+  <link rel="stylesheet" href="/css/portal.css?v=20260626">
 </head>
 <body class="portal-body">
 <header class="portal-header">

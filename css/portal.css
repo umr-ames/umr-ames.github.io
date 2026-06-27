@@ -87,6 +87,9 @@
 .icon-btn:hover { background: #fdeaea; color: #b3261e; }
 
 /* Admin */
+.admin-toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.admin-toolbar-help { font-size: 0.8rem; color: var(--text-light); }
+.admin-metrics { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--accent-dark); white-space: nowrap; }
 .admin-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
 .admin-table th, .admin-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.88rem; vertical-align: middle; }
 .admin-table th { background: var(--bg); font-weight: 700; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }

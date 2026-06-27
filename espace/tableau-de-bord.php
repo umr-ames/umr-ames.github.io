@@ -298,15 +298,15 @@ require __DIR__ . '/header.php';
     </form>
 
     <div class="metrics-refresh">
-      <?php if (!empty($p['metrics_updated_at'])): ?>
-        <span class="metrics-date"><i class="fas fa-clock"></i> <?= t('metrics_updated_on') ?> <?= e(date('d/m/Y', strtotime($p['metrics_updated_at']))) ?>
-          <?= !empty($p['metrics_manual']) ? '· '.t('metrics_src_manual') : '· '.t('metrics_src_openalex') ?></span>
-      <?php endif; ?>
-      <form method="post">
-        <?= csrf_field() ?>
-        <input type="hidden" name="action" value="refresh_metrics">
-        <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-rotate"></i> <?= t('metrics_refresh') ?></button>
-      </form>
+      <span class="metrics-date">
+        <i class="fas fa-clock"></i>
+        <?php if (!empty($p['metrics_updated_at'])): ?>
+          <?= t('metrics_updated_on') ?> <?= e(date('d/m/Y', strtotime($p['metrics_updated_at']))) ?>
+          <?= !empty($p['metrics_manual']) ? '· '.t('metrics_src_manual') : '· '.t('metrics_src_openalex') ?>
+        <?php else: ?>
+          <?= t('metrics_auto_note') ?>
+        <?php endif; ?>
+      </span>
     </div>
   </section>
 
