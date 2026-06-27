@@ -69,3 +69,10 @@ CREATE TABLE IF NOT EXISTS publications (
 
 CREATE INDEX idx_pub_year ON publications (year);
 CREATE INDEX idx_pub_axis ON publications (axis);
+
+-- Réglages globaux (clé/valeur)
+CREATE TABLE IF NOT EXISTS settings (
+  k VARCHAR(60) PRIMARY KEY,
+  v VARCHAR(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO settings (k, v) VALUES ('metrics_public', '1') ON DUPLICATE KEY UPDATE v = v;

@@ -8,6 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_check();
     $action = $_POST['action'] ?? '';
 
+    if ($action === 'set_metrics_visibility') {
+        set_setting('metrics_public', isset($_POST['metrics_public']) ? '1' : '0');
+        flash(t('status_updated'), 'success');
+        header('Location: admin.php'); exit;
+    }
+
     if ($action === 'refresh_all_metrics') {
         $list = $pdo->query('SELECT researcher_id, orcid FROM profiles WHERE orcid IS NOT NULL AND orcid <> \'\' AND (metrics_manual = 0 OR metrics_manual IS NULL)')->fetchAll();
         $ok = 0;
@@ -42,6 +48,18 @@ require __DIR__ . '/header.php';
     <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-rotate"></i> <?= t('metrics_refresh_all') ?></button>
   </form>
   <span class="admin-toolbar-help"><?= t('metrics_refresh_all_help') ?></span>
+</div>
+
+<div class="admin-toolbar">
+  <form method="post" id="metricsVisForm">
+    <?= csrf_field() ?>
+    <input type="hidden" name="action" value="set_metrics_visibility">
+    <label class="toggle-line" style="margin:0">
+      <input type="checkbox" name="metrics_public" value="1" <?= metrics_public() ? 'checked' : '' ?> onchange="document.getElementById('metricsVisForm').submit()">
+      <?= t('metrics_visibility_label') ?>
+    </label>
+  </form>
+  <span class="admin-toolbar-help"><?= t('metrics_visibility_help') ?></span>
 </div>
 
 <table class="admin-table">

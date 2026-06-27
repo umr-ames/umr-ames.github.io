@@ -106,6 +106,25 @@ function flashes(): array {
     return $f;
 }
 
+/* --- Réglages globaux (table settings) --- */
+function get_setting(string $k, $default = null) {
+    try {
+        $st = db()->prepare('SELECT v FROM settings WHERE k = ?');
+        $st->execute([$k]);
+        $v = $st->fetchColumn();
+        return ($v === false) ? $default : $v;
+    } catch (Throwable $e) {
+        return $default;
+    }
+}
+function set_setting(string $k, string $v): void {
+    db()->prepare('INSERT INTO settings (k, v) VALUES (?, ?) ON DUPLICATE KEY UPDATE v = VALUES(v)')
+        ->execute([$k, $v]);
+}
+function metrics_public(): bool {
+    return get_setting('metrics_public', '1') === '1';
+}
+
 /* --- Axes (libellés) --- */
 function axes(): array {
     return [

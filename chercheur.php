@@ -100,8 +100,8 @@ if ($r) {
 
       <div class="profile-body">
         <?php
-          $hasMetrics = isset($r['citations']) || isset($r['h_index']) || isset($r['i10_index']);
-          $hasMetrics = $hasMetrics && (($r['citations']??null) !== null || ($r['h_index']??null) !== null || ($r['i10_index']??null) !== null);
+          $hasMetrics = (($r['citations']??null) !== null || ($r['h_index']??null) !== null || ($r['i10_index']??null) !== null);
+          $hasMetrics = $hasMetrics && metrics_public();
         ?>
         <?php if ($hasMetrics): ?>
           <section class="profile-section">

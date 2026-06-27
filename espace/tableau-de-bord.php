@@ -288,6 +288,7 @@ require __DIR__ . '/header.php';
         <?= t('metrics_manual_label') ?>
       </label>
       <p class="field-help"><?= t('metrics_help') ?></p>
+      <?php if (!metrics_public()): ?><p class="field-help" style="color:#9a6700"><i class="fas fa-eye-slash"></i> <?= t('metrics_hidden_note') ?></p><?php endif; ?>
       <div class="form-row metrics-fields">
         <div class="form-group"><label><?= t('citations') ?></label><input type="number" name="citations" min="0" value="<?= e($p['citations'] ?? '') ?>"></div>
         <div class="form-group"><label><?= t('h_index') ?></label><input type="number" name="h_index" min="0" value="<?= e($p['h_index'] ?? '') ?>"></div>
