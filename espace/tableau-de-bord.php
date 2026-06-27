@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/lib.php';
 require_once __DIR__ . '/orcid.php';
+require_once __DIR__ . '/metrics.php';
 $me = require_login();
 $pdo = db();
 
@@ -64,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'scholar_url'      => trim($_POST['scholar_url'] ?? ''),
             'linkedin_url'     => trim($_POST['linkedin_url'] ?? ''),
             'website_url'      => trim($_POST['website_url'] ?? ''),
+            'name_clickable'   => isset($_POST['name_clickable']) ? 1 : 0,
+            'metrics_manual'   => isset($_POST['metrics_manual']) ? 1 : 0,
         ];
         if ($fields['public_email'] && !filter_var($fields['public_email'], FILTER_VALIDATE_EMAIL)) {
             flash(t('err_pub_email'), 'error');
@@ -98,10 +101,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $sql = 'UPDATE profiles SET title=?, affiliation=?, discipline=?, axis=?, research_axes=?, bio=?, phone=?, public_email=?, orcid=?, researchgate_url=?, scholar_url=?, linkedin_url=?, website_url=?' . $photoSql . ' WHERE researcher_id=?';
+        $sql = 'UPDATE profiles SET title=?, affiliation=?, discipline=?, axis=?, research_axes=?, bio=?, phone=?, public_email=?, orcid=?, researchgate_url=?, scholar_url=?, linkedin_url=?, website_url=?, name_clickable=?, metrics_manual=?' . $photoSql . ' WHERE researcher_id=?';
         $vals = array_merge(array_values($fields), $photoVal, [$me['id']]);
         try {
             $pdo->prepare($sql)->execute($vals);
+
+            // Indicateurs bibliométriques
+            $manual = (bool)$fields['metrics_manual'];
+            if ($manual) {
+                $cit = max(0, (int)($_POST['citations'] ?? 0));
+                $h   = max(0, (int)($_POST['h_index'] ?? 0));
+                $i10 = max(0, (int)($_POST['i10_index'] ?? 0));
+                $pdo->prepare('UPDATE profiles SET citations=?, h_index=?, i10_index=?, metrics_updated_at=NOW() WHERE researcher_id=?')
+                    ->execute([$cit, $h, $i10, $me['id']]);
+            } else {
+                // récupération automatique via OpenAlex (ORCID)
+                refresh_metrics_for($pdo, (int)$me['id'], $fields['orcid'] ?: null, false);
+            }
             flash(t('ok_profile'), 'success');
         } catch (PDOException $ex) {
             flash(t('err_db_migration'), 'error');
@@ -148,10 +164,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         header('Location: tableau-de-bord.php#pubs'); exit;
     }
+
+    /* ---- Actualiser les indicateurs (OpenAlex) ---- */
+    if ($action === 'refresh_metrics') {
+        $st = $pdo->prepare('SELECT orcid FROM profiles WHERE researcher_id=?');
+        $st->execute([$me['id']]); $orcid = $st->fetchColumn() ?: '';
+        if (!$orcid) {
+            flash(t('metrics_need_orcid'), 'error');
+        } elseif (refresh_metrics_for($pdo, (int)$me['id'], $orcid, false)) {
+            flash(t('metrics_updated'), 'success');
+        } else {
+            flash(t('metrics_failed'), 'error');
+        }
+        header('Location: tableau-de-bord.php#metrics'); exit;
+    }
 }
 
 // Données
 $st = $pdo->prepare('SELECT * FROM profiles WHERE researcher_id=?'); $st->execute([$me['id']]); $p = $st->fetch() ?: [];
+
+// Actualisation automatique des indicateurs si périmés (>7 j) et non manuels
+if (!empty($p['orcid']) && empty($p['metrics_manual']) && metrics_are_stale($p['metrics_updated_at'] ?? null)) {
+    try {
+        if (refresh_metrics_for($pdo, (int)$me['id'], $p['orcid'], false)) {
+            $st = $pdo->prepare('SELECT * FROM profiles WHERE researcher_id=?'); $st->execute([$me['id']]); $p = $st->fetch() ?: $p;
+        }
+    } catch (Throwable $e) { /* colonnes absentes ou réseau : on ignore */ }
+}
+
 $st = $pdo->prepare('SELECT * FROM publications WHERE researcher_id=? ORDER BY year DESC, id DESC'); $st->execute([$me['id']]); $pubs = $st->fetchAll();
 $cfg = config();
 $photoUrl = !empty($p['photo']) ? $cfg['uploads_url'].'/'.$p['photo'] : null;
@@ -238,8 +278,36 @@ require __DIR__ . '/header.php';
       </div>
       <div class="form-group"><label><?= t('website') ?></label><input type="text" name="website_url" value="<?= e($p['website_url']??'') ?>"></div>
 
+      <h3 class="portal-h3" id="metrics"><?= t('metrics_title') ?></h3>
+      <label class="toggle-line">
+        <input type="checkbox" name="name_clickable" value="1" <?= (!isset($p['name_clickable']) || $p['name_clickable']) ? 'checked' : '' ?>>
+        <?= t('name_clickable_label') ?>
+      </label>
+      <label class="toggle-line">
+        <input type="checkbox" name="metrics_manual" value="1" id="metricsManual" <?= !empty($p['metrics_manual']) ? 'checked' : '' ?>>
+        <?= t('metrics_manual_label') ?>
+      </label>
+      <p class="field-help"><?= t('metrics_help') ?></p>
+      <div class="form-row metrics-fields">
+        <div class="form-group"><label><?= t('citations') ?></label><input type="number" name="citations" min="0" value="<?= e($p['citations'] ?? '') ?>"></div>
+        <div class="form-group"><label><?= t('h_index') ?></label><input type="number" name="h_index" min="0" value="<?= e($p['h_index'] ?? '') ?>"></div>
+        <div class="form-group"><label><?= t('i10_index') ?></label><input type="number" name="i10_index" min="0" value="<?= e($p['i10_index'] ?? '') ?>"></div>
+      </div>
+
       <button class="btn btn-primary" type="submit"><i class="fas fa-floppy-disk"></i> <?= t('save_profile') ?></button>
     </form>
+
+    <div class="metrics-refresh">
+      <?php if (!empty($p['metrics_updated_at'])): ?>
+        <span class="metrics-date"><i class="fas fa-clock"></i> <?= t('metrics_updated_on') ?> <?= e(date('d/m/Y', strtotime($p['metrics_updated_at']))) ?>
+          <?= !empty($p['metrics_manual']) ? '· '.t('metrics_src_manual') : '· '.t('metrics_src_openalex') ?></span>
+      <?php endif; ?>
+      <form method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="refresh_metrics">
+        <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-rotate"></i> <?= t('metrics_refresh') ?></button>
+      </form>
+    </div>
   </section>
 
   <!-- PUBLICATIONS -->

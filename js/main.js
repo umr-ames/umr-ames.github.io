@@ -264,6 +264,37 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(function () { /* hors-ligne ou site statique : on garde la liste statique */ });
   })();
 
+  /* ---- Noms de membres cliquables (si le chercheur l'a activé) ---- */
+  (function () {
+    function norm(s) {
+      return (s || '')
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .replace(/\b(dr|pr|prof|professeur|mr|mme|m)\.?\b/g, '')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+    }
+    fetch('/api/chercheurs.php', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.ok || !data.researchers || !data.researchers.length) return;
+        const map = {};
+        data.researchers.forEach(function (x) { map[norm(x.full_name)] = x.slug; });
+        document.querySelectorAll('.instance-name, .membre-name').forEach(function (el) {
+          if (el.querySelector('a')) return;
+          const slug = map[norm(el.textContent)];
+          if (!slug) return;
+          const a = document.createElement('a');
+          a.href = '/chercheur.php?slug=' + encodeURIComponent(slug);
+          a.className = 'member-link';
+          a.textContent = el.textContent;
+          el.textContent = '';
+          el.appendChild(a);
+        });
+      })
+      .catch(function () { /* site statique / hors-ligne : noms non cliquables */ });
+  })();
+
   /* ---- Lightbox galeries ---- */
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {

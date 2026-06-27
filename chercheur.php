@@ -34,8 +34,8 @@ if ($r) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20260621">
-  <link rel="stylesheet" href="/css/portal.css?v=20260621">
+  <link rel="stylesheet" href="/css/style.css?v=20260625">
+  <link rel="stylesheet" href="/css/portal.css?v=20260625">
 </head>
 <body class="portal-body">
 <header class="portal-header">
@@ -87,6 +87,24 @@ if ($r) {
       </aside>
 
       <div class="profile-body">
+        <?php
+          $hasMetrics = isset($r['citations']) || isset($r['h_index']) || isset($r['i10_index']);
+          $hasMetrics = $hasMetrics && (($r['citations']??null) !== null || ($r['h_index']??null) !== null || ($r['i10_index']??null) !== null);
+        ?>
+        <?php if ($hasMetrics): ?>
+          <section class="profile-section">
+            <h2 class="portal-h2"><?= t('metrics_title') ?></h2>
+            <div class="metrics-cards">
+              <div class="metric-card"><span class="metric-num"><?= (int)($r['citations'] ?? 0) ?></span><span class="metric-lbl"><?= t('citations') ?></span></div>
+              <div class="metric-card"><span class="metric-num"><?= (int)($r['h_index'] ?? 0) ?></span><span class="metric-lbl"><?= t('h_index') ?></span></div>
+              <div class="metric-card"><span class="metric-num"><?= (int)($r['i10_index'] ?? 0) ?></span><span class="metric-lbl"><?= t('i10_index') ?></span></div>
+            </div>
+            <?php if (!empty($r['metrics_updated_at'])): ?>
+              <p class="metrics-source"><?= !empty($r['metrics_manual']) ? t('metrics_src_manual') : t('metrics_src_openalex') ?> · <?= t('metrics_updated_on') ?> <?= e(date('d/m/Y', strtotime($r['metrics_updated_at']))) ?></p>
+            <?php endif; ?>
+          </section>
+        <?php endif; ?>
+
         <?php if ($r['bio']): ?>
           <section class="profile-section">
             <h2 class="portal-h2"><?= t('bio') ?></h2>

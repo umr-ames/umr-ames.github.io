@@ -471,6 +471,9 @@ h1, h2, h3, h4,
 .instance-item { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: var(--bg); border-radius: 7px; }
 .instance-role { font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; }
 .instance-name { font-size: 0.9rem; font-weight: 600; color: var(--primary); }
+.member-link { color: var(--accent-dark); font-weight: 700; transition: var(--transition); border-bottom: 1px solid rgba(21,160,143,0.45); }
+.member-link::after { content: '\f0c1'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.62em; margin-left: 5px; opacity: 0.65; vertical-align: middle; }
+.member-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .instance-note .instance-name { font-size: 0.82rem; font-weight: 400; color: var(--text-secondary); font-style: italic; }
 
 /* =====================================================

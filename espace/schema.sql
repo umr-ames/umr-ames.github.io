@@ -29,6 +29,12 @@ CREATE TABLE IF NOT EXISTS profiles (
   discipline       VARCHAR(160) DEFAULT NULL,
   axis             VARCHAR(60)  DEFAULT NULL,    -- axe principal : env | sante | math | ia
   research_axes    TEXT,                          -- liste JSON des axes (unité + libres)
+  name_clickable   TINYINT(1) NOT NULL DEFAULT 1, -- nom cliquable sur le site
+  citations        INT          DEFAULT NULL,     -- bibliométrie (OpenAlex via ORCID)
+  h_index          INT          DEFAULT NULL,
+  i10_index        INT          DEFAULT NULL,
+  metrics_manual   TINYINT(1) NOT NULL DEFAULT 0, -- 1 = indicateurs saisis à la main
+  metrics_updated_at DATETIME   DEFAULT NULL,
   bio              TEXT,
   phone            VARCHAR(60)  DEFAULT NULL,
   public_email     VARCHAR(190) DEFAULT NULL,
