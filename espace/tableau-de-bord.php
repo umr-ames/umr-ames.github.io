@@ -307,6 +307,11 @@ require __DIR__ . '/header.php';
           <?= t('metrics_auto_note') ?>
         <?php endif; ?>
       </span>
+      <form method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="refresh_metrics">
+        <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-rotate"></i> <?= t('metrics_refresh') ?></button>
+      </form>
     </div>
   </section>
 
