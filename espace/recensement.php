@@ -41,11 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $onlyAmes = publications_ames_only();
-$rows = $pdo->query(
-    'SELECT pub.*, r.full_name FROM publications pub
-     JOIN researchers r ON r.id = pub.researcher_id
-     ORDER BY (pub.ames_affiliation IS NULL) DESC, r.full_name, pub.year DESC, pub.id DESC'
-)->fetchAll();
+$needMigrate = false;
+$rows = [];
+try {
+    $rows = $pdo->query(
+        'SELECT pub.*, r.full_name FROM publications pub
+         JOIN researchers r ON r.id = pub.researcher_id
+         ORDER BY (pub.ames_affiliation IS NULL) DESC, r.full_name, pub.year DESC, pub.id DESC'
+    )->fetchAll();
+} catch (PDOException $ex) {
+    $needMigrate = true; // colonnes pas encore créées
+}
 
 $nAmes = 0; $nNon = 0; $nVerif = 0;
 foreach ($rows as $r0) {
@@ -59,6 +65,13 @@ require __DIR__ . '/header.php';
 ?>
 <h1 class="portal-h1"><i class="fas fa-clipboard-check"></i> <?= t('recense_title') ?></h1>
 <p class="portal-sub"><?= t('recense_sub') ?></p>
+
+<?php if ($needMigrate): ?>
+  <div class="flash flash-error">
+    La base doit d'abord être mise à jour.
+    <a href="migrate.php"><strong>Cliquez ici pour lancer la mise à jour</strong></a>, puis revenez sur cette page.
+  </div>
+<?php require __DIR__ . '/footer.php'; exit; endif; ?>
 
 <div class="admin-toolbar">
   <form method="post">
