@@ -41,6 +41,12 @@ add_col($pdo, $done, $skip, 'profiles', 'i10_index',          'INT NULL');
 add_col($pdo, $done, $skip, 'profiles', 'metrics_manual',     'TINYINT(1) NOT NULL DEFAULT 0');
 add_col($pdo, $done, $skip, 'profiles', 'metrics_updated_at', 'DATETIME NULL');
 
+// --- publications : affiliation AMES ---
+add_col($pdo, $done, $skip, 'publications', 'ames_affiliation', 'TINYINT(1) NULL');        // NULL=à vérifier, 1=oui, 0=non
+add_col($pdo, $done, $skip, 'publications', 'ames_manual',      'TINYINT(1) NOT NULL DEFAULT 0');
+add_col($pdo, $done, $skip, 'publications', 'affiliation_raw',  'VARCHAR(500) NULL');
+add_col($pdo, $done, $skip, 'publications', 'ames_checked_at',  'DATETIME NULL');
+
 // --- settings ---
 if (!table_exists($pdo, 'settings')) {
     $pdo->exec('CREATE TABLE settings (k VARCHAR(60) PRIMARY KEY, v VARCHAR(255) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
@@ -49,6 +55,7 @@ if (!table_exists($pdo, 'settings')) {
     $skip[] = 'table settings';
 }
 $pdo->prepare('INSERT INTO settings (k, v) VALUES (\'metrics_public\', \'1\') ON DUPLICATE KEY UPDATE v = v')->execute();
+$pdo->prepare('INSERT INTO settings (k, v) VALUES (\'publications_ames_only\', \'0\') ON DUPLICATE KEY UPDATE v = v')->execute();
 
 $page_title = 'Mise à jour BDD';
 require __DIR__ . '/header.php';

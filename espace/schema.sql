@@ -61,6 +61,10 @@ CREATE TABLE IF NOT EXISTS publications (
   axis          VARCHAR(60)  DEFAULT NULL,     -- env | sante | math | ia
   source        ENUM('manual','orcid') NOT NULL DEFAULT 'manual',
   external_id   VARCHAR(120) DEFAULT NULL,     -- put-code ORCID (anti-doublon)
+  ames_affiliation TINYINT(1) NULL,            -- NULL=à vérifier, 1=oui, 0=non
+  ames_manual      TINYINT(1) NOT NULL DEFAULT 0,
+  affiliation_raw  VARCHAR(500) NULL,
+  ames_checked_at  DATETIME NULL,
   created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_pub_researcher FOREIGN KEY (researcher_id)
     REFERENCES researchers(id) ON DELETE CASCADE,
@@ -76,3 +80,4 @@ CREATE TABLE IF NOT EXISTS settings (
   v VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO settings (k, v) VALUES ('metrics_public', '1') ON DUPLICATE KEY UPDATE v = v;
+INSERT INTO settings (k, v) VALUES ('publications_ames_only', '0') ON DUPLICATE KEY UPDATE v = v;

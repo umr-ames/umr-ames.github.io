@@ -29,7 +29,8 @@ if ($r) {
         } catch (Throwable $e) { /* réseau / colonnes : on ignore */ }
     }
 
-    $st = $pdo->prepare('SELECT * FROM publications WHERE researcher_id=? ORDER BY year DESC, id DESC');
+    $amesOnly = publications_ames_only() ? ' AND ames_affiliation = 1' : '';
+    $st = $pdo->prepare('SELECT * FROM publications WHERE researcher_id=?' . $amesOnly . ' ORDER BY year DESC, id DESC');
     $st->execute([$r['id']]);
     $pubs = $st->fetchAll();
     $photoUrl = !empty($r['photo']) ? $cfg['uploads_url'].'/'.$r['photo'] : null;
@@ -46,8 +47,8 @@ if ($r) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20260626">
-  <link rel="stylesheet" href="/css/portal.css?v=20260626">
+  <link rel="stylesheet" href="/css/style.css?v=20260627">
+  <link rel="stylesheet" href="/css/portal.css?v=20260627">
 </head>
 <body class="portal-body">
 <header class="portal-header">

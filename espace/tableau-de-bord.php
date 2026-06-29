@@ -2,6 +2,7 @@
 require_once __DIR__ . '/lib.php';
 require_once __DIR__ . '/orcid.php';
 require_once __DIR__ . '/metrics.php';
+require_once __DIR__ . '/affiliation.php';
 $me = require_login();
 $pdo = db();
 
@@ -160,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else {
             $norm = orcid_normalize($orcid);
             if ($norm) $pdo->prepare('UPDATE profiles SET orcid=? WHERE researcher_id=?')->execute([$norm, $me['id']]);
+            try { detect_affiliations_for($pdo, (int)$me['id'], $norm ?: $orcid); } catch (Throwable $e) {}
             flash(sprintf(t('orcid_done'), $imp, $tot), 'success');
         }
         header('Location: tableau-de-bord.php#pubs'); exit;

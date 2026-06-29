@@ -16,8 +16,8 @@ $page_title = $page_title ?? 'Espace chercheur';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20260626">
-  <link rel="stylesheet" href="/css/portal.css?v=20260626">
+  <link rel="stylesheet" href="/css/style.css?v=20260627">
+  <link rel="stylesheet" href="/css/portal.css?v=20260627">
 </head>
 <body class="portal-body">
 <header class="portal-header">
@@ -30,6 +30,7 @@ $page_title = $page_title ?? 'Espace chercheur';
         <a href="<?= e(lang_url('/espace/tableau-de-bord.php')) ?>"><i class="fas fa-gauge"></i> <?= t('dashboard') ?></a>
         <?php if ($me['role'] === 'admin'): ?>
           <a href="<?= e(lang_url('/espace/admin.php')) ?>"><i class="fas fa-user-shield"></i> <?= t('admin') ?></a>
+          <a href="<?= e(lang_url('/espace/recensement.php')) ?>"><i class="fas fa-clipboard-check"></i> <?= t('recense_title') ?></a>
         <?php endif; ?>
         <a href="<?= e(lang_url('/chercheur.php?slug=' . $me['slug'])) ?>"><i class="fas fa-id-badge"></i> <?= t('my_page') ?></a>
         <a href="/espace/deconnexion.php" class="portal-logout"><i class="fas fa-right-from-bracket"></i> <?= t('logout') ?></a>

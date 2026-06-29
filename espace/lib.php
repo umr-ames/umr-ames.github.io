@@ -124,6 +124,9 @@ function set_setting(string $k, string $v): void {
 function metrics_public(): bool {
     return get_setting('metrics_public', '1') === '1';
 }
+function publications_ames_only(): bool {
+    return get_setting('publications_ames_only', '0') === '1';
+}
 
 /* --- Axes (libellés) --- */
 function axes(): array {
