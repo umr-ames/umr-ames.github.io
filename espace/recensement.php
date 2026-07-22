@@ -94,6 +94,17 @@ require __DIR__ . '/header.php';
   <span class="admin-toolbar-help"><?= t('recense_filter_help') ?></span>
 </div>
 
+<div class="admin-toolbar export-bar">
+  <form method="get" action="export-publications.php" class="export-form">
+    <label class="export-label"><?= t('export_from') ?>
+      <input type="date" name="from" value="<?= e((date('Y') - 5) . '-01-01') ?>" required>
+    </label>
+    <label class="toggle-line" style="margin:0"><input type="checkbox" name="ames_only" value="1"> <?= t('export_ames_only') ?></label>
+    <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-file-word"></i> <?= t('export_btn') ?></button>
+  </form>
+  <span class="admin-toolbar-help"><?= t('export_help') ?></span>
+</div>
+
 <p class="recense-stats">
   <span class="status status-approved"><?= t('recense_yes') ?> : <?= $nAmes ?></span>
   <span class="status status-suspended"><?= t('recense_no') ?> : <?= $nNon ?></span>
