@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/lib.php';
 require_once __DIR__ . '/affiliation.php';
+require_once __DIR__ . '/orcid.php';
 $me = require_admin();
 $pdo = db();
 
@@ -16,14 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'recense_all') {
         $list = $pdo->query('SELECT researcher_id, orcid FROM profiles WHERE orcid IS NOT NULL AND orcid <> \'\'')->fetchAll();
-        $checked = 0; $ames = 0; $people = 0;
+        $imported = 0; $checked = 0; $ames = 0; $people = 0;
         foreach ($list as $row) {
             try {
+                // 1. Importer les nouvelles publications depuis ORCID
+                [$imp] = orcid_import((int)$row['researcher_id'], $row['orcid']);
+                $imported += $imp;
+                // 2. Détecter les affiliations AMES via OpenAlex
                 $res = detect_affiliations_for($pdo, (int)$row['researcher_id'], $row['orcid']);
                 $checked += $res['checked']; $ames += $res['ames']; $people++;
             } catch (Throwable $e) {}
         }
-        flash(sprintf(t('recense_done'), $checked, $ames, $people), 'success');
+        flash(sprintf(t('recense_done'), $checked, $ames, $people) . ' (+' . $imported . ' importée(s) depuis ORCID)', 'success');
         header('Location: recensement.php'); exit;
     }
 
@@ -43,14 +48,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $onlyAmes = publications_ames_only();
 $needMigrate = false;
 $rows = [];
+
+$filterFrom = trim($_GET['from'] ?? '');
+$filterYear = 0;
+if ($filterFrom !== '') {
+    $ts = strtotime($filterFrom);
+    if ($ts) $filterYear = (int)date('Y', $ts);
+}
+
 try {
-    $rows = $pdo->query(
-        'SELECT pub.*, r.full_name FROM publications pub
-         JOIN researchers r ON r.id = pub.researcher_id
-         ORDER BY (pub.ames_affiliation IS NULL) DESC, r.full_name, pub.year DESC, pub.id DESC'
-    )->fetchAll();
+    if ($filterYear > 0) {
+        $st = $pdo->prepare(
+            'SELECT pub.*, r.full_name FROM publications pub
+             JOIN researchers r ON r.id = pub.researcher_id
+             WHERE pub.year >= ?
+             ORDER BY pub.year DESC, pub.id DESC'
+        );
+        $st->execute([$filterYear]);
+        $rows = $st->fetchAll();
+    } else {
+        $rows = $pdo->query(
+            'SELECT pub.*, r.full_name FROM publications pub
+             JOIN researchers r ON r.id = pub.researcher_id
+             ORDER BY pub.year DESC, pub.id DESC'
+        )->fetchAll();
+    }
 } catch (PDOException $ex) {
-    $needMigrate = true; // colonnes pas encore créées
+    $needMigrate = true;
 }
 
 $nAmes = 0; $nNon = 0; $nVerif = 0;
@@ -95,10 +119,17 @@ require __DIR__ . '/header.php';
 </div>
 
 <div class="admin-toolbar export-bar">
-  <form method="get" action="export-publications.php" class="export-form">
+  <form method="get" action="recensement.php" class="export-form" style="margin-bottom:6px">
     <label class="export-label"><?= t('export_from') ?>
-      <input type="date" name="from" value="<?= e((date('Y') - 5) . '-01-01') ?>" required>
+      <input type="date" name="from" value="<?= e($filterFrom ?: (date('Y') - 5) . '-01-01') ?>">
     </label>
+    <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-filter"></i> Filtrer le tableau</button>
+    <?php if ($filterYear > 0): ?>
+      <a href="recensement.php" class="btn btn-sm btn-outline-dark">✕ Tout afficher</a>
+    <?php endif; ?>
+  </form>
+  <form method="get" action="export-publications.php" class="export-form">
+    <input type="hidden" name="from" value="<?= e($filterFrom ?: (date('Y') - 5) . '-01-01') ?>">
     <label class="toggle-line" style="margin:0"><input type="checkbox" name="ames_only" value="1"> <?= t('export_ames_only') ?></label>
     <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-file-word"></i> <?= t('export_btn') ?></button>
   </form>
