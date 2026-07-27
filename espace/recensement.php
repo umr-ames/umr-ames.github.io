@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/lib.php';
-require_once __DIR__ . '/affiliation.php';
 require_once __DIR__ . '/orcid.php';
+require_once __DIR__ . '/claude.php';
 $me = require_admin();
 $pdo = db();
 
@@ -15,20 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: recensement.php'); exit;
     }
 
+    // Import ORCID uniquement (sans détection d'affiliation)
     if ($action === 'recense_all') {
         $list = $pdo->query('SELECT researcher_id, orcid FROM profiles WHERE orcid IS NOT NULL AND orcid <> \'\'')->fetchAll();
-        $imported = 0; $checked = 0; $ames = 0; $people = 0;
+        $imported = 0; $people = 0;
         foreach ($list as $row) {
             try {
-                // 1. Importer les nouvelles publications depuis ORCID
                 [$imp] = orcid_import((int)$row['researcher_id'], $row['orcid']);
                 $imported += $imp;
-                // 2. Détecter les affiliations AMES via OpenAlex
-                $res = detect_affiliations_for($pdo, (int)$row['researcher_id'], $row['orcid']);
-                $checked += $res['checked']; $ames += $res['ames']; $people++;
+                $people++;
             } catch (Throwable $e) {}
         }
-        flash(sprintf(t('recense_done'), $checked, $ames, $people) . ' (+' . $imported . ' importée(s) depuis ORCID)', 'success');
+        flash(sprintf('%d publication(s) importée(s) depuis ORCID pour %d chercheur(s).', $imported, $people), 'success');
         header('Location: recensement.php'); exit;
     }
 
@@ -36,18 +34,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pid = (int)($_POST['pub_id'] ?? 0);
         $val = $_POST['val'] ?? '';
         if ($val === 'auto') {
-            $pdo->prepare('UPDATE publications SET ames_manual = 0 WHERE id = ?')->execute([$pid]);
+            $pdo->prepare('UPDATE publications SET ames_manual = 0, ames_affiliation = NULL WHERE id = ?')->execute([$pid]);
         } elseif ($val === '1' || $val === '0') {
             $pdo->prepare('UPDATE publications SET ames_manual = 1, ames_affiliation = ?, ames_checked_at = NOW() WHERE id = ?')
                 ->execute([(int)$val, $pid]);
         }
         header('Location: recensement.php#p' . $pid); exit;
     }
+
+    // Vérification Claude : publication unique
+    if ($action === 'verify_claude') {
+        $apiKey = get_setting('anthropic_api_key', '');
+        $pid    = (int)($_POST['pub_id'] ?? 0);
+        if ($apiKey && $pid) {
+            $st = $pdo->prepare('SELECT * FROM publications WHERE id = ?');
+            $st->execute([$pid]);
+            $p = $st->fetch();
+            if ($p && !$p['ames_manual']) {
+                $val = claude_verify_ames($apiKey, $p);
+                if ($val !== null) {
+                    $pdo->prepare('UPDATE publications SET ames_affiliation = ?, ames_checked_at = NOW() WHERE id = ?')
+                        ->execute([$val, $pid]);
+                    flash($val === 1 ? 'Claude : publication affiliée AMES.' : 'Claude : publication non affiliée.', 'success');
+                } else {
+                    flash('Claude n\'a pas pu déterminer l\'affiliation (résultat incertain).', 'info');
+                }
+            }
+        }
+        header('Location: recensement.php#p' . $pid); exit;
+    }
+
+    // Vérification Claude : toutes les publications "À vérifier"
+    if ($action === 'verify_claude_pending') {
+        $apiKey = get_setting('anthropic_api_key', '');
+        if ($apiKey) {
+            set_time_limit(180);
+            $pending = $pdo->query('SELECT * FROM publications WHERE ames_affiliation IS NULL AND ames_manual = 0')->fetchAll();
+            $done = 0; $ames = 0; $uncertain = 0;
+            foreach ($pending as $p) {
+                $val = claude_verify_ames($apiKey, $p);
+                if ($val !== null) {
+                    $pdo->prepare('UPDATE publications SET ames_affiliation = ?, ames_checked_at = NOW() WHERE id = ?')
+                        ->execute([$val, $p['id']]);
+                    $done++;
+                    if ($val === 1) $ames++;
+                } else {
+                    $uncertain++;
+                }
+            }
+            flash(sprintf(
+                'Claude a vérifié %d publication(s) : %d AMES, %d non affiliées, %d incertaines.',
+                $done + $uncertain, $ames, $done - $ames, $uncertain
+            ), 'success');
+        } else {
+            flash('Clé API Anthropic non configurée (voir Administration).', 'error');
+        }
+        header('Location: recensement.php'); exit;
+    }
 }
 
-$onlyAmes = publications_ames_only();
+$onlyAmes    = publications_ames_only();
+$claudeReady = get_setting('anthropic_api_key', '') !== '';
 $needMigrate = false;
-$rows = [];
+$rows        = [];
 
 $filterFrom = trim($_GET['from'] ?? '');
 $filterYear = 0;
@@ -62,7 +111,7 @@ try {
             'SELECT pub.*, r.full_name FROM publications pub
              JOIN researchers r ON r.id = pub.researcher_id
              WHERE pub.year >= ?
-             ORDER BY pub.year DESC, pub.id DESC'
+             ORDER BY pub.year DESC, r.full_name ASC, pub.id DESC'
         );
         $st->execute([$filterYear]);
         $rows = $st->fetchAll();
@@ -70,7 +119,7 @@ try {
         $rows = $pdo->query(
             'SELECT pub.*, r.full_name FROM publications pub
              JOIN researchers r ON r.id = pub.researcher_id
-             ORDER BY pub.year DESC, pub.id DESC'
+             ORDER BY pub.year DESC, r.full_name ASC, pub.id DESC'
         )->fetchAll();
     }
 } catch (PDOException $ex) {
@@ -101,10 +150,27 @@ require __DIR__ . '/header.php';
   <form method="post">
     <?= csrf_field() ?>
     <input type="hidden" name="action" value="recense_all">
-    <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-magnifying-glass"></i> <?= t('recense_run') ?></button>
+    <button class="btn btn-dark btn-sm" type="submit"><i class="fas fa-rotate"></i> Actualiser depuis ORCID</button>
   </form>
-  <span class="admin-toolbar-help"><?= t('recense_run_help') ?></span>
+  <span class="admin-toolbar-help">Importe les nouvelles publications depuis ORCID pour tous les chercheurs ayant un compte et un ORCID.</span>
 </div>
+
+<?php if ($claudeReady): ?>
+<div class="admin-toolbar">
+  <form method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="action" value="verify_claude_pending">
+    <button class="btn btn-sm" style="background:#7c3aed;color:#fff;border:none;border-radius:6px;padding:6px 14px;cursor:pointer" type="submit">
+      <i class="fas fa-robot"></i> Vérifier les "À vérifier" avec Claude
+    </button>
+  </form>
+  <span class="admin-toolbar-help"><?= $nVerif ?> publication(s) à vérifier — Claude analyse chaque affiliation via l'API Anthropic.</span>
+</div>
+<?php else: ?>
+<div class="admin-toolbar">
+  <span class="admin-toolbar-help" style="color:#b45309"><i class="fas fa-triangle-exclamation"></i> Clé API Anthropic non configurée — rendez-vous dans <a href="admin.php">Administration</a> pour l'activer.</span>
+</div>
+<?php endif; ?>
 
 <div class="admin-toolbar">
   <form method="post" id="filterForm">
@@ -150,9 +216,9 @@ require __DIR__ . '/header.php';
   <tbody>
   <?php foreach ($rows as $p): ?>
     <?php
-      $st = $p['ames_affiliation'];
-      if ($st === null) { $cls='status-pending'; $lbl=t('recense_unknown'); }
-      elseif ((int)$st === 1) { $cls='status-approved'; $lbl=t('recense_yes'); }
+      $affilVal = $p['ames_affiliation'];
+      if ($affilVal === null) { $cls='status-pending'; $lbl=t('recense_unknown'); }
+      elseif ((int)$affilVal === 1) { $cls='status-approved'; $lbl=t('recense_yes'); }
       else { $cls='status-suspended'; $lbl=t('recense_no'); }
     ?>
     <tr id="p<?= (int)$p['id'] ?>">
@@ -169,8 +235,18 @@ require __DIR__ . '/header.php';
           <input type="hidden" name="pub_id" value="<?= (int)$p['id'] ?>">
           <button name="val" value="1" class="btn btn-sm btn-primary" title="<?= t('recense_yes') ?>">AMES</button>
           <button name="val" value="0" class="btn btn-sm btn-outline-dark" title="<?= t('recense_no') ?>"><?= t('recense_no') ?></button>
-          <button name="val" value="auto" class="btn btn-sm btn-outline-dark" title="Auto"><i class="fas fa-rotate"></i></button>
+          <button name="val" value="auto" class="btn btn-sm btn-outline-dark" title="Réinitialiser"><i class="fas fa-rotate"></i></button>
         </form>
+        <?php if ($claudeReady && $affilVal === null && !$p['ames_manual']): ?>
+        <form method="post" class="admin-actions" style="margin-top:4px">
+          <?= csrf_field() ?>
+          <input type="hidden" name="action" value="verify_claude">
+          <input type="hidden" name="pub_id" value="<?= (int)$p['id'] ?>">
+          <button class="btn btn-sm" style="background:#7c3aed;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer" title="Vérifier avec Claude">
+            <i class="fas fa-robot"></i> Claude
+          </button>
+        </form>
+        <?php endif; ?>
       </td>
     </tr>
   <?php endforeach; ?>

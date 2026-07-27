@@ -14,6 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: admin.php'); exit;
     }
 
+    if ($action === 'set_anthropic_key') {
+        $key = trim($_POST['anthropic_api_key'] ?? '');
+        if ($key !== '') {
+            set_setting('anthropic_api_key', $key);
+            flash('Clé API Anthropic enregistrée.', 'success');
+        }
+        header('Location: admin.php'); exit;
+    }
+
     if ($action === 'refresh_all_metrics') {
         $list = $pdo->query('SELECT researcher_id, orcid FROM profiles WHERE orcid IS NOT NULL AND orcid <> \'\' AND (metrics_manual = 0 OR metrics_manual IS NULL)')->fetchAll();
         $ok = 0;
@@ -60,6 +69,23 @@ require __DIR__ . '/header.php';
     </label>
   </form>
   <span class="admin-toolbar-help"><?= t('metrics_visibility_help') ?></span>
+</div>
+
+<?php $anthropicKey = get_setting('anthropic_api_key', ''); ?>
+<div class="admin-toolbar">
+  <form method="post" class="export-form">
+    <?= csrf_field() ?>
+    <input type="hidden" name="action" value="set_anthropic_key">
+    <label class="export-label">Clé API Anthropic (Claude)
+      <input type="password" name="anthropic_api_key" placeholder="sk-ant-api03-…" style="width:320px;font-family:monospace">
+    </label>
+    <button class="btn btn-dark btn-sm" type="submit">Enregistrer</button>
+  </form>
+  <?php if ($anthropicKey): ?>
+    <span class="admin-toolbar-help" style="color:#0e7c6f"><i class="fas fa-check-circle"></i> Clé configurée (<?= e(substr($anthropicKey, 0, 12)) ?>…)</span>
+  <?php else: ?>
+    <span class="admin-toolbar-help">Requis pour la vérification des affiliations AMES via Claude (page Recensement).</span>
+  <?php endif; ?>
 </div>
 
 <table class="admin-table">
