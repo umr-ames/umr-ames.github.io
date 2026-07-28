@@ -45,18 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   window.addEventListener('scroll', updateActiveLink, { passive: true });
 
-  /* ---- Onglets Membres : Permanents / Associés ---- */
-  document.querySelectorAll('.tab-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-
-      const tab = btn.dataset.tab;
-      document.querySelectorAll('.membres-grid').forEach(function (g) {
-        g.classList.toggle('hidden', g.id !== 'tab-' + tab);
+  /* ---- Recherche de chercheurs par nom ---- */
+  const membreSearch = document.getElementById('membreSearch');
+  if (membreSearch) {
+    membreSearch.addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      document.querySelectorAll('.membres-group').forEach(function (group) {
+        let visible = 0;
+        group.querySelectorAll('.membre-card').forEach(function (card) {
+          const name = card.querySelector('.membre-name').textContent.toLowerCase();
+          const match = name.indexOf(q) !== -1;
+          card.classList.toggle('hidden', !match);
+          if (match) visible++;
+        });
+        const empty = group.querySelector('.membres-empty');
+        if (empty) empty.classList.toggle('hidden', visible !== 0);
       });
     });
-  });
+  }
 
   /* ---- Filtres Publications ---- */
   document.querySelectorAll('.pub-filter-btn').forEach(function (btn) {
