@@ -69,8 +69,9 @@ h1, h2, h3, h4,
 
 /* ---- Utilitaires ---- */
 .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-.section { padding: 104px 0; }
+.section { padding: 104px 0; scroll-margin-top: 90px; }
 .section-alt { background: var(--bg); }
+.hero { scroll-margin-top: 90px; }
 .hidden { display: none !important; }
 
 .section-header { text-align: center; margin-bottom: 64px; max-width: 720px; margin-left: auto; margin-right: auto; }
@@ -169,9 +170,11 @@ h1, h2, h3, h4,
 #header.scrolled .dropdown-toggle { color: var(--text); }
 .dropdown-toggle i { font-size: 0.62rem; transition: transform 0.25s var(--ease); opacity: 0.8; }
 .has-dropdown:hover .dropdown-toggle,
-.has-dropdown.open .dropdown-toggle { color: var(--accent-dark); background: rgba(21,160,143,0.10); }
+.has-dropdown.open .dropdown-toggle,
+.has-dropdown.group-active .dropdown-toggle { color: var(--accent-dark); background: rgba(21,160,143,0.10); }
 .has-dropdown:hover .dropdown-toggle i,
 .has-dropdown.open .dropdown-toggle i { transform: rotate(180deg); }
+#header.scrolled .has-dropdown.group-active .dropdown-toggle { color: var(--accent-dark); }
 
 .dropdown-menu {
   position: absolute; top: calc(100% + 10px); left: 0; min-width: 210px;

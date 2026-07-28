@@ -37,13 +37,84 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateActiveLink() {
     let current = '';
     sections.forEach(function (s) {
+      if (s.offsetParent === null) return; // rubrique masquée (autre page) : on l'ignore
       if (window.scrollY >= s.offsetTop - 90) current = s.id;
     });
     navLinks.forEach(function (a) {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
   }
+  function setActiveLink(id) {
+    navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
   window.addEventListener('scroll', updateActiveLink, { passive: true });
+
+  /* ---- Navigation par page : une seule rubrique visible à la fois ---- */
+  const PAGE_GROUPS = {
+    accueil:    ['accueil'],
+    unite:      ['presentation', 'instances', 'membres', 'partenaires'],
+    recherche:  ['axes', 'equipes', 'projets', 'publications'],
+    actualites: ['actualites'],
+    contact:    ['contact']
+  };
+  const SECTION_TO_GROUP = {};
+  Object.keys(PAGE_GROUPS).forEach(function (g) {
+    PAGE_GROUPS[g].forEach(function (id) { SECTION_TO_GROUP[id] = g; });
+  });
+
+  function showPageGroup(groupKey) {
+    const ids = PAGE_GROUPS[groupKey] || PAGE_GROUPS.accueil;
+    document.querySelectorAll('section[data-page]').forEach(function (s) {
+      s.classList.toggle('hidden', ids.indexOf(s.id) === -1);
+    });
+    document.querySelectorAll('.has-dropdown').forEach(function (d) {
+      const active = Array.prototype.some.call(d.querySelectorAll('.dropdown-menu a[href^="#"]'), function (a) {
+        return SECTION_TO_GROUP[a.getAttribute('href').slice(1)] === groupKey;
+      });
+      d.classList.toggle('group-active', active);
+    });
+  }
+
+  function goToSection(targetId, opts) {
+    opts = opts || {};
+    if (!SECTION_TO_GROUP.hasOwnProperty(targetId)) targetId = 'accueil';
+    showPageGroup(SECTION_TO_GROUP[targetId]);
+    setActiveLink(targetId);
+    const el = document.getElementById(targetId);
+    if (el) { el.scrollIntoView({ behavior: opts.instant ? 'auto' : 'smooth', block: 'start' }); }
+    if (opts.updateHash !== false && location.hash !== '#' + targetId) {
+      history.pushState(null, '', '#' + targetId);
+    }
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    const id = a.getAttribute('href').slice(1);
+    if (!SECTION_TO_GROUP.hasOwnProperty(id)) return;
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      goToSection(id);
+    });
+  });
+
+  window.addEventListener('popstate', function () {
+    const id = location.hash.replace('#', '') || 'accueil';
+    goToSection(id, { updateHash: false, instant: true });
+  });
+
+  /* État initial : respecte un lien direct vers une rubrique (#membres…), sinon Accueil */
+  const initialId = location.hash.replace('#', '');
+  if (initialId && SECTION_TO_GROUP.hasOwnProperty(initialId)) {
+    showPageGroup(SECTION_TO_GROUP[initialId]);
+    setActiveLink(initialId);
+    window.requestAnimationFrame(function () {
+      const el = document.getElementById(initialId);
+      if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  } else {
+    showPageGroup('accueil');
+  }
 
   /* ---- Recherche de chercheurs par nom ---- */
   const membreSearch = document.getElementById('membreSearch');
