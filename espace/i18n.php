@@ -113,6 +113,14 @@ function i18n_strings(): array {
         // Admin
         'admin_title' => 'Administration des comptes', 'admin_sub' => 'Validez les nouveaux comptes pour les rendre publics.',
         'col_name' => 'Nom', 'col_email' => 'E-mail', 'col_role' => 'Rôle', 'col_status' => 'Statut', 'col_actions' => 'Actions',
+        // Membres (admin)
+        'members_title' => 'Membres de l\'unité',
+        'members_sub' => 'Liste des membres permanents et associés. Réservé à l\'administration.',
+        'members_permanent' => 'Membres permanents', 'members_associate' => 'Membres associés',
+        'members_export_perm' => 'Permanents (Word)', 'members_export_assoc' => 'Associés (Word)',
+        'members_export_all' => 'Liste complète (Word)',
+        'members_phd' => 'doctorant', 'members_abbrev' => 'Abréviations',
+        'col_estab' => 'Établ.', 'col_grade' => 'Grade', 'col_specialty' => 'Spécialité', 'col_phone' => 'Téléphone',
         'approve' => 'Approuver', 'suspend' => 'Suspendre', 'you' => 'vous', 'status_updated' => 'Statut mis à jour.',
         // Profil public
         'not_found' => 'Chercheur introuvable', 'not_found_txt' => "Cette page n'existe pas ou n'est pas encore publiée.",
@@ -197,6 +205,14 @@ function i18n_strings(): array {
         'orcid_none' => 'No publications found for this ORCID.',
         'admin_title' => 'Account administration', 'admin_sub' => 'Approve new accounts to make them public.',
         'col_name' => 'Name', 'col_email' => 'Email', 'col_role' => 'Role', 'col_status' => 'Status', 'col_actions' => 'Actions',
+        // Members (admin)
+        'members_title' => 'Unit members',
+        'members_sub' => 'List of permanent and associate members. Administration only.',
+        'members_permanent' => 'Permanent members', 'members_associate' => 'Associate members',
+        'members_export_perm' => 'Permanent (Word)', 'members_export_assoc' => 'Associate (Word)',
+        'members_export_all' => 'Full list (Word)',
+        'members_phd' => 'PhD student', 'members_abbrev' => 'Abbreviations',
+        'col_estab' => 'Inst.', 'col_grade' => 'Grade', 'col_specialty' => 'Speciality', 'col_phone' => 'Phone',
         'approve' => 'Approve', 'suspend' => 'Suspend', 'you' => 'you', 'status_updated' => 'Status updated.',
         'not_found' => 'Researcher not found', 'not_found_txt' => 'This page does not exist or is not published yet.',
         'see_members' => 'See members', 'private_preview' => 'Private preview — this profile is not publicly approved yet.',
