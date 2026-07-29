@@ -47,6 +47,22 @@ add_col($pdo, $done, $skip, 'publications', 'ames_manual',      'TINYINT(1) NOT 
 add_col($pdo, $done, $skip, 'publications', 'affiliation_raw',  'VARCHAR(500) NULL');
 add_col($pdo, $done, $skip, 'publications', 'ames_checked_at',  'DATETIME NULL');
 
+// --- login_attempts : limitation anti-force brute ---
+if (!table_exists($pdo, 'login_attempts')) {
+    $pdo->exec(
+        'CREATE TABLE login_attempts (
+           id           INT AUTO_INCREMENT PRIMARY KEY,
+           ip           VARCHAR(45)  NOT NULL,
+           email        VARCHAR(190) NOT NULL,
+           attempted_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+           INDEX idx_attempt (ip, email, attempted_at)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+    );
+    $done[] = 'table login_attempts';
+} else {
+    $skip[] = 'table login_attempts';
+}
+
 // --- settings ---
 if (!table_exists($pdo, 'settings')) {
     $pdo->exec('CREATE TABLE settings (k VARCHAR(60) PRIMARY KEY, v VARCHAR(255) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');

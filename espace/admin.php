@@ -16,7 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'set_anthropic_key') {
         $key = trim($_POST['anthropic_api_key'] ?? '');
-        if ($key !== '') {
+        if ($key === '') {
+            // champ laissé vide : on ne touche pas à la clé existante
+        } elseif (!preg_match('/^sk-ant-[A-Za-z0-9_-]{20,200}$/', $key)) {
+            flash('Format de clé API invalide (attendu : sk-ant-…).', 'error');
+        } else {
             set_setting('anthropic_api_key', $key);
             flash('Clé API Anthropic enregistrée.', 'success');
         }
@@ -82,7 +86,7 @@ require __DIR__ . '/header.php';
     <button class="btn btn-dark btn-sm" type="submit">Enregistrer</button>
   </form>
   <?php if ($anthropicKey): ?>
-    <span class="admin-toolbar-help" style="color:#0e7c6f"><i class="fas fa-check-circle"></i> Clé configurée (<?= e(substr($anthropicKey, 0, 12)) ?>…)</span>
+    <span class="admin-toolbar-help" style="color:#0e7c6f"><i class="fas fa-check-circle"></i> Clé configurée (se termine par …<?= e(substr($anthropicKey, -4)) ?>)</span>
   <?php else: ?>
     <span class="admin-toolbar-help">Requis pour la vérification des affiliations AMES via Claude (page Recensement).</span>
   <?php endif; ?>

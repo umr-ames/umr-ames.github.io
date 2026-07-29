@@ -74,6 +74,15 @@ CREATE TABLE IF NOT EXISTS publications (
 CREATE INDEX idx_pub_year ON publications (year);
 CREATE INDEX idx_pub_axis ON publications (axis);
 
+-- Tentatives de connexion échouées (limitation anti-force brute)
+CREATE TABLE IF NOT EXISTS login_attempts (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  ip           VARCHAR(45)  NOT NULL,
+  email        VARCHAR(190) NOT NULL,
+  attempted_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_attempt (ip, email, attempted_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Réglages globaux (clé/valeur)
 CREATE TABLE IF NOT EXISTS settings (
   k VARCHAR(60) PRIMARY KEY,

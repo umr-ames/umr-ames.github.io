@@ -25,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = t('err_domain');
         }
     }
-    if (strlen($pass) < 8)                  $errors[] = t('err_pass8');
+    if (strlen($pass) < 10 || !preg_match('/[A-Za-z]/', $pass) || !preg_match('/\d/', $pass)) {
+        $errors[] = t('err_pass8');
+    }
     if ($pass !== $pass2)                   $errors[] = t('err_pass_match');
 
     if (!$errors) {
@@ -38,21 +40,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         $cfg = config();
-        $isAdmin = (strcasecmp($email, $cfg['admin_email']) === 0);
+        $pdo = db();
+
+        /* Amorçage admin : réservé à la toute première installation.
+           Dès qu'un administrateur existe, l'e-mail admin ne confère plus
+           aucun privilège — sinon n'importe qui pourrait s'inscrire avec
+           cette adresse et obtenir les pleins pouvoirs sans validation. */
+        $adminExists = (int)$pdo->query('SELECT COUNT(*) FROM researchers WHERE role = \'admin\'')->fetchColumn() > 0;
+        $isAdmin = !$adminExists && (strcasecmp($email, $cfg['admin_email']) === 0);
+
         $slug = unique_slug($full_name);
         $hash = password_hash($pass, PASSWORD_DEFAULT);
         $role = $isAdmin ? 'admin' : 'researcher';
         $status = $isAdmin ? 'approved' : 'pending';
 
-        $pdo = db();
         $pdo->prepare('INSERT INTO researchers (email, password_hash, full_name, slug, role, status) VALUES (?,?,?,?,?,?)')
             ->execute([$email, $hash, $full_name, $slug, $role, $status]);
         $id = (int)$pdo->lastInsertId();
         $pdo->prepare('INSERT INTO profiles (researcher_id) VALUES (?)')->execute([$id]);
 
-        $_SESSION['uid'] = $id;
         session_regenerate_id(true);
         $_SESSION['uid'] = $id;
+        $_SESSION['created'] = time();
 
         if ($status === 'pending') {
             flash(t('ok_pending'), 'success');

@@ -11,20 +11,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pass  = (string)($_POST['password'] ?? '');
     $old_email = $email;
 
-    $st = db()->prepare('SELECT * FROM researchers WHERE email = ?');
-    $st->execute([$email]);
-    $u = $st->fetch();
-
-    if ($u && password_verify($pass, $u['password_hash'])) {
-        if ($u['status'] === 'suspended') {
-            $error = t('err_suspended');
-        } else {
-            session_regenerate_id(true);
-            $_SESSION['uid'] = (int)$u['id'];
-            header('Location: tableau-de-bord.php'); exit;
-        }
+    if (login_failures($email) >= 5) {
+        // Trop d'échecs récents : on bloque sans révéler si le compte existe
+        $error = t('err_throttled');
     } else {
-        $error = t('err_login');
+        $st = db()->prepare('SELECT * FROM researchers WHERE email = ?');
+        $st->execute([$email]);
+        $u = $st->fetch();
+
+        if ($u && password_verify($pass, $u['password_hash'])) {
+            if ($u['status'] === 'suspended') {
+                $error = t('err_suspended');
+            } else {
+                login_clear_failures($email);
+                session_regenerate_id(true);
+                $_SESSION['uid'] = (int)$u['id'];
+                $_SESSION['created'] = time();
+                header('Location: tableau-de-bord.php'); exit;
+            }
+        } else {
+            login_record_failure($email);
+            $error = t('err_login');
+        }
     }
 }
 

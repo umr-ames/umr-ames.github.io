@@ -1,7 +1,48 @@
-# Sécurité : le dépôt Git est déployé dans public_html.
-# Bloquer l'accès web aux fichiers de versionnement et de configuration.
-RedirectMatch 404 /\.git
+# =====================================================
+# UMR-AMES — Sécurité du site
+# Le dépôt Git est déployé directement dans public_html :
+# les fichiers de versionnement et de configuration doivent
+# rester inaccessibles depuis le web.
+# =====================================================
 
-<FilesMatch "^(\.gitignore|\.cpanel\.yml|config\.php|schema\.sql|config\.sample\.php)$">
+# ---- Pas de listing de répertoire ----
+Options -Indexes
+
+# ---- Forcer HTTPS ----
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ---- Fichiers sensibles : jamais servis ----
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.github
+
+<FilesMatch "(^\.|\.(yml|yaml|sql|sample\.php|md|log|bak|old|ini|sh)$)">
   Require all denied
 </FilesMatch>
+
+<FilesMatch "^config\.php$">
+  Require all denied
+</FilesMatch>
+
+# ---- En-têtes de sécurité ----
+<IfModule mod_headers.c>
+  # Empêche l'interprétation d'un fichier dans un type différent de celui déclaré
+  Header always set X-Content-Type-Options "nosniff"
+  # Bloque l'inclusion du site dans une iframe tierce (clickjacking)
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Ne fuite pas l'URL complète vers les sites externes
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Coupe l'accès aux capteurs pour les scripts de la page
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+  # HSTS : impose HTTPS pendant 1 an (activé une fois le certificat vérifié)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # Ne pas exposer la version de PHP
+  Header always unset X-Powered-By
+</IfModule>
+
+# ---- Masquer la signature du serveur ----
+ServerSignature Off

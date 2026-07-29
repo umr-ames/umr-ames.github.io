@@ -4,18 +4,43 @@
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/i18n.php';
 
+/* Détection HTTPS fiable derrière le proxy/load-balancer de l'hébergeur */
+function is_https(): bool {
+    if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') return true;
+    if (($_SERVER['SERVER_PORT'] ?? '') == 443) return true;
+    $fwd = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+    if (strtolower($fwd) === 'https') return true;
+    if (strtolower($_SERVER['HTTP_X_FORWARDED_SSL'] ?? '') === 'on') return true;
+    return false;
+}
+
 function boot_session(): void {
     if (session_status() === PHP_SESSION_NONE) {
-        $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
         session_set_cookie_params([
             'lifetime' => 0,
             'path'     => '/',
             'httponly' => true,
-            'secure'   => $secure,
+            'secure'   => is_https(),
             'samesite' => 'Lax',
         ]);
         session_name('amesportal');
+        ini_set('session.use_strict_mode', '1'); // refuse les identifiants de session non générés par PHP
         session_start();
+
+        /* Expiration après 2 h d'inactivité + rotation périodique de l'identifiant */
+        $now = time();
+        if (isset($_SESSION['last_seen']) && ($now - $_SESSION['last_seen']) > 7200) {
+            $_SESSION = [];
+            session_destroy();
+            session_start();
+        }
+        $_SESSION['last_seen'] = $now;
+        if (!isset($_SESSION['created'])) {
+            $_SESSION['created'] = $now;
+        } elseif (($now - $_SESSION['created']) > 1800) {
+            session_regenerate_id(true);
+            $_SESSION['created'] = $now;
+        }
     }
 }
 
@@ -59,15 +84,56 @@ function current_user(): ?array {
 function require_login(): array {
     $u = current_user();
     if (!$u) { header('Location: connexion.php'); exit; }
-    if ($u['status'] !== 'approved') {
-        // Compte en attente : autorisé à voir son tableau de bord mais averti
+    /* Une suspension doit prendre effet immédiatement, sans attendre que
+       le chercheur se déconnecte : on ferme la session en cours. */
+    if ($u['status'] === 'suspended') {
+        $_SESSION = [];
+        session_destroy();
+        header('Location: connexion.php'); exit;
     }
+    // Compte « pending » : accès à son tableau de bord, mais averti (page non publiée)
     return $u;
 }
 function require_admin(): array {
     $u = require_login();
     if ($u['role'] !== 'admin') { http_response_code(403); exit('Accès réservé à l\'administration.'); }
     return $u;
+}
+
+/* --- Limitation des tentatives de connexion (anti-force brute) --- */
+function client_ip(): string {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    return substr($ip, 0, 45);
+}
+
+/** Nombre d'échecs récents pour ce couple IP + e-mail. */
+function login_failures(string $email): int {
+    try {
+        $st = db()->prepare(
+            'SELECT COUNT(*) FROM login_attempts
+             WHERE ip = ? AND email = ? AND attempted_at > (NOW() - INTERVAL 15 MINUTE)'
+        );
+        $st->execute([client_ip(), mb_substr($email, 0, 190)]);
+        return (int)$st->fetchColumn();
+    } catch (Throwable $e) {
+        return 0; // table absente : ne pas bloquer la connexion
+    }
+}
+
+function login_record_failure(string $email): void {
+    try {
+        db()->prepare('INSERT INTO login_attempts (ip, email) VALUES (?, ?)')
+            ->execute([client_ip(), mb_substr($email, 0, 190)]);
+        // Purge opportuniste des entrées anciennes
+        db()->exec('DELETE FROM login_attempts WHERE attempted_at < (NOW() - INTERVAL 1 DAY)');
+    } catch (Throwable $e) { /* table absente : ignorer */ }
+}
+
+function login_clear_failures(string $email): void {
+    try {
+        db()->prepare('DELETE FROM login_attempts WHERE ip = ? AND email = ?')
+            ->execute([client_ip(), mb_substr($email, 0, 190)]);
+    } catch (Throwable $e) { /* ignorer */ }
 }
 
 /* --- Slug --- */
