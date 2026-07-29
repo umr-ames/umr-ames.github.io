@@ -16,13 +16,13 @@
 function membres_list(): array {
     return [
         // ---- Membres permanents (document officiel) ----
-        ['name'=>'Marbe Begnoug',                  'estab'=>'IUP',       'grade'=>'MC',   'spec'=>'Maths appliquées',      'phone'=>'44807010', 'email'=>'benioug@gmail.com',      'permanent'=>true,  'phd'=>false],
-        ['name'=>'Zeinebou Zoubeir',               'estab'=>'IUP',       'grade'=>'MA',   'spec'=>'Informatique',          'phone'=>'26003996', 'email'=>'mzeinebou@gmail.com',    'permanent'=>true,  'phd'=>false],
-        ['name'=>'Aziza Ahmedou',                  'estab'=>'IUP',       'grade'=>'MC',   'spec'=>'Statistiques',          'phone'=>'36620383', 'email'=>'ahmedouaziza@yahoo.fr',  'permanent'=>true,  'phd'=>false],
-        ['name'=>'Mohamed Saad Bouh Elemine Vall', 'estab'=>'IUP',       'grade'=>'MA',   'spec'=>'Maths appliquées',      'phone'=>'48154130', 'email'=>'saadbouh@iup.e-una.mr',  'permanent'=>true,  'phd'=>false],
-        ['name'=>'Mohamed El Hacen Dilla Bouna',   'estab'=>'IUP',       'grade'=>'PH',   'spec'=>'Informatique',          'phone'=>'43486485', 'email'=>'mohdyla@gmail.com',      'permanent'=>true,  'phd'=>false],
-        ['name'=>'Yahya Mohamed',                  'estab'=>'FSJE',      'grade'=>'MA',   'spec'=>'Maths appliquées',      'phone'=>'38198138', 'email'=>'yahyajidou@yahoo.fr',    'permanent'=>true,  'phd'=>false],
-        ['name'=>'Bedin Mohamed Lemine Kerim',     'estab'=>'FSJE',      'grade'=>'MA',   'spec'=>'Statistiques',          'phone'=>'27578141', 'email'=>'bedine@Univ-nkc.mr',     'permanent'=>true,  'phd'=>false],
+        ['name'=>'Marbe Begnoug',                  'estab'=>'ISGI',      'grade'=>'MC',   'spec'=>'Maths appliquées',      'phone'=>'44807010', 'email'=>'benioug@gmail.com',      'permanent'=>true,  'phd'=>false],
+        ['name'=>'Zeinebou Zoubeir',               'estab'=>'ISGI',      'grade'=>'MA',   'spec'=>'Informatique',          'phone'=>'26003996', 'email'=>'mzeinebou@gmail.com',    'permanent'=>true,  'phd'=>false],
+        ['name'=>'Aziza Ahmedou',                  'estab'=>'ISGI',      'grade'=>'MC',   'spec'=>'Statistiques',          'phone'=>'36620383', 'email'=>'ahmedouaziza@yahoo.fr',  'permanent'=>true,  'phd'=>false],
+        ['name'=>'Mohamed Saad Bouh Elemine Vall', 'estab'=>'ISGI',      'grade'=>'MA',   'spec'=>'Maths appliquées',      'phone'=>'48154130', 'email'=>'saadbouh@iup.e-una.mr',  'permanent'=>true,  'phd'=>false],
+        ['name'=>'Mohamed El Hacen Dilla Bouna',   'estab'=>'ISGI',      'grade'=>'PH',   'spec'=>'Informatique',          'phone'=>'43486485', 'email'=>'mohdyla@gmail.com',      'permanent'=>true,  'phd'=>false],
+        ['name'=>'Yahya Mohamed',                  'estab'=>'FEG',       'grade'=>'MA',   'spec'=>'Maths appliquées',      'phone'=>'38198138', 'email'=>'yahyajidou@yahoo.fr',    'permanent'=>true,  'phd'=>false],
+        ['name'=>'Bedin Mohamed Lemine Kerim',     'estab'=>'FEG',       'grade'=>'MA',   'spec'=>'Statistiques',          'phone'=>'27578141', 'email'=>'bedine@Univ-nkc.mr',     'permanent'=>true,  'phd'=>false],
         ['name'=>'Mohamed Douh Begnoug',           'estab'=>'FST',       'grade'=>'PH',   'spec'=>'Mathématiques',         'phone'=>'27271057', 'email'=>'mdouh2001@yahoo.com',    'permanent'=>true,  'phd'=>false],
         ['name'=>'Mohamed Lemine Abdel Vettah',    'estab'=>'FST',       'grade'=>'DCR',  'spec'=>'Maths appliquées',      'phone'=>'34263435', 'email'=>'Medlemineb6@gmail.com',  'permanent'=>true,  'phd'=>true],
         ['name'=>'Sidi Mohamed Ahmed Ramdhane',    'estab'=>'FST',       'grade'=>'DCR',  'spec'=>'Maths appliquées',      'phone'=>'',         'email'=>'',                       'permanent'=>true,  'phd'=>true],
@@ -30,7 +30,7 @@ function membres_list(): array {
 
         // ---- Membres associés : chercheurs ----
         ['name'=>'Mohamed Ahmed Sambe',            'estab'=>'ISGI',      'grade'=>'MA',   'spec'=>'Mathématiques Appliquées', 'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
-        ['name'=>'Jyda Moustapha',                 'estab'=>'FSEG / UN', 'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
+        ['name'=>'Jyda Moustapha',                 'estab'=>'FEG / UN',  'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Mohamed Hemmidy',                'estab'=>'FST / UN',  'grade'=>'MA',   'spec'=>'Mathématiques Appliquées', 'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'El Banany Mohamed Mahmoud',      'estab'=>'FST / UN',  'grade'=>'MA',   'spec'=>'Informatique',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Mouna Hadrami Saleck',           'estab'=>'ENS',       'grade'=>'MA',   'spec'=>'Biologie',                 'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
@@ -43,8 +43,8 @@ function membres_list(): array {
         ['name'=>'Enne Benhmeida',                 'estab'=>'ISGI',      'grade'=>'MA',   'spec'=>'Mathématiques Appliquées', 'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Moustapha Saleck',               'estab'=>'ISGI',      'grade'=>'MA',   'spec'=>'Informatique / IA',        'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Mohamed Ahmed Sidi Cheikh',      'estab'=>'CDD',       'grade'=>'Exp',  'spec'=>'Géomatique',               'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
-        ['name'=>'Khadijetou El Heda',             'estab'=>'FSEG / UN', 'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
-        ['name'=>'Hasna Hmoyed',                   'estab'=>'FSEG / UN', 'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
+        ['name'=>'Khadijetou El Heda',             'estab'=>'FEG / UN',  'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
+        ['name'=>'Hasna Hmoyed',                   'estab'=>'FEG / UN',  'grade'=>'MA',   'spec'=>'Statistiques',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Ahmed Mohameden',                'estab'=>'FST / UN',  'grade'=>'MA',   'spec'=>'Informatique',             'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Abdoul Samba Ndongo',            'estab'=>'ISCAE',     'grade'=>'MA',   'spec'=>'Mathématiques Appliquées', 'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],
         ['name'=>'Mariem Jidou Khayar',            'estab'=>'ESP',       'grade'=>'MA',   'spec'=>'—',                        'phone'=>'', 'email'=>'', 'permanent'=>false, 'phd'=>false],

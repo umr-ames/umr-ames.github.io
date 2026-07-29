@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function showPageGroup(groupKey) {
     const ids = PAGE_GROUPS[groupKey] || PAGE_GROUPS.accueil;
     document.querySelectorAll('section[data-page]').forEach(function (s) {
-      s.classList.toggle('hidden', ids.indexOf(s.id) === -1);
+      // data-locked : rubrique non publiée (ex. Instances tant que l'admin ne l'a pas activée)
+      const locked = s.dataset.locked === '1';
+      s.classList.toggle('hidden', locked || ids.indexOf(s.id) === -1);
     });
     document.querySelectorAll('.has-dropdown').forEach(function (d) {
       const active = Array.prototype.some.call(d.querySelectorAll('.dropdown-menu a[href^="#"]'), function (a) {
@@ -77,9 +79,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function isLocked(id) {
+    const s = document.getElementById(id);
+    return !!(s && s.dataset.locked === '1');
+  }
+
+  /* Masque les entrées de menu qui pointent vers une rubrique non publiée */
+  function syncLockedNav() {
+    document.querySelectorAll('.nav-menu a[href^="#"], .footer-col a[href^="#"]').forEach(function (a) {
+      const id = a.getAttribute('href').slice(1);
+      if (!SECTION_TO_GROUP.hasOwnProperty(id)) return;
+      const li = a.closest('li') || a;
+      li.classList.toggle('hidden', isLocked(id));
+    });
+  }
+
   function goToSection(targetId, opts) {
     opts = opts || {};
-    if (!SECTION_TO_GROUP.hasOwnProperty(targetId)) targetId = 'accueil';
+    if (!SECTION_TO_GROUP.hasOwnProperty(targetId) || isLocked(targetId)) targetId = 'accueil';
     showPageGroup(SECTION_TO_GROUP[targetId]);
     setActiveLink(targetId);
     const el = document.getElementById(targetId);
@@ -104,8 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* État initial : respecte un lien direct vers une rubrique (#membres…), sinon Accueil */
+  syncLockedNav();
   const initialId = location.hash.replace('#', '');
-  if (initialId && SECTION_TO_GROUP.hasOwnProperty(initialId)) {
+  if (initialId && SECTION_TO_GROUP.hasOwnProperty(initialId) && !isLocked(initialId)) {
     showPageGroup(SECTION_TO_GROUP[initialId]);
     setActiveLink(initialId);
     window.requestAnimationFrame(function () {
@@ -115,6 +133,66 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     showPageGroup('accueil');
   }
+
+  /* ---- Instances de gouvernance (publiées depuis l'espace admin) ---- */
+  (function () {
+    const grid = document.getElementById('instancesGrid');
+    const section = document.getElementById('instances');
+    if (!grid || !section) return;
+
+    fetch('/api/instances.php', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.ok || !data.public || !data.blocs || !data.blocs.length) return;
+
+        const frag = document.createDocumentFragment();
+        data.blocs.forEach(function (bloc, n) {
+          const card = document.createElement('article');
+          card.className = 'instance-card fade-up fade-up-delay-' + Math.min(n + 1, 3);
+
+          const head = document.createElement('div');
+          head.className = 'instance-header';
+          const icon = document.createElement('div');
+          icon.className = 'instance-icon';
+          icon.innerHTML = '<i class="fas ' + (bloc.icon || 'fa-users').replace(/[^a-z0-9-]/gi, '') + '" aria-hidden="true"></i>';
+          const h3 = document.createElement('h3');
+          h3.textContent = bloc.label;
+          head.appendChild(icon); head.appendChild(h3);
+          card.appendChild(head);
+
+          const body = document.createElement('div');
+          body.className = 'instance-body';
+          bloc.items.forEach(function (it) {
+            const row = document.createElement('div');
+            row.className = 'instance-item' + (it.note ? ' instance-note' : '');
+            if (!it.note && it.role) {
+              const role = document.createElement('span');
+              role.className = 'instance-role';
+              role.textContent = it.role;
+              row.appendChild(role);
+            }
+            const name = document.createElement('span');
+            name.className = 'instance-name';
+            name.textContent = it.name;
+            row.appendChild(name);
+            body.appendChild(row);
+          });
+          card.appendChild(body);
+          frag.appendChild(card);
+        });
+
+        grid.innerHTML = '';
+        grid.appendChild(frag);
+
+        // La rubrique devient accessible : on lève le verrou et on réaffiche le menu
+        delete section.dataset.locked;
+        syncLockedNav();
+        grid.querySelectorAll('.fade-up').forEach(function (el) { el.classList.add('visible'); });
+        const cur = location.hash.replace('#', '');
+        showPageGroup(SECTION_TO_GROUP[cur] || 'accueil');
+      })
+      .catch(function () { /* site statique ou hors-ligne : la rubrique reste masquée */ });
+  })();
 
   /* ---- Recherche de chercheurs par nom ---- */
   const membreSearch = document.getElementById('membreSearch');

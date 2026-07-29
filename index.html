@@ -217,7 +217,10 @@
         <p>
           L'unité rassemble <strong>37 chercheurs et doctorants</strong> issus de
           plusieurs établissements d'enseignement supérieur et organismes de recherche mauritaniens :
-          ISGI, Université de Nouakchott (FST, FSEG), ENS, IMROP, PNBA et ONISPA.
+          ISGI, Université de Nouakchott (FST, FEG), ENS, IMROP, PNBA et ONISPA.
+        </p>
+        <p>
+          Le Directeur de l'UMR-AMES est <strong>Dr. Marbe Begnoug</strong>.
         </p>
         <p>
           Première Unité Mixte de Recherche en Mauritanie à se consacrer à l'environnement et à la santé,
@@ -262,7 +265,7 @@
 <!-- =====================================================
      INSTANCES
      ===================================================== -->
-<section id="instances" class="section section-alt hidden" data-page="unite" aria-labelledby="h-instances">
+<section id="instances" class="section section-alt hidden" data-page="unite" data-locked="1" aria-labelledby="h-instances">
   <div class="container">
 
     <div class="section-header fade-up">
@@ -271,97 +274,10 @@
       <p>Organisation institutionnelle et gouvernance de l'unité</p>
     </div>
 
-    <div class="instances-grid">
+    <!-- Contenu alimenté par /api/instances.php ; la rubrique reste masquée
+         tant que l'administration ne l'a pas rendue publique. -->
+    <div class="instances-grid" id="instancesGrid"></div>
 
-      <!-- Direction -->
-      <article class="instance-card fade-up fade-up-delay-1">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-user-tie" aria-hidden="true"></i></div>
-          <h3>Direction</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item">
-            <span class="instance-role">Directeur</span>
-            <span class="instance-name">Dr. Marbe Begnoug</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Conseil scientifique -->
-      <article class="instance-card fade-up fade-up-delay-2">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-flask" aria-hidden="true"></i></div>
-          <h3>Conseil Scientifique</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item">
-            <span class="instance-role">Président</span>
-            <span class="instance-name">Dr. Marbe Begnoug</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Mohamed Saad Bouh Elemine Vall</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Zeinebou Zoubeir</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Aziza Ahmedou</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Jyda Moustapha</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Yahya Mohamed</span>
-          </div>
-          <div class="instance-item instance-note">
-            <span class="instance-name">+ représentants du personnel administratif, des doctorants et personnalités extérieures qualifiées</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Comité de pilotage -->
-      <article class="instance-card fade-up fade-up-delay-3">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-sitemap" aria-hidden="true"></i></div>
-          <h3>Comité de Pilotage (CoPil)</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Marbe Begnoug</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Mohamed Saad Bouh Elemine Vall</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Zeinebou Zoubeir</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Aziza Ahmedou</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Jyda Moustapha</span>
-          </div>
-          <div class="instance-item">
-            <span class="instance-role">Membre</span>
-            <span class="instance-name">Dr. Yahya Mohamed</span>
-          </div>
-          <div class="instance-item instance-note">
-            <span class="instance-name">+ un représentant de chaque institution fondatrice (ISGI, UN, ENS, IMROP, ONISPA, PNBA)</span>
-          </div>
-        </div>
-      </article>
-
-    </div>
   </div>
 </section>
 
@@ -579,7 +495,7 @@
           <div class="membre-info">
             <div class="membre-name">Jyda Moustapha</div>
             <div class="membre-grade">Maître-Assistant (MA)</div>
-            <div class="membre-affiliation">FSEG / UN</div>
+            <div class="membre-affiliation">FEG / UN</div>
             <div class="membre-discipline">Statistiques</div>
           </div>
         </div>
@@ -589,7 +505,7 @@
           <div class="membre-info">
             <div class="membre-name">Yahya Mohamed</div>
             <div class="membre-grade">Maître-Assistant (MA)</div>
-            <div class="membre-affiliation">FSEG / UN</div>
+            <div class="membre-affiliation">FEG / UN</div>
             <div class="membre-discipline">Mathématiques Appliquées</div>
           </div>
         </div>
@@ -599,7 +515,7 @@
           <div class="membre-info">
             <div class="membre-name">Bedin Mohamed Lemine Kerim</div>
             <div class="membre-grade">Maître-Assistant (MA)</div>
-            <div class="membre-affiliation">FSEG / UN</div>
+            <div class="membre-affiliation">FEG / UN</div>
             <div class="membre-discipline">Informatique</div>
           </div>
         </div>
@@ -739,7 +655,7 @@
           <div class="membre-info">
             <div class="membre-name">Khadijetou El Heda</div>
             <div class="membre-grade">Maître-Assistant (MA)</div>
-            <div class="membre-affiliation">FSEG / UN</div>
+            <div class="membre-affiliation">FEG / UN</div>
             <div class="membre-discipline">Statistiques</div>
           </div>
         </div>
@@ -749,7 +665,7 @@
           <div class="membre-info">
             <div class="membre-name">Hasna Hmoyed</div>
             <div class="membre-grade">Maître-Assistant (MA)</div>
-            <div class="membre-affiliation">FSEG / UN</div>
+            <div class="membre-affiliation">FEG / UN</div>
             <div class="membre-discipline">Statistiques</div>
           </div>
         </div>

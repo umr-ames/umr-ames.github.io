@@ -193,6 +193,19 @@ function metrics_public(): bool {
 function publications_ames_only(): bool {
     return get_setting('publications_ames_only', '0') === '1';
 }
+/* Rubrique « Instances » visible sur le site public ? (masquée par défaut) */
+function instances_public(): bool {
+    return get_setting('instances_public', '0') === '1';
+}
+
+/* Blocs de gouvernance : clé => libellé + icône */
+function instance_blocs(): array {
+    return [
+        'direction' => ['label' => 'Direction',                 'icon' => 'fa-user-tie'],
+        'conseil'   => ['label' => 'Conseil Scientifique',      'icon' => 'fa-flask'],
+        'copil'     => ['label' => 'Comité de Pilotage (CoPil)', 'icon' => 'fa-sitemap'],
+    ];
+}
 
 /* --- Axes (libellés) --- */
 function axes(): array {

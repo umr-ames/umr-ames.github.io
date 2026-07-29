@@ -31,6 +31,7 @@ $page_title = $page_title ?? 'Espace chercheur';
         <?php if ($me['role'] === 'admin'): ?>
           <a href="<?= e(lang_url('/espace/admin.php')) ?>"><i class="fas fa-user-shield"></i> <?= t('admin') ?></a>
           <a href="<?= e(lang_url('/espace/membres.php')) ?>"><i class="fas fa-users"></i> <?= t('members_title') ?></a>
+          <a href="<?= e(lang_url('/espace/instances.php')) ?>"><i class="fas fa-landmark"></i> <?= t('inst_title') ?></a>
           <a href="<?= e(lang_url('/espace/recensement.php')) ?>"><i class="fas fa-clipboard-check"></i> <?= t('recense_title') ?></a>
         <?php endif; ?>
         <a href="<?= e(lang_url('/chercheur.php?slug=' . $me['slug'])) ?>"><i class="fas fa-id-badge"></i> <?= t('my_page') ?></a>

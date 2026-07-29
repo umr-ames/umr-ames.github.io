@@ -63,6 +63,48 @@ if (!table_exists($pdo, 'login_attempts')) {
     $skip[] = 'table login_attempts';
 }
 
+// --- instance_members : composition des instances de gouvernance ---
+if (!table_exists($pdo, 'instance_members')) {
+    $pdo->exec(
+        'CREATE TABLE instance_members (
+           id         INT AUTO_INCREMENT PRIMARY KEY,
+           bloc       VARCHAR(20)  NOT NULL,          -- direction | conseil | copil
+           role       VARCHAR(80)  DEFAULT NULL,
+           name       VARCHAR(190) NOT NULL,
+           is_note    TINYINT(1)   NOT NULL DEFAULT 0, -- ligne de note (sans rôle)
+           sort_order INT          NOT NULL DEFAULT 0,
+           INDEX idx_bloc (bloc, sort_order)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+    );
+    // Amorçage avec la composition actuellement publiée sur le site
+    $seed = [
+        ['direction', 'Directeur', 'Dr. Marbe Begnoug', 0],
+        ['conseil', 'Président', 'Dr. Marbe Begnoug', 0],
+        ['conseil', 'Membre', 'Dr. Mohamed Saad Bouh Elemine Vall', 0],
+        ['conseil', 'Membre', 'Dr. Zeinebou Zoubeir', 0],
+        ['conseil', 'Membre', 'Dr. Aziza Ahmedou', 0],
+        ['conseil', 'Membre', 'Dr. Jyda Moustapha', 0],
+        ['conseil', 'Membre', 'Dr. Yahya Mohamed', 0],
+        ['conseil', null, '+ représentants du personnel administratif, des doctorants et personnalités extérieures qualifiées', 1],
+        ['copil', 'Membre', 'Dr. Marbe Begnoug', 0],
+        ['copil', 'Membre', 'Dr. Mohamed Saad Bouh Elemine Vall', 0],
+        ['copil', 'Membre', 'Dr. Zeinebou Zoubeir', 0],
+        ['copil', 'Membre', 'Dr. Aziza Ahmedou', 0],
+        ['copil', 'Membre', 'Dr. Jyda Moustapha', 0],
+        ['copil', 'Membre', 'Dr. Yahya Mohamed', 0],
+        ['copil', null, '+ un représentant de chaque institution fondatrice (ISGI, UN, ENS, IMROP, ONISPA, PNBA)', 1],
+    ];
+    $ins = $pdo->prepare('INSERT INTO instance_members (bloc, role, name, is_note, sort_order) VALUES (?,?,?,?,?)');
+    $order = [];
+    foreach ($seed as [$bloc, $role, $name, $note]) {
+        $order[$bloc] = ($order[$bloc] ?? 0) + 10;
+        $ins->execute([$bloc, $role, $name, $note, $order[$bloc]]);
+    }
+    $done[] = 'table instance_members';
+} else {
+    $skip[] = 'table instance_members';
+}
+
 // --- settings ---
 if (!table_exists($pdo, 'settings')) {
     $pdo->exec('CREATE TABLE settings (k VARCHAR(60) PRIMARY KEY, v VARCHAR(255) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
@@ -72,6 +114,7 @@ if (!table_exists($pdo, 'settings')) {
 }
 $pdo->prepare('INSERT INTO settings (k, v) VALUES (\'metrics_public\', \'1\') ON DUPLICATE KEY UPDATE v = v')->execute();
 $pdo->prepare('INSERT INTO settings (k, v) VALUES (\'publications_ames_only\', \'0\') ON DUPLICATE KEY UPDATE v = v')->execute();
+$pdo->prepare('INSERT INTO settings (k, v) VALUES (\'instances_public\', \'0\') ON DUPLICATE KEY UPDATE v = v')->execute();
 
 $page_title = 'Mise à jour BDD';
 require __DIR__ . '/header.php';

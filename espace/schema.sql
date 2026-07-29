@@ -83,6 +83,17 @@ CREATE TABLE IF NOT EXISTS login_attempts (
   INDEX idx_attempt (ip, email, attempted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Composition des instances de gouvernance (Direction, Conseil Scientifique, CoPil)
+CREATE TABLE IF NOT EXISTS instance_members (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  bloc       VARCHAR(20)  NOT NULL,           -- direction | conseil | copil
+  role       VARCHAR(80)  DEFAULT NULL,
+  name       VARCHAR(190) NOT NULL,
+  is_note    TINYINT(1)   NOT NULL DEFAULT 0, -- ligne de note (sans rôle)
+  sort_order INT          NOT NULL DEFAULT 0,
+  INDEX idx_bloc (bloc, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Réglages globaux (clé/valeur)
 CREATE TABLE IF NOT EXISTS settings (
   k VARCHAR(60) PRIMARY KEY,
@@ -90,3 +101,4 @@ CREATE TABLE IF NOT EXISTS settings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO settings (k, v) VALUES ('metrics_public', '1') ON DUPLICATE KEY UPDATE v = v;
 INSERT INTO settings (k, v) VALUES ('publications_ames_only', '0') ON DUPLICATE KEY UPDATE v = v;
+INSERT INTO settings (k, v) VALUES ('instances_public', '0') ON DUPLICATE KEY UPDATE v = v;

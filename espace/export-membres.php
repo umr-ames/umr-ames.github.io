@@ -90,7 +90,6 @@ echo "\xEF\xBB\xBF"; // BOM UTF-8 pour Word
 <p class="foot">
   <strong>Abr&eacute;viations :</strong> <?= htmlspecialchars(membres_abbrev(), ENT_QUOTES, 'UTF-8') ?><br>
   Document g&eacute;n&eacute;r&eacute; depuis l'espace d'administration du site umr-ames.mr.
-  Il contient des coordonn&eacute;es personnelles &mdash; diffusion &agrave; usage interne.
 </p>
 
 </body>

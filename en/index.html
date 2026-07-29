@@ -187,7 +187,10 @@
         <p>
           The unit brings together <strong>37 researchers and PhD students</strong>
           from several Mauritanian higher education institutions and research organizations:
-          ISGI, University of Nouakchott (FST, FSEG), ENS, IMROP, PNBA and ONISPA.
+          ISGI, University of Nouakchott (FST, FEG), ENS, IMROP, PNBA and ONISPA.
+        </p>
+        <p>
+          The Director of UMR-AMES is <strong>Dr. Marbe Begnoug</strong>.
         </p>
         <p>
           The first Joint Research Unit in Mauritania dedicated to the environment and health, UMR-AMES
@@ -227,60 +230,16 @@
 </section>
 
 <!-- GOVERNANCE -->
-<section id="instances" class="section section-alt hidden" data-page="unite" aria-labelledby="h-instances">
+<section id="instances" class="section section-alt hidden" data-page="unite" data-locked="1" aria-labelledby="h-instances">
   <div class="container">
     <div class="section-header fade-up">
       <span class="section-tag">Governance</span>
       <h2 id="h-instances">Governing Bodies</h2>
       <p>Institutional organization and governance of the unit</p>
     </div>
-    <div class="instances-grid">
-      <article class="instance-card fade-up fade-up-delay-1">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-user-tie" aria-hidden="true"></i></div>
-          <h3>Directorate</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item">
-            <span class="instance-role">Director</span>
-            <span class="instance-name">Dr. Marbe Begnoug</span>
-          </div>
-        </div>
-      </article>
-      <article class="instance-card fade-up fade-up-delay-2">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-flask" aria-hidden="true"></i></div>
-          <h3>Scientific Council</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item">
-            <span class="instance-role">President</span>
-            <span class="instance-name">Dr. Marbe Begnoug</span>
-          </div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Mohamed Saad Bouh Elemine Vall</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Zeinebou Zoubeir</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Aziza Ahmedou</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Jyda Moustapha</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Yahya Mohamed</span></div>
-          <div class="instance-item instance-note"><span class="instance-name">+ administrative staff representatives, PhD students and external experts</span></div>
-        </div>
-      </article>
-      <article class="instance-card fade-up fade-up-delay-3">
-        <div class="instance-header">
-          <div class="instance-icon"><i class="fas fa-sitemap" aria-hidden="true"></i></div>
-          <h3>Steering Committee (CoPil)</h3>
-        </div>
-        <div class="instance-body">
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Marbe Begnoug</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Mohamed Saad Bouh Elemine Vall</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Zeinebou Zoubeir</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Aziza Ahmedou</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Jyda Moustapha</span></div>
-          <div class="instance-item"><span class="instance-role">Member</span><span class="instance-name">Dr. Yahya Mohamed</span></div>
-          <div class="instance-item instance-note"><span class="instance-name">+ one representative from each founding institution (ISGI, UN, ENS, IMROP, ONISPA, PNBA)</span></div>
-        </div>
-      </article>
-    </div>
+    <!-- Filled from /api/instances.php; the section stays hidden until the
+         administration makes it public. -->
+    <div class="instances-grid" id="instancesGrid"></div>
   </div>
 </section>
 
@@ -379,9 +338,9 @@
         <div class="membre-card"><div class="membre-avatar">AA</div><div class="membre-info"><div class="membre-name">Aziza Ahmedou</div><div class="membre-grade">Associate Professor (MC)</div><div class="membre-affiliation">ISGI</div><div class="membre-discipline">Statistics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">ME</div><div class="membre-info"><div class="membre-name">Mohamed Saad Bouh Elemine Vall</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">ISGI</div><div class="membre-discipline">Applied Mathematics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">MD</div><div class="membre-info"><div class="membre-name">Mohamed El Hacen Dilla Bouna</div><div class="membre-grade">Associate Professor (MC)</div><div class="membre-affiliation">ISGI</div><div class="membre-discipline">Computer Science</div></div></div>
-        <div class="membre-card"><div class="membre-avatar">JM</div><div class="membre-info"><div class="membre-name">Jyda Moustapha</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FSEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
-        <div class="membre-card"><div class="membre-avatar">YM</div><div class="membre-info"><div class="membre-name">Yahya Mohamed</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FSEG / UN</div><div class="membre-discipline">Applied Mathematics</div></div></div>
-        <div class="membre-card"><div class="membre-avatar">BK</div><div class="membre-info"><div class="membre-name">Bedin Mohamed Lemine Kerim</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FSEG / UN</div><div class="membre-discipline">Computer Science</div></div></div>
+        <div class="membre-card"><div class="membre-avatar">JM</div><div class="membre-info"><div class="membre-name">Jyda Moustapha</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
+        <div class="membre-card"><div class="membre-avatar">YM</div><div class="membre-info"><div class="membre-name">Yahya Mohamed</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FEG / UN</div><div class="membre-discipline">Applied Mathematics</div></div></div>
+        <div class="membre-card"><div class="membre-avatar">BK</div><div class="membre-info"><div class="membre-name">Bedin Mohamed Lemine Kerim</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FEG / UN</div><div class="membre-discipline">Computer Science</div></div></div>
         <div class="membre-card"><div class="membre-avatar">DB</div><div class="membre-info"><div class="membre-name">Mohamed Douh Begnoug</div><div class="membre-grade">Habilitated Professor (PH)</div><div class="membre-affiliation">FST / UN</div><div class="membre-discipline">Mathematics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">MH</div><div class="membre-info"><div class="membre-name">Mohamed Hemmidy</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FST / UN</div><div class="membre-discipline">Applied Mathematics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">EB</div><div class="membre-info"><div class="membre-name">El Banany Mohamed Mahmoud</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FST / UN</div><div class="membre-discipline">Computer Science</div></div></div>
@@ -395,8 +354,8 @@
         <div class="membre-card"><div class="membre-avatar">EB</div><div class="membre-info"><div class="membre-name">Enne Benhmeida</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">ISGI</div><div class="membre-discipline">Applied Mathematics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">MS</div><div class="membre-info"><div class="membre-name">Moustapha Saleck</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">ISGI</div><div class="membre-discipline">Computer Science / AI</div></div></div>
         <div class="membre-card"><div class="membre-avatar">MA</div><div class="membre-info"><div class="membre-name">Mohamed Ahmed Sidi Cheikh</div><div class="membre-grade">Expert (Exp)</div><div class="membre-affiliation">CDD</div><div class="membre-discipline">Geomatics</div></div></div>
-        <div class="membre-card"><div class="membre-avatar">KH</div><div class="membre-info"><div class="membre-name">Khadijetou El Heda</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FSEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
-        <div class="membre-card"><div class="membre-avatar">HH</div><div class="membre-info"><div class="membre-name">Hasna Hmoyed</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FSEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
+        <div class="membre-card"><div class="membre-avatar">KH</div><div class="membre-info"><div class="membre-name">Khadijetou El Heda</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
+        <div class="membre-card"><div class="membre-avatar">HH</div><div class="membre-info"><div class="membre-name">Hasna Hmoyed</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FEG / UN</div><div class="membre-discipline">Statistics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">AM</div><div class="membre-info"><div class="membre-name">Ahmed Mohameden</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">FST / UN</div><div class="membre-discipline">Computer Science</div></div></div>
         <div class="membre-card"><div class="membre-avatar">AN</div><div class="membre-info"><div class="membre-name">Abdoul Samba Ndongo</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">ISCAE</div><div class="membre-discipline">Applied Mathematics</div></div></div>
         <div class="membre-card"><div class="membre-avatar">MJ</div><div class="membre-info"><div class="membre-name">Mariem Jidou Khayar</div><div class="membre-grade">Assistant Professor (MA)</div><div class="membre-affiliation">ESP</div><div class="membre-discipline">–</div></div></div>
