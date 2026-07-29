@@ -63,6 +63,39 @@ if (!table_exists($pdo, 'login_attempts')) {
     $skip[] = 'table login_attempts';
 }
 
+// --- unit_members : liste des membres de l'unité (éditable par l'admin) ---
+if (!table_exists($pdo, 'unit_members')) {
+    $pdo->exec(
+        'CREATE TABLE unit_members (
+           id           INT AUTO_INCREMENT PRIMARY KEY,
+           name         VARCHAR(190) NOT NULL,
+           estab        VARCHAR(60)  DEFAULT NULL,
+           grade        VARCHAR(40)  DEFAULT NULL,
+           spec         VARCHAR(120) DEFAULT NULL,
+           phone        VARCHAR(40)  DEFAULT NULL,
+           email        VARCHAR(190) DEFAULT NULL,
+           is_permanent TINYINT(1)   NOT NULL DEFAULT 0,
+           is_phd       TINYINT(1)   NOT NULL DEFAULT 0,
+           sort_order   INT          NOT NULL DEFAULT 0,
+           INDEX idx_perm (is_permanent, sort_order)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+    );
+    require_once __DIR__ . '/membres-data.php';
+    $ins = $pdo->prepare(
+        'INSERT INTO unit_members (name, estab, grade, spec, phone, email, is_permanent, is_phd, sort_order)
+         VALUES (?,?,?,?,?,?,?,?,?)'
+    );
+    $n = 0;
+    foreach (membres_list() as $m) {
+        $n += 10;
+        $ins->execute([$m['name'], $m['estab'], $m['grade'], $m['spec'],
+                       $m['phone'], $m['email'], $m['permanent'] ? 1 : 0, $m['phd'] ? 1 : 0, $n]);
+    }
+    $done[] = 'table unit_members';
+} else {
+    $skip[] = 'table unit_members';
+}
+
 // --- instance_members : composition des instances de gouvernance ---
 if (!table_exists($pdo, 'instance_members')) {
     $pdo->exec(

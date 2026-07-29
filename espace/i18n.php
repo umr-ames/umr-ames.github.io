@@ -120,6 +120,11 @@ function i18n_strings(): array {
         'members_export_perm' => 'Permanents (Word)', 'members_export_assoc' => 'Associés (Word)',
         'members_export_all' => 'Liste complète (Word)',
         'members_phd' => 'doctorant', 'members_abbrev' => 'Abréviations',
+        'mem_perm' => 'Permanent', 'mem_edit' => 'Modifier',
+        'mem_add_title' => 'Ajouter un membre',
+        'mem_add_help' => "Cochez « Permanent » pour l'inscrire dans la liste des membres permanents, et « doctorant » s'il s'agit d'un doctorant.",
+        'mem_added' => 'Membre ajouté.', 'mem_saved' => 'Membre modifié.', 'mem_deleted' => 'Membre supprimé.',
+        'mem_confirm_del' => 'Supprimer définitivement ce membre ?',
         'col_estab' => 'Établ.', 'col_grade' => 'Grade', 'col_specialty' => 'Spécialité', 'col_phone' => 'Téléphone',
         // Instances (admin)
         'inst_title' => 'Instances de gouvernance',
@@ -223,6 +228,11 @@ function i18n_strings(): array {
         'members_export_perm' => 'Permanent (Word)', 'members_export_assoc' => 'Associate (Word)',
         'members_export_all' => 'Full list (Word)',
         'members_phd' => 'PhD student', 'members_abbrev' => 'Abbreviations',
+        'mem_perm' => 'Permanent', 'mem_edit' => 'Edit',
+        'mem_add_title' => 'Add a member',
+        'mem_add_help' => 'Tick "Permanent" to list the person among permanent members, and "PhD student" for doctoral candidates.',
+        'mem_added' => 'Member added.', 'mem_saved' => 'Member updated.', 'mem_deleted' => 'Member removed.',
+        'mem_confirm_del' => 'Permanently delete this member?',
         'col_estab' => 'Inst.', 'col_grade' => 'Grade', 'col_specialty' => 'Speciality', 'col_phone' => 'Phone',
         // Governance bodies (admin)
         'inst_title' => 'Governance bodies',

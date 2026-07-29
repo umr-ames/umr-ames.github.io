@@ -83,6 +83,21 @@ CREATE TABLE IF NOT EXISTS login_attempts (
   INDEX idx_attempt (ip, email, attempted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Membres de l'unité (liste éditable depuis l'espace d'administration)
+CREATE TABLE IF NOT EXISTS unit_members (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  name         VARCHAR(190) NOT NULL,
+  estab        VARCHAR(60)  DEFAULT NULL,
+  grade        VARCHAR(40)  DEFAULT NULL,
+  spec         VARCHAR(120) DEFAULT NULL,
+  phone        VARCHAR(40)  DEFAULT NULL,
+  email        VARCHAR(190) DEFAULT NULL,
+  is_permanent TINYINT(1)   NOT NULL DEFAULT 0,
+  is_phd       TINYINT(1)   NOT NULL DEFAULT 0,
+  sort_order   INT          NOT NULL DEFAULT 0,
+  INDEX idx_perm (is_permanent, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Composition des instances de gouvernance (Direction, Conseil Scientifique, CoPil)
 CREATE TABLE IF NOT EXISTS instance_members (
   id         INT AUTO_INCREMENT PRIMARY KEY,

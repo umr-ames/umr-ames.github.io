@@ -12,16 +12,19 @@ if (!in_array($type, ['permanents', 'associes', 'all'], true)) $type = 'all';
 if ($type === 'permanents') {
     $blocks = [['Membres permanents', membres_permanents()]];
     $slug   = 'permanents';
+    $titre  = 'UMR-AMES — Liste des membres permanents';
 } elseif ($type === 'associes') {
     $blocks = [['Membres associés', membres_associes()]];
     $slug   = 'associes';
+    $titre  = 'UMR-AMES — Liste des membres associés';
 } else {
     $blocks = [['Membres permanents', membres_permanents()], ['Membres associés', membres_associes()]];
     $slug   = 'complet';
+    $titre  = 'UMR-AMES — Liste des membres';
 }
-
-$total = 0;
-foreach ($blocks as $b) { $total += count($b[1]); }
+/* Titre unique quand l'export ne porte que sur une catégorie : les
+   intertitres feraient doublon avec le titre du document. */
+$showBlockTitles = count($blocks) > 1;
 
 $filename = 'membres-umr-ames-' . $slug . '.doc';
 header('Content-Type: application/msword; charset=utf-8');
@@ -52,15 +55,13 @@ echo "\xEF\xBB\xBF"; // BOM UTF-8 pour Word
 </head>
 <body>
 
-<h1>UMR-AMES &mdash; Liste des membres</h1>
-<p class="sub">
-  Analyse et Mod&eacute;lisation pour l'Environnement et la Sant&eacute; &middot; ISGI, Nouakchott<br>
-  Total : <strong><?= $total ?></strong> membre(s) &middot; Document g&eacute;n&eacute;r&eacute; le <?= date('d/m/Y') ?>
-</p>
+<h1><?= htmlspecialchars($titre, ENT_QUOTES, 'UTF-8') ?></h1>
 
-<?php foreach ($blocks as [$titre, $list]): ?>
-  <h2><?= htmlspecialchars($titre, ENT_QUOTES, 'UTF-8') ?>
-      <span style="font-weight:normal;font-size:9.5pt;color:#777">(<?= count($list) ?>)</span></h2>
+<?php foreach ($blocks as [$blockTitle, $list]): ?>
+  <?php if ($showBlockTitles): ?>
+    <h2><?= htmlspecialchars($blockTitle, ENT_QUOTES, 'UTF-8') ?>
+        <span style="font-weight:normal;font-size:9.5pt;color:#777">(<?= count($list) ?>)</span></h2>
+  <?php endif; ?>
   <table>
     <thead><tr>
       <th style="width:5%">N&deg;</th>
@@ -88,8 +89,7 @@ echo "\xEF\xBB\xBF"; // BOM UTF-8 pour Word
 <?php endforeach; ?>
 
 <p class="foot">
-  <strong>Abr&eacute;viations :</strong> <?= htmlspecialchars(membres_abbrev(), ENT_QUOTES, 'UTF-8') ?><br>
-  Document g&eacute;n&eacute;r&eacute; depuis l'espace d'administration du site umr-ames.mr.
+  <strong>Abr&eacute;viations :</strong> <?= htmlspecialchars(membres_abbrev(), ENT_QUOTES, 'UTF-8') ?>
 </p>
 
 </body>

@@ -60,14 +60,49 @@ function membres_list(): array {
     ];
 }
 
+/**
+ * Liste effective : celle de la base si la table existe (l'administration
+ * peut y ajouter ou en retirer des membres), sinon la liste de référence
+ * ci-dessus. Le repli évite une page blanche avant l'exécution de migrate.php.
+ */
+function membres_all(): array {
+    static $cache = null;
+    if ($cache !== null) return $cache;
+
+    if (function_exists('db')) {
+        try {
+            $rows = db()->query(
+                'SELECT name, estab, grade, spec, phone, email, is_permanent, is_phd, id
+                 FROM unit_members ORDER BY is_permanent DESC, sort_order, id'
+            )->fetchAll();
+            if ($rows) {
+                $cache = array_map(fn($r) => [
+                    'id'        => (int)$r['id'],
+                    'name'      => $r['name'],
+                    'estab'     => $r['estab'] ?? '',
+                    'grade'     => $r['grade'] ?? '',
+                    'spec'      => $r['spec'] ?? '',
+                    'phone'     => $r['phone'] ?? '',
+                    'email'     => $r['email'] ?? '',
+                    'permanent' => (bool)$r['is_permanent'],
+                    'phd'       => (bool)$r['is_phd'],
+                ], $rows);
+                return $cache;
+            }
+        } catch (Throwable $e) { /* table absente : repli sur la liste de référence */ }
+    }
+    $cache = membres_list();
+    return $cache;
+}
+
 /** Membres permanents (ordre du document officiel). */
 function membres_permanents(): array {
-    return array_values(array_filter(membres_list(), fn($m) => $m['permanent']));
+    return array_values(array_filter(membres_all(), fn($m) => $m['permanent']));
 }
 
 /** Membres associés (tous les autres chercheurs et doctorants). */
 function membres_associes(): array {
-    return array_values(array_filter(membres_list(), fn($m) => !$m['permanent']));
+    return array_values(array_filter(membres_all(), fn($m) => !$m['permanent']));
 }
 
 /** Légende des abréviations de grade. */
