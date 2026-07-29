@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/$USER/public_html/
-    - /bin/rsync -rvz --exclude=".git" --exclude=".cpanel.yml" --exclude="espace/config.php" --exclude="uploads/chercheurs/*" --exclude=".gitignore" ./ $DEPLOYPATH

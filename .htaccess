@@ -1,0 +1,7 @@
+# Sécurité : le dépôt Git est déployé dans public_html.
+# Bloquer l'accès web aux fichiers de versionnement et de configuration.
+RedirectMatch 404 /\.git
+
+<FilesMatch "^(\.gitignore|\.cpanel\.yml|config\.php|schema\.sql|config\.sample\.php)$">
+  Require all denied
+</FilesMatch>
