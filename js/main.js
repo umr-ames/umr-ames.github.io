@@ -194,6 +194,74 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(function () { /* site statique ou hors-ligne : la rubrique reste masquée */ });
   })();
 
+  /* ---- Membres de l'unité (synchronisés avec l'espace admin) ---- */
+  (function () {
+    const grids = {
+      chercheurs: document.getElementById('grid-chercheurs'),
+      doctorants: document.getElementById('grid-doctorants')
+    };
+    if (!grids.chercheurs && !grids.doctorants) return;
+
+    function initials(name) {
+      const parts = (name || '').trim().split(/\s+/);
+      return ((parts[0] || '').charAt(0) + (parts[1] || '').charAt(0)).toUpperCase();
+    }
+
+    function card(m) {
+      const el = document.createElement('div');
+      el.className = 'membre-card fade-up visible';
+
+      const av = document.createElement('div');
+      av.className = 'membre-avatar';
+      av.setAttribute('aria-hidden', 'true');
+      av.textContent = initials(m.name);
+      el.appendChild(av);
+
+      const info = document.createElement('div');
+      info.className = 'membre-info';
+      [['membre-name', m.name], ['membre-grade', m.grade],
+       ['membre-affiliation', m.estab], ['membre-discipline', m.spec]].forEach(function (pair) {
+        if (!pair[1]) return;
+        const d = document.createElement('div');
+        d.className = pair[0];
+        d.textContent = pair[1];
+        info.appendChild(d);
+      });
+      el.appendChild(info);
+      return el;
+    }
+
+    fetch('/api/membres.php', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.ok) return;
+        // Un seul groupe vide est possible ; deux groupes vides = réponse suspecte
+        if (!data.chercheurs.length && !data.doctorants.length) return;
+
+        Object.keys(grids).forEach(function (k) {
+          const grid = grids[k];
+          if (!grid) return;
+          const frag = document.createDocumentFragment();
+          (data[k] || []).forEach(function (m) { frag.appendChild(card(m)); });
+          grid.innerHTML = '';
+          grid.appendChild(frag);
+        });
+
+        // Compteurs : sous-titre de la rubrique et statistique du bandeau d'accueil
+        const sub = document.querySelector('#membres .section-header p');
+        if (sub && data.total) {
+          sub.textContent = sub.textContent.replace(/^\d+/, data.total);
+        }
+        const stat = document.querySelector('.hero-stats .stat-number[data-target]');
+        if (stat && data.total) {
+          stat.dataset.target = data.total;
+          // le compteur animé peut être en cours : on repasse après son terme
+          setTimeout(function () { stat.textContent = data.total; }, 1400);
+        }
+      })
+      .catch(function () { /* site statique ou hors-ligne : la liste du HTML reste affichée */ });
+  })();
+
   /* ---- Recherche de chercheurs par nom ---- */
   const membreSearch = document.getElementById('membreSearch');
   if (membreSearch) {

@@ -60,16 +60,77 @@ function membres_list(): array {
     ];
 }
 
+/* Normalisation d'un nom pour le rapprochement entre documents
+   (accents, casse, espaces multiples). */
+function membre_key(string $name): string {
+    $s = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name);
+    $s = strtolower($s);
+    $s = preg_replace('/[^a-z0-9]+/', ' ', $s);
+    return trim($s);
+}
+
+/**
+ * Coordonnées relevées dans « Liste finale » (PDF annoté et .docx).
+ * Clé = nom normalisé ; sert à renseigner les membres dont le téléphone
+ * ou l'e-mail manquait. Les noms sont ceux de notre liste, y compris
+ * lorsqu'ils s'écrivent différemment dans les documents source.
+ */
+function membres_contacts(): array {
+    return [
+        'marbe begnoug'                          => ['44807010', 'benioug@gmail.com'],
+        'mohamed ahmed sambe'                    => ['30474221', 'bbaba2012@gmail.com'],
+        'zeinebou zoubeir'                       => ['26003996', 'mzeinebou@gmail.com'],
+        'aziza ahmedou'                          => ['36620383', 'ahmedouaziza@yahoo.fr'],
+        'mohamed saad bouh elemine vall'         => ['48154130', 'saadbouh@iup.e-una.mr'],
+        'mohamed elgheith ledhem'                => ['20559927', 'ovadel@gmail.com'],
+        'enne benhmeida'                         => ['36299944', 'enne_sidaty@yahoo.fr'],
+        'mohamed el hacen dilla bouna'           => ['43486485', 'mohdyla@gmail.com'],
+        'lemhaba yarba ahmed mahmoud'            => ['4676048',  'ouldyarba@yahoo.fr'],
+        'mohamed ahmed sidi cheikh'              => ['20081636', 'ouldsidicheikh@gmail.com'],
+        'jyda moustapha'                         => ['31737945', 'jyda.mintmoustapha@gmail.com'],
+        'khadijetou el heda'                     => ['26145513', 'khatouahmed@yahoo.fr'],
+        'yahya mohamed'                          => ['38198138', 'yahyajidou@yahoo.fr'],
+        'bedin mohamed lemine kerim'             => ['27578141', 'bedine@Univ-nkc.mr'],
+        'hasna hmoyed'                           => ['49067003', 'hasnaahmedou@yahoo.fr'],
+        'mohamed hemmidy'                        => ['42170101', 'mohamed.hemmidy@gmail.com'],
+        'el banany mohamed mahmoud'              => ['49952342', 'medmhdbennannu@gmail.com'],
+        'ahmed mohameden'                        => ['41666514', 'amed.mohameden@gmail.com'],
+        'abdoul samba ndongo'                    => ['32675319', 'abdoul_ndongo@hotmail.com'],
+        'mariem jidou khayar'                    => ['36252021', 'Mariem_jidou@hotmail.com'],
+        'mariem m a mohamed sultane'             => ['32123214', 'rimsultan4@gmail.com'],
+        'ahmed jidou mohamed lemine el bechir'   => ['48175967', 'ajidou35@gmail.com'],
+        'abdallahi ahmedou mohamed lemine'       => ['20835363', 'daddahabdallahi@gmail.com'],
+        'mohamed lemine mohamed'                 => ['34263435', 'medlemineb6@gmail.com'],
+        'zeineb mohamed mahmoud'                 => ['20200019', 'zeynebouelmehdi@gmail.com'],
+        'lalla boulahe chadade'                  => ['27177697', 'lalaboulahe@gmail.com'],
+        'mohamed douh begnoug'                   => ['27271057', 'mdouh2001@yahoo.com'],
+        'mohamed lemine abdel vettah'            => ['34263435', 'Medlemineb6@gmail.com'],
+    ];
+}
+
 /**
  * Liste effective : celle de la base si la table existe (l'administration
  * peut y ajouter ou en retirer des membres), sinon la liste de référence
  * ci-dessus. Le repli évite une page blanche avant l'exécution de migrate.php.
  */
+/** Complète téléphone et e-mail manquants depuis membres_contacts(). */
+function membres_fill_contacts(array $list): array {
+    $c = membres_contacts();
+    foreach ($list as &$m) {
+        $k = membre_key($m['name']);
+        if (!isset($c[$k])) continue;
+        if (empty($m['phone'])) $m['phone'] = $c[$k][0];
+        if (empty($m['email'])) $m['email'] = $c[$k][1];
+    }
+    return $list;
+}
+
 function membres_all(): array {
     static $cache = null;
     if ($cache !== null) return $cache;
 
-    if (function_exists('db')) {
+    // config() interrompt l'exécution si le fichier manque : on vérifie d'abord
+    if (function_exists('db') && file_exists(__DIR__ . '/config.php')) {
         try {
             $rows = db()->query(
                 'SELECT name, estab, grade, spec, phone, email, is_permanent, is_phd, id
@@ -91,7 +152,7 @@ function membres_all(): array {
             }
         } catch (Throwable $e) { /* table absente : repli sur la liste de référence */ }
     }
-    $cache = membres_list();
+    $cache = membres_fill_contacts(membres_list());
     return $cache;
 }
 

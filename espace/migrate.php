@@ -96,6 +96,27 @@ if (!table_exists($pdo, 'unit_members')) {
     $skip[] = 'table unit_members';
 }
 
+// --- Renseignement des coordonnées manquantes (idempotent) ---
+if (table_exists($pdo, 'unit_members')) {
+    require_once __DIR__ . '/membres-data.php';
+    $contacts = membres_contacts();
+    $rows = $pdo->query('SELECT id, name, phone, email FROM unit_members')->fetchAll();
+    $upd = $pdo->prepare('UPDATE unit_members SET phone = ?, email = ? WHERE id = ?');
+    $filled = 0;
+    foreach ($rows as $r) {
+        $k = membre_key($r['name']);
+        if (!isset($contacts[$k])) continue;
+        $phone = ($r['phone'] === null || $r['phone'] === '') ? $contacts[$k][0] : $r['phone'];
+        $email = ($r['email'] === null || $r['email'] === '') ? $contacts[$k][1] : $r['email'];
+        if ($phone !== $r['phone'] || $email !== $r['email']) {
+            $upd->execute([$phone, $email, $r['id']]);
+            $filled++;
+        }
+    }
+    if ($filled) $done[] = "coordonnées renseignées ($filled membre·s)";
+    else         $skip[] = 'coordonnées des membres';
+}
+
 // --- instance_members : composition des instances de gouvernance ---
 if (!table_exists($pdo, 'instance_members')) {
     $pdo->exec(
