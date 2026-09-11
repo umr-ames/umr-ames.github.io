@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Site en maintenance · UMR-AMES</title>
+<title>Site indisponible · UMR-AMES</title>
 <link rel="icon" href="/favicon.png">
 <style>
   :root {
     --primary: #102a4c;
-    --accent:  #15a08f;
+    --error:   #b3261e;
     --text:    #14233c;
     --muted:   #5a6b82;
     --bg:      #f5f8fa;
@@ -45,24 +45,18 @@
   .badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(21,160,143,.10);
-    color: #0e7c6f;
+    gap: 9px;
+    background: #fdeaea;
+    color: var(--error);
     font-size: .74rem;
     font-weight: 700;
     letter-spacing: .09em;
     text-transform: uppercase;
-    padding: 7px 15px;
+    padding: 7px 16px;
     border-radius: 50px;
     margin-bottom: 22px;
   }
-  .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  .badge svg { width: 13px; height: 13px; fill: currentColor; }
   h1 {
     font-size: 1.6rem;
     line-height: 1.3;
@@ -71,15 +65,22 @@
     letter-spacing: -.02em;
   }
   p { font-size: .96rem; line-height: 1.7; color: var(--muted); margin: 0 0 12px; }
+  .code {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem;
+    color: #8290a4;
+    background: var(--bg);
+    border: 1px solid #e6ecf2;
+    border-radius: 7px;
+    padding: 5px 12px;
+  }
   .sep { height: 1px; background: #e6ecf2; margin: 28px 0 24px; }
   .en { font-size: .88rem; color: #8290a4; }
   .en strong { color: var(--muted); font-weight: 600; }
-  .contact {
-    margin-top: 26px;
-    font-size: .9rem;
-    color: var(--muted);
-  }
-  .contact a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .contact { margin-top: 26px; font-size: .9rem; color: var(--muted); }
+  .contact a { color: #0e7c6f; font-weight: 600; text-decoration: none; }
   .contact a:hover { text-decoration: underline; }
   .unit {
     margin-top: 30px;
@@ -97,21 +98,23 @@
   <main class="card">
     <img src="/logo/logo_unite.png" alt="UMR-AMES" class="logo">
 
-    <div class="badge"><span class="dot"></span> Maintenance</div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>
+      Erreur
+    </div>
 
-    <h1>Site en cours de maintenance</h1>
+    <h1>Le site est indisponible</h1>
     <p>
-      Le site de l'UMR-AMES est momentanément indisponible pendant une opération
-      de maintenance technique. Il sera de nouveau accessible prochainement.
+      Le site de l'UMR-AMES est actuellement indisponible.
+      Merci de réessayer ultérieurement.
     </p>
-    <p>Merci de votre compréhension.</p>
+    <p><span class="code">Erreur 503 &middot; Service indisponible</span></p>
 
     <div class="sep"></div>
 
     <p class="en">
-      <strong>Site under maintenance.</strong><br>
-      The UMR-AMES website is temporarily unavailable while technical maintenance
-      is carried out. It will be back online shortly. Thank you for your understanding.
+      <strong>The site is unavailable.</strong><br>
+      The UMR-AMES website is currently unavailable. Please try again later.
     </p>
 
     <p class="contact">
