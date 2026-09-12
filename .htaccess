@@ -16,36 +16,6 @@ Options -Indexes
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# =====================================================
-# SITE INACCESSIBLE — DÉBUT
-# Le site public répond par une page d'erreur (HTTP 503),
-# statut qui signale une coupure temporaire et préserve le
-# référencement du site.
-# Restent accessibles : l'espace d'administration (/espace/),
-# la page d'erreur et le logo qu'elle affiche.
-# Pour remettre le site en ligne, supprimer ce bloc entier
-# (de DÉBUT à FIN) puis redéployer.
-# =====================================================
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  # Ne s'applique qu'à la requête initiale : sans cette garde, le service
-  # interne de la page d'erreur pourrait être renvoyé en 503 à son tour.
-  RewriteCond %{ENV:REDIRECT_STATUS} ^$
-  RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-  RewriteCond %{REQUEST_URI} !^/espace/
-  RewriteCond %{REQUEST_URI} !^/logo/
-  RewriteCond %{REQUEST_URI} !^/favicon
-  RewriteRule ^ - [R=503,L]
-</IfModule>
-ErrorDocument 503 /maintenance.html
-
-<Files "maintenance.html">
-  <IfModule mod_headers.c>
-    Header always set Retry-After "3600"
-  </IfModule>
-</Files>
-# SITE INACCESSIBLE — FIN
-
 # ---- Fichiers sensibles : jamais servis ----
 RedirectMatch 404 /\.git
 RedirectMatch 404 /\.github
