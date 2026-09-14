@@ -670,6 +670,19 @@ h1, h2, h3, h4,
 .cimpa-committee-list li { font-size: 0.82rem; color: var(--text-secondary);
   padding: 4px 0; break-inside: avoid; }
 
+/* Encadré simple, même habillage que le bloc repliable du comité */
+.cimpa-panel {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+  padding: 18px 4px 6px;
+}
+.cimpa-panel .cimpa-committee-lead { padding-top: 0; }
+.cimpa-country {
+  display: inline-block; margin-left: 8px;
+  background: rgba(21,160,143,0.10); color: var(--accent-dark);
+  font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 50px;
+}
+
 .cimpa-sponsors-note { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px; }
 .cimpa-sponsors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px; }
 .cimpa-sponsor {
