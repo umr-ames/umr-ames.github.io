@@ -587,7 +587,7 @@ h1, h2, h3, h4,
    ÉCOLE CIMPA
    ===================================================== */
 .cimpa-facts {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 16px; margin-bottom: 38px;
 }
 .cimpa-fact {
@@ -613,7 +613,7 @@ h1, h2, h3, h4,
 .cimpa-h4 { font-size: 0.86rem; font-weight: 700; color: var(--accent-dark);
   text-transform: uppercase; letter-spacing: 0.07em; margin: 26px 0 14px; }
 
-.cimpa-coord { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.cimpa-coord { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; }
 .cimpa-coord-card {
   background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--accent);
   border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow-sm);
@@ -623,7 +623,7 @@ h1, h2, h3, h4,
 .cimpa-coord-card strong { display: block; font-size: 1rem; color: var(--primary); margin-bottom: 5px; }
 .cimpa-coord-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
 
-.cimpa-speakers { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.cimpa-speakers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; }
 .cimpa-speaker {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 15px 18px; box-shadow: var(--shadow-sm); transition: var(--transition);
@@ -632,7 +632,7 @@ h1, h2, h3, h4,
 .cimpa-speaker strong { display: block; font-size: 0.9rem; color: var(--primary); margin-bottom: 3px; }
 .cimpa-speaker span { font-size: 0.79rem; color: var(--text-light); line-height: 1.5; }
 
-.cimpa-courses { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.cimpa-courses { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 16px; }
 .cimpa-course {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 22px 24px; box-shadow: var(--shadow-sm); transition: var(--transition);
@@ -671,7 +671,7 @@ h1, h2, h3, h4,
   padding: 4px 0; break-inside: avoid; }
 
 .cimpa-sponsors-note { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px; }
-.cimpa-sponsors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.cimpa-sponsors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px; }
 .cimpa-sponsor {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 22px 18px; box-shadow: var(--shadow-sm); text-align: center;
@@ -1022,10 +1022,9 @@ footer::before {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
 }
 
-@media (max-width: 768px) {
-  .section { padding: 60px 0; }
-  .section-header { margin-bottom: 38px; }
-
+/* Le menu en tiroir doit s'activer AVANT que la barre ne déborde :
+   avec six entrées de premier niveau, la navbar sature vers 930px. */
+@media (max-width: 960px) {
   /* Nav mobile */
   .nav-toggle { display: flex; margin-left: 8px; }
   .lang-switcher { display: none; }
@@ -1057,6 +1056,11 @@ footer::before {
   }
   .has-dropdown.open .dropdown-menu { visibility: visible; max-height: 320px; }
   .dropdown-menu a { font-size: 0.95rem; padding: 10px 16px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 60px 0; }
+  .section-header { margin-bottom: 38px; }
 
   .hero-stats { gap: 28px; }
   .hero-actions { flex-direction: column; align-items: center; }
