@@ -584,6 +584,112 @@ h1, h2, h3, h4,
 .membre-discipline { font-size: 0.73rem; color: var(--text-light); font-style: italic; }
 
 /* =====================================================
+   ÉCOLE CIMPA
+   ===================================================== */
+.cimpa-facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; margin-bottom: 38px;
+}
+.cimpa-fact {
+  display: flex; align-items: center; gap: 15px;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 20px; box-shadow: var(--shadow-sm);
+}
+.cimpa-fact i { font-size: 1.3rem; color: var(--accent); flex-shrink: 0; }
+.cimpa-fact span { display: block; font-size: 0.74rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-light); margin-bottom: 3px; }
+.cimpa-fact strong { font-size: 0.92rem; color: var(--primary); }
+
+.cimpa-prose { max-width: 860px; margin: 0 auto 10px; }
+.cimpa-prose p { font-size: 0.95rem; line-height: 1.85; color: var(--text-secondary);
+  text-align: justify; margin-bottom: 16px; }
+
+.cimpa-h3 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.15rem; font-weight: 700; color: var(--primary);
+  margin: 46px 0 18px; padding-bottom: 10px; border-bottom: 2px solid var(--border);
+}
+.cimpa-h3 i { color: var(--accent); font-size: 1rem; }
+.cimpa-h4 { font-size: 0.86rem; font-weight: 700; color: var(--accent-dark);
+  text-transform: uppercase; letter-spacing: 0.07em; margin: 26px 0 14px; }
+
+.cimpa-coord { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.cimpa-coord-card {
+  background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow-sm);
+}
+.cimpa-role { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--accent-dark); margin-bottom: 7px; }
+.cimpa-coord-card strong { display: block; font-size: 1rem; color: var(--primary); margin-bottom: 5px; }
+.cimpa-coord-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+.cimpa-speakers { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.cimpa-speaker {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 15px 18px; box-shadow: var(--shadow-sm); transition: var(--transition);
+}
+.cimpa-speaker:hover { box-shadow: var(--shadow); border-color: rgba(21,160,143,0.3); }
+.cimpa-speaker strong { display: block; font-size: 0.9rem; color: var(--primary); margin-bottom: 3px; }
+.cimpa-speaker span { font-size: 0.79rem; color: var(--text-light); line-height: 1.5; }
+
+.cimpa-courses { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.cimpa-course {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px 24px; box-shadow: var(--shadow-sm); transition: var(--transition);
+  display: flex; flex-direction: column;
+}
+.cimpa-course:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.cimpa-course h5 { font-size: 0.94rem; font-weight: 700; color: var(--primary);
+  line-height: 1.45; margin-bottom: 10px; }
+.cimpa-course p { font-size: 0.85rem; line-height: 1.75; color: var(--text-secondary);
+  text-align: justify; margin-bottom: 14px; flex: 1; }
+.cimpa-teacher { display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+  background: rgba(21,160,143,0.10); color: var(--accent-dark);
+  font-size: 0.78rem; font-weight: 600; padding: 5px 13px; border-radius: 50px; }
+
+.cimpa-cta {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 26px 28px; box-shadow: var(--shadow-sm); text-align: center;
+}
+.cimpa-cta p { font-size: 0.9rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 18px; }
+
+.cimpa-committee { background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+.cimpa-committee summary { cursor: pointer; padding: 16px 22px; font-size: 0.89rem;
+  font-weight: 600; color: var(--primary); list-style: none; transition: var(--transition); }
+.cimpa-committee summary::-webkit-details-marker { display: none; }
+.cimpa-committee summary::before { content: '\f078'; font-family: 'Font Awesome 6 Free';
+  font-weight: 900; font-size: 0.7rem; color: var(--accent); margin-right: 10px;
+  display: inline-block; transition: transform 0.25s var(--ease); }
+.cimpa-committee[open] summary::before { transform: rotate(180deg); }
+.cimpa-committee summary:hover { background: var(--bg); }
+.cimpa-committee-lead { padding: 4px 22px 0; }
+.cimpa-committee-lead p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; }
+.cimpa-committee-lead strong { color: var(--primary); }
+.cimpa-committee-list { columns: 2; column-gap: 34px; padding: 14px 22px 22px; list-style: none; }
+.cimpa-committee-list li { font-size: 0.82rem; color: var(--text-secondary);
+  padding: 4px 0; break-inside: avoid; }
+
+.cimpa-sponsors-note { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px; }
+.cimpa-sponsors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.cimpa-sponsor {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px 18px; box-shadow: var(--shadow-sm); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: var(--transition);
+}
+.cimpa-sponsor:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.cimpa-sponsor img { max-height: 62px; max-width: 100%; width: auto; object-fit: contain; }
+.cimpa-sponsor-name { font-family: var(--font-display); font-size: 1.5rem;
+  font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
+.cimpa-sponsor > span:last-child { font-size: 0.8rem; color: var(--text-light); }
+
+@media (max-width: 640px) {
+  .cimpa-committee-list { columns: 1; }
+  .cimpa-prose p, .cimpa-course p { text-align: left; }
+}
+
+/* =====================================================
    PROJETS
    ===================================================== */
 .projets-grid {

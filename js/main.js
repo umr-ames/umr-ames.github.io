@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     accueil:    ['accueil'],
     unite:      ['presentation', 'instances', 'membres', 'partenaires'],
     recherche:  ['axes', 'equipes', 'projets', 'publications'],
+    cimpa:      ['cimpa'],
     actualites: ['actualites'],
     contact:    ['contact']
   };
