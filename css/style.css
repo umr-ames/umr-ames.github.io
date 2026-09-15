@@ -647,12 +647,6 @@ h1, h2, h3, h4,
   background: rgba(21,160,143,0.10); color: var(--accent-dark);
   font-size: 0.78rem; font-weight: 600; padding: 5px 13px; border-radius: 50px; }
 
-.cimpa-cta {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 26px 28px; box-shadow: var(--shadow-sm); text-align: center;
-}
-.cimpa-cta p { font-size: 0.9rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 18px; }
-
 .cimpa-committee { background: var(--white); border: 1px solid var(--border);
   border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
 .cimpa-committee summary { cursor: pointer; padding: 16px 22px; font-size: 0.89rem;
@@ -671,6 +665,53 @@ h1, h2, h3, h4,
   padding: 4px 0; break-inside: avoid; }
 
 /* Encadré simple, même habillage que le bloc repliable du comité */
+.cimpa-themes { padding: 4px 22px 18px; }
+.cimpa-themes li {
+  position: relative; padding: 7px 0 7px 22px;
+  font-size: 0.89rem; color: var(--text-secondary);
+}
+.cimpa-themes li::before {
+  content: ''; position: absolute; left: 4px; top: 15px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+}
+
+.cimpa-highlights {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 16px;
+}
+.cimpa-highlight {
+  background: var(--white); border: 1px solid var(--border);
+  border-top: 3px solid var(--accent); border-radius: var(--radius);
+  padding: 20px 22px; box-shadow: var(--shadow-sm); transition: var(--transition);
+}
+.cimpa-highlight:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.cimpa-when {
+  display: inline-block; font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--accent-dark); margin-bottom: 8px;
+}
+.cimpa-highlight h5 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 9px; }
+.cimpa-highlight p { font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary); }
+
+.cimpa-table-wrap {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); overflow-x: auto;
+}
+.cimpa-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.cimpa-table th {
+  background: var(--bg); font-size: 0.74rem; font-weight: 700; color: var(--primary);
+  text-transform: uppercase; letter-spacing: 0.05em; text-align: left;
+  padding: 13px 16px; border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.cimpa-table td {
+  padding: 11px 16px; font-size: 0.85rem; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.cimpa-table tr:last-child td { border-bottom: none; }
+.cimpa-table tbody tr:hover { background: rgba(21,160,143,0.04); }
+.cimpa-table .num { width: 46px; text-align: center; color: var(--text-light); font-size: 0.8rem; }
+.cimpa-table td:nth-child(2) { color: var(--primary); font-weight: 600; }
+.cimpa-table .muted { color: var(--text-light); }
+
 .cimpa-panel {
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--radius); box-shadow: var(--shadow-sm);
@@ -682,20 +723,6 @@ h1, h2, h3, h4,
   background: rgba(21,160,143,0.10); color: var(--accent-dark);
   font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 50px;
 }
-
-.cimpa-sponsors-note { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px; }
-.cimpa-sponsors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px; }
-.cimpa-sponsor {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 22px 18px; box-shadow: var(--shadow-sm); text-align: center;
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  transition: var(--transition);
-}
-.cimpa-sponsor:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-.cimpa-sponsor img { max-height: 62px; max-width: 100%; width: auto; object-fit: contain; }
-.cimpa-sponsor-name { font-family: var(--font-display); font-size: 1.5rem;
-  font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
-.cimpa-sponsor > span:last-child { font-size: 0.8rem; color: var(--text-light); }
 
 @media (max-width: 640px) {
   .cimpa-committee-list { columns: 1; }
