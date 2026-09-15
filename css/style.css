@@ -675,6 +675,12 @@ h1, h2, h3, h4,
   width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
 }
 
+.cimpa-themes li strong { color: var(--primary); font-weight: 600; }
+.cimpa-theme-desc {
+  display: block; margin-top: 4px;
+  font-size: 0.84rem; line-height: 1.7; color: var(--text-light);
+}
+
 .cimpa-highlights {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 16px;
 }
